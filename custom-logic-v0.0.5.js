@@ -269,7 +269,7 @@ window.addEventListener("load", function () {
       // Hide all content divs
       document
         .querySelectorAll(".content")
-        .forEach((div) => (div.style.display = "none"));
+        .forEach((div) => (div.classList.add('hidden')));
 
       // Get the value of the selected option
       let value = this.value;
@@ -280,7 +280,7 @@ window.addEventListener("load", function () {
           `div[data-ethnicity='${value}']`
         );
         if (selectedDiv) {
-          selectedDiv.style.display = "block";
+          selectedDiv.classList.remove('hidden');
         }
       }
       resetHeight();
