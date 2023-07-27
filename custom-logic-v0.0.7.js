@@ -266,6 +266,7 @@ window.addEventListener("load", function () {
   // Ethnicity options
   document.querySelectorAll('input[name="ethnicity"]').forEach((elem) => {
     elem.addEventListener("change", function () {
+      console.log("option changed");
       // Hide all content divs
       document
         .querySelectorAll(".sub-options")
@@ -276,11 +277,14 @@ window.addEventListener("load", function () {
 
       // Show the div with the matching data-ethnicity attribute
       if (value) {
+        console.log("contains value");
         let selectedDiv = document.querySelector(
           `div[data-ethnicity='${value}']`
         );
+        console.log(selectedDiv);
         if (selectedDiv) {
           selectedDiv.classList.remove('hidden');
+          console.log("removed hidden class from selected div");
         }
       }
       resetHeight();
