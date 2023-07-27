@@ -268,7 +268,7 @@ window.addEventListener("load", function () {
     elem.addEventListener("change", function () {
       // Hide all content divs
       document
-        .querySelectorAll(".content")
+        .querySelectorAll(".sub-options")
         .forEach((div) => (div.classList.add('hidden')));
 
       // Get the value of the selected option
