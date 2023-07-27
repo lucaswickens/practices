@@ -212,7 +212,7 @@ window.addEventListener("load", function () {
       console.log(`Slide: ${slide}`);
       const slideHeight = slide.offsetHeight;
       console.log(`Slide height: ${slideHeight}`);
-      animateHeight(sliderMask, slideHeight, 400, easeIn);
+      animateHeight(sliderMask, slideHeight, 400, easeOut);
     }
 
     // Create function that can only be called once
