@@ -264,7 +264,7 @@ window.addEventListener("load", function () {
   });
 
   // Ethnicity options
-  document.querySelectorAll('input[name="ethnicity"]').forEach((elem) => {
+  document.querySelectorAll('input[name="Ethnicity"]').forEach((elem) => {
     elem.addEventListener("change", function () {
       console.log("option changed");
       // Hide all content divs
