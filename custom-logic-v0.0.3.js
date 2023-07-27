@@ -163,6 +163,8 @@ window.addEventListener("load", function () {
         setTimeout(() => {
           document.getElementById("flat").focus();
         }, 401);
+      } else {
+          document.getElementById("flat").focus();
       }
     });
 
