@@ -176,7 +176,7 @@ window.addEventListener("load", function () {
   
     console.log(`Total slides: ${totalSlides}`);
   
-    const widths = [20.25, 37.5, 51.75, 64, 75.25, 84.5, 92.75, 100];
+    const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
   
     const sliderMask = document.querySelector("#w-slider-mask-0");
   
