@@ -178,7 +178,7 @@ window.addEventListener("load", function () {
   
     const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
   
-    const sliderMask = document.querySelector("#w-slider-mask-0");
+    const sliderMask = document.querySelector("#mask");
   
     function animateHeight(element, to, duration, timingFunction) {
       const start = performance.now();
