@@ -175,10 +175,10 @@ window.addEventListener("load", function () {
     options
   );
 
-  previousAutocomplete.addListener("place_changed", () => {
-    const place = autocomplete.getPlace();
+  previousAutocomplete.addListener("previous_place_changed", () => {
+    const previousPlace = previousAutocomplete.getPlace();
 
-    place.address_components.forEach((component) => {
+    previousPlace.address_components.forEach((component) => {
       const addressType = component.types[0];
       switch (addressType) {
         case "street_number":
