@@ -291,7 +291,7 @@ window.addEventListener("load", function () {
   });
 
   // Get elements
-  const addressChanged = document.getElementById("home-address-changed");
+  const addressChanged = document.getElementById("address-changed");
   const previousPostcode = document.getElementById("previous-postcode");
   const armedForces = document.getElementById("armed-forces");
   const armedForcesOptions = armedForces.querySelectorAll(
