@@ -301,21 +301,35 @@ window.addEventListener("load", function () {
     'input[type="radio"]'
   );
 
+  // State
+  let registeredBefore;
+  let addressHasChanged;
+
   // Registered with GP before
   document
     .querySelectorAll('input[name="Registered-with-a-GP-before"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         // Get the value of the selected option
-        let value = this.value;
+        registeredBefore = this.value;
 
         // Show the div with the matching data-ethnicity attribute
-        if (value === "Yes") {
+        if (registeredBefore === "Yes") {
           addressChanged.classList.remove("hidden");
           armedForcesOptions.forEach((input) => {
             input.required = true;
           });
-        } else {
+          if (addressHasChanged === "Yes") {
+            previousPostcode.classList.remove("hidden");
+            armedForces.classList.remove("hidden");
+            previousPostcodeInput.requred = true;
+          } else {
+            previousPostcode.classList.add("hidden");
+            armedForces.classList.remove("hidden");
+            previousPostcodeInput.requred = false;
+          }
+        }
+        if (registeredBefore === "No") {
           addressChanged.classList.add("hidden");
           armedForces.classList.add("hidden");
           previousPostcode.classList.add("hidden");
@@ -334,7 +348,7 @@ window.addEventListener("load", function () {
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         // Get the value of the selected option
-        let value = this.value;
+        addressHasChanged = this.value;
 
         // Show the div with the matching data-ethnicity attribute
         if (value === "Yes") {
