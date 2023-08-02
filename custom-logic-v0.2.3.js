@@ -170,7 +170,10 @@ window.addEventListener("load", function () {
 
   // Address lookup - previous address
   const previousInput = document.getElementById("previous-address-input");
-  const previousAutocomplete = new google.maps.places.Autocomplete(previousInput, options);
+  const previousAutocomplete = new google.maps.places.Autocomplete(
+    previousInput,
+    options
+  );
 
   previousAutocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
@@ -179,7 +182,8 @@ window.addEventListener("load", function () {
       const addressType = component.types[0];
       switch (addressType) {
         case "street_number":
-          document.getElementById("previous_street_number").value = component.long_name;
+          document.getElementById("previous_street_number").value =
+            component.long_name;
           break;
         case "route":
           document.getElementById("previous_route").value = component.long_name;
@@ -188,15 +192,20 @@ window.addEventListener("load", function () {
           document.getElementById("previous_city").value = component.long_name;
           break;
         case "postal_code":
-          document.getElementById("previous_postcode").value = component.long_name;
+          document.getElementById("previous_postcode").value =
+            component.long_name;
           break;
         // you can add more cases as needed
       }
     });
     if (
-      document.getElementById("previousAdditionalFields").classList.contains("hidden")
+      document
+        .getElementById("previousAdditionalFields")
+        .classList.contains("hidden")
     ) {
-      document.getElementById("previousAdditionalFields").classList.remove("hidden");
+      document
+        .getElementById("previousAdditionalFields")
+        .classList.remove("hidden");
       resetHeight();
       setTimeout(() => {
         document.getElementById("previous_additional").focus();
@@ -335,6 +344,8 @@ window.addEventListener("load", function () {
   const armedForcesOptions = armedForces.querySelectorAll(
     'input[type="radio"]'
   );
+  const ehicDetails = document.getElementById("ehic-details");
+  const ehicDetailsInputs = ehicDetails.querySelectorAll('input[type="text"]');
 
   // State
   let registeredBefore;
@@ -533,6 +544,11 @@ window.addEventListener("load", function () {
           input.required = false;
           input.checked = false;
         });
+        ehicDetails.classList.add("hidden");
+        ehicDetailsInputs.forEach((input) => {
+          input.required = false;
+          input.value = "";
+        });
       }
       resetHeight();
     });
@@ -542,10 +558,6 @@ window.addEventListener("load", function () {
   document.querySelectorAll('input[name="Documents"]').forEach((elem) => {
     elem.addEventListener("change", function () {
       let value = this.value;
-
-      const ehicDetails = document.getElementById("ehic-details");
-      const ehicDetailsInputs =
-        ehicDetails.querySelectorAll('input[type="text"]');
 
       if (value === "European health insurance card (EHIC)") {
         ehicDetails.classList.remove("hidden");
