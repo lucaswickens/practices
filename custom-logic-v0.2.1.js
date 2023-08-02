@@ -514,7 +514,7 @@ window.addEventListener("load", function () {
     elem.addEventListener("change", function () {
       let value = this.value;
 
-      ehicDetails = document.getElementById("ehic-details");
+      const ehicDetails = document.getElementById("ehic-details");
       const ehicDetailsInputs =
         ehicDetails.querySelectorAll('input[type="text"]');
 
@@ -558,7 +558,7 @@ window.addEventListener("load", function () {
 
   // Previous address
   document
-    .querySelectorAll('input[name="Interpreter-needed"]')
+    .querySelectorAll('input[name="Has-previous-UK-address"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         let value = this.value;
@@ -572,7 +572,7 @@ window.addEventListener("load", function () {
           previousAddress.classList.remove("hidden");
         } else {
           previousAddress.classList.add("hidden");
-          previousAddress.value = "";
+          previousAddressInput.value = "";
         }
         resetHeight();
       });
