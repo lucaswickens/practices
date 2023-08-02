@@ -294,6 +294,9 @@ window.addEventListener("load", function () {
   const addressChanged = document.getElementById("address-changed");
   const previousPostcode = document.getElementById("previous-postcode");
   const armedForces = document.getElementById("armed-forces");
+  const previousPostcodeInput = document.getElementById(
+    "previous-postcode-input"
+  );
   const armedForcesOptions = armedForces.querySelectorAll(
     'input[type="radio"]'
   );
@@ -314,6 +317,9 @@ window.addEventListener("load", function () {
           });
         } else {
           addressChanged.classList.add("hidden");
+          armedForces.classList.add("hidden");
+          previousPostcode.classList.add("hidden");
+          previousPostcodeInput.requred = false;
           armedForcesOptions.forEach((input) => {
             input.required = false;
           });
@@ -327,9 +333,6 @@ window.addEventListener("load", function () {
     .querySelectorAll('input[name="Address-has-changed"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
-        const previousPostcodeInput = document.getElementById(
-          "previous-postcode-input"
-        );
         // Get the value of the selected option
         let value = this.value;
 
