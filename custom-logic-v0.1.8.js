@@ -323,7 +323,8 @@ window.addEventListener("load", function () {
             previousPostcode.classList.remove("hidden");
             armedForces.classList.remove("hidden");
             previousPostcodeInput.requred = true;
-          } else {
+          }
+          if (addressHasChanged === "No") {
             previousPostcode.classList.add("hidden");
             armedForces.classList.remove("hidden");
             previousPostcodeInput.requred = false;
@@ -351,11 +352,12 @@ window.addEventListener("load", function () {
         addressHasChanged = this.value;
 
         // Show the div with the matching data-ethnicity attribute
-        if (value === "Yes") {
+        if (addressHasChanged === "Yes") {
           previousPostcode.classList.remove("hidden");
           armedForces.classList.remove("hidden");
           previousPostcodeInput.requred = true;
-        } else {
+        }
+        if (addressHasChanged === "No") {
           previousPostcode.classList.add("hidden");
           armedForces.classList.remove("hidden");
           previousPostcodeInput.requred = false;
