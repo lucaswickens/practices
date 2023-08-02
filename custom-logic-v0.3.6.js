@@ -16,8 +16,15 @@ window.addEventListener("load", function () {
   const dobMonth = document.getElementById("dob-month");
   const dobYear = document.getElementById("dob-year");
 
+  const applicantDivs = document.querySelectorAll(".replace-name");
+
   firstName.addEventListener("input", () => {
     localStorage.setItem("firstName", firstName.value);
+    if (applicantDivs.length > 0) {
+      applicantDivs.forEach((div) => {
+        div.textContent = getLocalStorageValue("firstName");
+      });
+    }
   });
   lastName.addEventListener("input", () => {
     localStorage.setItem("lastName", lastName.value);
@@ -644,14 +651,6 @@ window.addEventListener("load", function () {
       }
     }
     resetHeight();
-  }
-
-  let applicantDivs = document.querySelectorAll(".replace-name");
-
-  if (applicantDivs.length > 0) {
-    applicantDivs.forEach((div) => {
-      div.textContent = getLocalStorageValue("firstName");
-    });
   }
 });
 
