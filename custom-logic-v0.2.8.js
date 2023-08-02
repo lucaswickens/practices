@@ -367,6 +367,7 @@ window.addEventListener("load", function () {
   let addressHasChanged;
   let countryBornInput;
   let recentlyMoved;
+  let hasMovedFromEU;
 
   // Registered with GP before
   document
@@ -442,37 +443,7 @@ window.addEventListener("load", function () {
         countryBornOptions.forEach((input) => {
           input.required = true;
         });
-        if (recentlyMoved === "Yes") {
-          enterUK.classList.remove("hidden");
-          enterUKOptions.forEach((input) => {
-            input.required = true;
-          });
-          movedFromEU.classList.remove("hidden");
-          movedFromEUOptions.forEach((input) => {
-            input.required = true;
-          });
-          interpreter.classList.remove("hidden");
-          interpreterOptions.forEach((input) => {
-            input.required = true;
-          });
-        }
-        if (recentlyMoved === "No") {
-          enterUK.classList.add("hidden");
-          enterUKOptions.forEach((input) => {
-            input.required = false;
-            input.value = "";
-          });
-          movedFromEU.classList.add("hidden");
-          movedFromEUOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
-          });
-          interpreter.classList.add("hidden");
-          interpreterOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
-          });
-        }
+        abroadLogic();
         resetHeight();
       });
     });
@@ -487,65 +458,7 @@ window.addEventListener("load", function () {
         document.getElementById("birth-details").classList.remove("hidden");
         document.getElementById("birth-place-input").required = true;
 
-        if (countryBornInput === "None of the above") {
-          intCountryQuestion.classList.remove("hidden");
-          intCountryField.required = true;
-          enterUK.classList.remove("hidden");
-          enterUKOptions.forEach((input) => {
-            input.required = true;
-          });
-          movedFromEU.classList.remove("hidden");
-          movedFromEUOptions.forEach((input) => {
-            input.required = true;
-          });
-          interpreter.classList.remove("hidden");
-          interpreterOptions.forEach((input) => {
-            input.required = true;
-          });
-          hasPreviousAddress.classList.add("hidden");
-          hasPreviousAddressOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
-          });
-        } else {
-          intCountryQuestion.classList.add("hidden");
-          intCountryField.required = false;
-          hasPreviousAddress.classList.remove("hidden");
-          hasPreviousAddressOptions.forEach((input) => {
-            input.required = true;
-          });
-          if (recentlyMoved === "Yes") {
-            enterUK.classList.remove("hidden");
-            enterUKOptions.forEach((input) => {
-              input.required = true;
-            });
-            movedFromEU.classList.remove("hidden");
-            movedFromEUOptions.forEach((input) => {
-              input.required = true;
-            });
-            interpreter.classList.remove("hidden");
-            interpreterOptions.forEach((input) => {
-              input.required = true;
-            });
-          }
-          if (recentlyMoved === "No") {
-            enterUK.classList.add("hidden");
-            enterUKOptions.forEach((input) => {
-              input.required = false;
-              input.value = "";
-            });
-            movedFromEU.classList.add("hidden");
-            movedFromEUOptions.forEach((input) => {
-              input.required = false;
-              input.checked = false;
-            });
-            interpreter.classList.add("hidden");
-            interpreterOptions.forEach((input) => {
-              input.required = false;
-              input.checked = false;
-            });
-          }
-        }
+        abroadLogic();
         resetHeight();
       });
     });
@@ -553,20 +466,20 @@ window.addEventListener("load", function () {
   // Moved from EU
   document.querySelectorAll('input[name="Moved-from-EU"]').forEach((elem) => {
     elem.addEventListener("change", function () {
-      let value = this.value;
+      hasMovedFromEU = this.value;
 
       documentsSection = document.getElementById("documents");
       const documentsOptions = documentsSection.querySelectorAll(
         'input[type="radio"]'
       );
 
-      if (value === "Yes") {
+      if (hasMovedFromEU === "Yes") {
         documentsSection.classList.remove("hidden");
         documentsOptions.forEach((input) => {
           input.required = true;
         });
       }
-      if (value === "No") {
+      if (hasMovedFromEU === "No") {
         documentsSection.classList.add("hidden");
         documentsOptions.forEach((input) => {
           input.required = false;
@@ -646,6 +559,71 @@ window.addEventListener("load", function () {
         resetHeight();
       });
     });
+
+  function abroadLogic() {
+
+    if (countryBornInput) {
+      if (recentlyMoved === "Yes") {
+        enterUK.classList.remove("hidden");
+        enterUKOptions.forEach((input) => {
+          input.required = true;
+        });
+        movedFromEU.classList.remove("hidden");
+        movedFromEUOptions.forEach((input) => {
+          input.required = true;
+        });
+        interpreter.classList.remove("hidden");
+        interpreterOptions.forEach((input) => {
+          input.required = true;
+        });
+      }
+      if (recentlyMoved === "No") {
+        enterUK.classList.add("hidden");
+        enterUKOptions.forEach((input) => {
+          input.required = false;
+          input.value = "";
+        });
+        movedFromEU.classList.add("hidden");
+        movedFromEUOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+        interpreter.classList.add("hidden");
+        interpreterOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+      }
+      if (countryBornInput === "None of the above") {
+        intCountryQuestion.classList.remove("hidden");
+        intCountryField.required = true;
+        enterUK.classList.remove("hidden");
+        enterUKOptions.forEach((input) => {
+          input.required = true;
+        });
+        movedFromEU.classList.remove("hidden");
+        movedFromEUOptions.forEach((input) => {
+          input.required = true;
+        });
+        interpreter.classList.remove("hidden");
+        interpreterOptions.forEach((input) => {
+          input.required = true;
+        });
+        hasPreviousAddress.classList.add("hidden");
+        hasPreviousAddressOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+      } else {
+        intCountryQuestion.classList.add("hidden");
+        intCountryField.required = false;
+        hasPreviousAddress.classList.remove("hidden");
+        hasPreviousAddressOptions.forEach((input) => {
+          input.required = true;
+        });
+      }
+    }
+  }
 });
 
 // Function to get a localStorage value
