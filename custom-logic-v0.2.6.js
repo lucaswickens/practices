@@ -175,7 +175,7 @@ window.addEventListener("load", function () {
     options
   );
 
-  previousAutocomplete.addListener("previous_place_changed", () => {
+  previousAutocomplete.addListener("place_changed", () => {
     const previousPlace = previousAutocomplete.getPlace();
     console.log(previousPlace);
 
