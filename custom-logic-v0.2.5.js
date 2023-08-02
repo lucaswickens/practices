@@ -177,6 +177,7 @@ window.addEventListener("load", function () {
 
   previousAutocomplete.addListener("previous_place_changed", () => {
     const previousPlace = previousAutocomplete.getPlace();
+    console.log(previousPlace);
 
     previousPlace.address_components.forEach((component) => {
       const addressType = component.types[0];
