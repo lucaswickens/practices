@@ -357,6 +357,8 @@ window.addEventListener("load", function () {
   const interpreterOptions = interpreter.querySelectorAll(
     'input[type="radio"]'
   );
+  const previousAddress = this.document.getElementById("previous-address");
+  const previousAddressInput = document.getElementById("previous-address-input");
   const hasPreviousAddressQuestion = document.getElementById(
     "has-previous-address"
   );
