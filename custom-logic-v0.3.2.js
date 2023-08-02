@@ -372,6 +372,7 @@ window.addEventListener("load", function () {
   let countryBornInput;
   let recentlyMoved;
   let hasMovedFromEU;
+  let documents;
 
   // Registered with GP before
   document
@@ -479,20 +480,8 @@ window.addEventListener("load", function () {
   // Documents
   document.querySelectorAll('input[name="Documents"]').forEach((elem) => {
     elem.addEventListener("change", function () {
-      let value = this.value;
-
-      if (value === "European health insurance card (EHIC)") {
-        ehicDetails.classList.remove("hidden");
-        ehicDetailsInputs.forEach((input) => {
-          input.required = true;
-        });
-      } else {
-        ehicDetails.classList.add("hidden");
-        ehicDetailsInputs.forEach((input) => {
-          input.required = false;
-          input.value = "";
-        });
-      }
+      documents = this.value;
+      abroadLogic();
       resetHeight();
     });
   });
@@ -541,6 +530,39 @@ window.addEventListener("load", function () {
       });
     });
 
+  function movedFromEULogic() {
+    if (hasMovedFromEU === "Yes") {
+      documentsSection.classList.remove("hidden");
+      documentsOptions.forEach((input) => {
+        input.required = true;
+      });
+      if (documents === "European health insurance card (EHIC)") {
+        ehicDetails.classList.remove("hidden");
+        ehicDetailsInputs.forEach((input) => {
+          input.required = true;
+        });
+      } else {
+        ehicDetails.classList.add("hidden");
+        ehicDetailsInputs.forEach((input) => {
+          input.required = false;
+          input.value = "";
+        });
+      }
+    }
+    if (hasMovedFromEU === "No") {
+      documentsSection.classList.add("hidden");
+      documentsOptions.forEach((input) => {
+        input.required = false;
+        input.checked = false;
+      });
+      ehicDetails.classList.add("hidden");
+      ehicDetailsInputs.forEach((input) => {
+        input.required = false;
+        input.value = "";
+      });
+    }
+  }
+
   function abroadLogic() {
     if (countryBornInput) {
       if (countryBornInput === "None of the above") {
@@ -558,12 +580,6 @@ window.addEventListener("load", function () {
         interpreterOptions.forEach((input) => {
           input.required = true;
         });
-        if (hasMovedFromEU === "Yes") {
-          documentsSection.classList.remove("hidden");
-          documentsOptions.forEach((input) => {
-            input.required = true;
-          });
-        }
         hasPreviousAddress.classList.add("hidden");
         hasPreviousAddressOptions.forEach((input) => {
           input.required = false;
@@ -589,43 +605,37 @@ window.addEventListener("load", function () {
           interpreterOptions.forEach((input) => {
             input.required = true;
           });
-          if (hasMovedFromEU === "Yes") {
-            documentsSection.classList.remove("hidden");
+          if (recentlyMoved === "No") {
+            enterUK.classList.add("hidden");
+            enterUKOptions.forEach((input) => {
+              input.required = false;
+              input.value = "";
+            });
+            movedFromEU.classList.add("hidden");
+            movedFromEUOptions.forEach((input) => {
+              input.required = false;
+              input.checked = false;
+            });
+            interpreter.classList.add("hidden");
+            interpreterOptions.forEach((input) => {
+              input.required = false;
+              input.checked = false;
+            });
+            documentsSection.classList.add("hidden");
             documentsOptions.forEach((input) => {
-              input.required = true;
+              input.required = false;
+              input.checked = false;
+            });
+            ehicDetails.classList.add("hidden");
+            ehicDetailsInputs.forEach((input) => {
+              input.required = false;
+              input.value = "";
             });
           }
         }
-        if (recentlyMoved === "No") {
-          enterUK.classList.add("hidden");
-          enterUKOptions.forEach((input) => {
-            input.required = false;
-            input.value = "";
-          });
-          movedFromEU.classList.add("hidden");
-          movedFromEUOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
-          });
-          interpreter.classList.add("hidden");
-          interpreterOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
-          });
-          documentsSection.classList.add("hidden");
-          documentsOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
-          });
-          ehicDetails.classList.add("hidden");
-          ehicDetailsInputs.forEach((input) => {
-            input.required = false;
-            input.value = "";
-          });
-        }
       }
+      movedFromEULogic();
     }
-    resetHeight();
   }
 });
 
