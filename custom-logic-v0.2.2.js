@@ -136,7 +136,6 @@ window.addEventListener("load", function () {
 
   autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
-    console.log(place);
 
     place.address_components.forEach((component) => {
       const addressType = component.types[0];
@@ -169,12 +168,48 @@ window.addEventListener("load", function () {
     }
   });
 
+  // Address lookup - previous address
+  const previousInput = document.getElementById("previous-address-input");
+  const previousAutocomplete = new google.maps.places.Autocomplete(previousInput, options);
+
+  previousAutocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+
+    place.address_components.forEach((component) => {
+      const addressType = component.types[0];
+      switch (addressType) {
+        case "street_number":
+          document.getElementById("previous_street_number").value = component.long_name;
+          break;
+        case "route":
+          document.getElementById("previous_route").value = component.long_name;
+          break;
+        case "postal_town":
+          document.getElementById("previous_city").value = component.long_name;
+          break;
+        case "postal_code":
+          document.getElementById("previous_postcode").value = component.long_name;
+          break;
+        // you can add more cases as needed
+      }
+    });
+    if (
+      document.getElementById("previousAdditionalFields").classList.contains("hidden")
+    ) {
+      document.getElementById("previousAdditionalFields").classList.remove("hidden");
+      resetHeight();
+      setTimeout(() => {
+        document.getElementById("previous_additional").focus();
+      }, 401);
+    } else {
+      document.getElementById("previous_additional").focus();
+    }
+  });
+
   const totalSlides = document.querySelectorAll(".w-slider-dot").length;
   document
     .getElementById("reset-height")
     .addEventListener("click", resetHeight);
-
-  console.log(`Total slides: ${totalSlides}`);
 
   const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
 
@@ -204,17 +239,12 @@ window.addEventListener("load", function () {
   }
 
   function resetHeight() {
-    console.log(`Total slides: ${totalSlides}`);
     const slideNo = document.getElementById("currentStep").textContent;
-    console.log(`Slide no: ${slideNo}`);
     const target = slideNo + " of " + totalSlides;
-    console.log(`Target: ${target}`);
     const slide = document.querySelector(
       '[aria-label="' + target + '"] .slide'
     );
-    console.log(`Slide: ${slide}`);
     const slideHeight = slide.offsetHeight;
-    console.log(`Slide height: ${slideHeight}`);
     animateHeight(sliderMask, slideHeight, 400, easeOut);
   }
 
@@ -281,7 +311,6 @@ window.addEventListener("load", function () {
         let selectedDiv = document.querySelector(
           `div[data-ethnicity='${value}']`
         );
-        console.log(selectedDiv);
         if (selectedDiv) {
           selectedDiv.classList.remove("hidden");
         }
@@ -488,7 +517,7 @@ window.addEventListener("load", function () {
       let value = this.value;
 
       documentsSection = document.getElementById("documents");
-      const documentsOptions = ehicDetails.querySelectorAll(
+      const documentsOptions = documentsSection.querySelectorAll(
         'input[type="radio"]'
       );
 
