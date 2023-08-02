@@ -361,6 +361,10 @@ window.addEventListener("load", function () {
   const hasPreviousAddressOptions = hasPreviousAddress.querySelectorAll(
     'input[type="radio"]'
   );
+  documentsSection = document.getElementById("documents");
+  const documentsOptions = documentsSection.querySelectorAll(
+    'input[type="radio"]'
+  );
 
   // State
   let registeredBefore;
@@ -467,11 +471,6 @@ window.addEventListener("load", function () {
   document.querySelectorAll('input[name="Moved-from-EU"]').forEach((elem) => {
     elem.addEventListener("change", function () {
       hasMovedFromEU = this.value;
-
-      documentsSection = document.getElementById("documents");
-      const documentsOptions = documentsSection.querySelectorAll(
-        'input[type="radio"]'
-      );
       abroadLogic();
       resetHeight();
     });
