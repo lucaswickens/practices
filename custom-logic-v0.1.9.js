@@ -294,6 +294,12 @@ window.addEventListener("load", function () {
   const addressChanged = document.getElementById("address-changed");
   const previousPostcode = document.getElementById("previous-postcode");
   const armedForces = document.getElementById("armed-forces");
+  const countryBorn = document.getElementById("country-born");
+  const intCountryQuestion = document.getElementById("int-country");
+  const intCountryField = document.getElementById("int-country-field");
+  const countryBornOptions = countryBorn.querySelectorAll(
+    'input[type="radio"]'
+  );
   const previousPostcodeInput = document.getElementById(
     "previous-postcode-input"
   );
@@ -304,6 +310,9 @@ window.addEventListener("load", function () {
   // State
   let registeredBefore;
   let addressHasChanged;
+  let countryBornInput;
+  let recentlyMoved;
+  let movedFromEU;
 
   // Registered with GP before
   document
@@ -322,21 +331,24 @@ window.addEventListener("load", function () {
           if (addressHasChanged === "Yes") {
             previousPostcode.classList.remove("hidden");
             armedForces.classList.remove("hidden");
-            previousPostcodeInput.requred = true;
+            previousPostcodeInput.required = true;
           }
           if (addressHasChanged === "No") {
             previousPostcode.classList.add("hidden");
             armedForces.classList.remove("hidden");
-            previousPostcodeInput.requred = false;
+            previousPostcodeInput.required = false;
+            previousPostcodeInput.value = "";
           }
         }
         if (registeredBefore === "No") {
           addressChanged.classList.add("hidden");
           armedForces.classList.add("hidden");
           previousPostcode.classList.add("hidden");
-          previousPostcodeInput.requred = false;
+          previousPostcodeInput.required = false;
+          previousPostcodeInput.value = "";
           armedForcesOptions.forEach((input) => {
             input.required = false;
+            input.checked = false;
           });
         }
         resetHeight();
@@ -355,12 +367,212 @@ window.addEventListener("load", function () {
         if (addressHasChanged === "Yes") {
           previousPostcode.classList.remove("hidden");
           armedForces.classList.remove("hidden");
-          previousPostcodeInput.requred = true;
+          previousPostcodeInput.required = true;
         }
         if (addressHasChanged === "No") {
           previousPostcode.classList.add("hidden");
           armedForces.classList.remove("hidden");
-          previousPostcodeInput.requred = false;
+          previousPostcodeInput.required = false;
+        }
+        resetHeight();
+      });
+    });
+
+  // Recently moved from abroad
+  document
+    .querySelectorAll('input[name="Recently-moved-from-abroad"]')
+    .forEach((elem) => {
+      elem.addEventListener("change", function () {
+        recentlyMoved = this.value;
+        countryBorn.classList.remove("hidden");
+        countryBornOptions.forEach((input) => {
+          input.required = true;
+        });
+        resetHeight();
+      });
+    });
+
+  // Country of birth
+  document
+    .querySelectorAll('input[name="Country-of-birth"]')
+    .forEach((elem) => {
+      elem.addEventListener("change", function () {
+        countryBornInput = this.value;
+
+        const enterUK = document.getElementById("enter-uk");
+        const movedFromEU = document.getElementById("moved-from-eu");
+        const enterUKOptions = enterUK.querySelectorAll('input[type="text"]');
+        const movedFromEUOptions = movedFromEU.querySelectorAll(
+          'input[type="radio"]'
+        );
+        const interpreter = document.getElementById("interpreter");
+        const interpreterOptions = interpreter.querySelectorAll(
+          'input[type="radio"]'
+        );
+        const hasPreviousAddress = document.getElementById(
+          "has-previous-address"
+        );
+        const hasPreviousAddressOptions = hasPreviousAddress.querySelectorAll(
+          'input[type="radio"]'
+        );
+
+        document.getElementById("birth-details").classList.remove("hidden");
+        document.getElementById("birth-place").required = true;
+
+        if (countryBornInput === "None of the above") {
+          intCountryQuestion.classList.remove("hidden");
+          intCountryField.required = true;
+          enterUK.classList.remove("hidden");
+          enterUKOptions.forEach((input) => {
+            input.required = true;
+          });
+          movedFromEU.classList.remove("hidden");
+          movedFromEUOptions.forEach((input) => {
+            input.required = true;
+          });
+          interpreter.classList.remove("hidden");
+          interpreterOptions.forEach((input) => {
+            input.required = true;
+          });
+          hasPreviousAddress.classList.add("hidden");
+          hasPreviousAddressOptions.forEach((input) => {
+            input.required = false;
+            input.checked = false;
+          });
+        } else {
+          intCountryField.classList.add("hidden");
+          intCountryField.required = false;
+          hasPreviousAddress.classList.remove("hidden");
+          hasPreviousAddressOptions.forEach((input) => {
+            input.required = true;
+          });
+          if (recentlyMoved === "Yes") {
+            enterUK.classList.remove("hidden");
+            enterUKOptions.forEach((input) => {
+              input.required = true;
+            });
+            movedFromEU.classList.remove("hidden");
+            movedFromEUOptions.forEach((input) => {
+              input.required = true;
+            });
+            interpreter.classList.remove("hidden");
+            interpreterOptions.forEach((input) => {
+              input.required = true;
+            });
+          }
+          if (recentlyMoved === "No") {
+            enterUK.classList.add("hidden");
+            enterUKOptions.forEach((input) => {
+              input.required = false;
+              input.value = "";
+            });
+            movedFromEU.classList.add("hidden");
+            movedFromEUOptions.forEach((input) => {
+              input.required = false;
+              input.checked = false;
+            });
+            interpreter.classList.add("hidden");
+            interpreterOptions.forEach((input) => {
+              input.required = false;
+              input.checked = false;
+            });
+          }
+        }
+        resetHeight();
+      });
+    });
+
+  // Moved from EU
+  document.querySelectorAll('input[name="Moved-from-EU"]').forEach((elem) => {
+    elem.addEventListener("change", function () {
+      let value = this.value;
+
+      documentsSection = document.getElementById("documents");
+      const documentsOptions = ehicDetails.querySelectorAll(
+        'input[type="radio"]'
+      );
+
+      if (value === "Yes") {
+        documentsSection.classList.remove("hidden");
+        documentsOptions.forEach((input) => {
+          input.required = true;
+        });
+      }
+      if (value === "No") {
+        documentsSection.classList.add("hidden");
+        documentsOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+      }
+      resetHeight();
+    });
+  });
+
+  // Documents
+  document.querySelectorAll('input[name="Documents"]').forEach((elem) => {
+    elem.addEventListener("change", function () {
+      let value = this.value;
+
+      ehicDetails = document.getElementById("ehic-details");
+      const ehicDetailsInputs =
+        ehicDetails.querySelectorAll('input[type="text"]');
+
+      if (value === "European health insurance card (EHIC)") {
+        ehicDetails.classList.remove("hidden");
+        ehicDetailsInputs.forEach((input) => {
+          input.required = true;
+        });
+      } else {
+        ehicDetails.classList.add("hidden");
+        ehicDetailsInputs.forEach((input) => {
+          input.required = false;
+          input.value = "";
+        });
+      }
+      resetHeight();
+    });
+  });
+
+  // Interpreter
+  document
+    .querySelectorAll('input[name="Interpreter-needed"]')
+    .forEach((elem) => {
+      elem.addEventListener("change", function () {
+        let value = this.value;
+
+        preferredLang = document.getElementById("preferred-lang");
+        preferredLangInput = document.getElementById("preferred-lang-input");
+
+        if (value === "Yes") {
+          preferredLang.classList.remove("hidden");
+          preferredLangInput.required = true;
+        } else {
+          preferredLang.classList.add("hidden");
+          preferredLangInput.required = false;
+          preferredLangInput.value = "";
+        }
+        resetHeight();
+      });
+    });
+
+  // Previous address
+  document
+    .querySelectorAll('input[name="Interpreter-needed"]')
+    .forEach((elem) => {
+      elem.addEventListener("change", function () {
+        let value = this.value;
+
+        const previousAddress = document.getElementById("previous-address");
+        const previousAddressInput = document.getElementById(
+          "previous-address-input"
+        );
+
+        if (value === "Yes") {
+          previousAddress.classList.remove("hidden");
+        } else {
+          previousAddress.classList.add("hidden");
+          previousAddress.value = "";
         }
         resetHeight();
       });
