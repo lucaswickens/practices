@@ -270,20 +270,22 @@ window.addEventListener("load", function () {
       }
     };
   }
-  const emailCapture = createSingletonFunction(() => {
-    const abandoned = getLocalStorageValue("abandoned");
-    if (abandoned !== "true") {
-      console.log("Send AJAX");
-      setLocalStorageValue("abandoned", true);
-      fetch("https://api.form-data.com/f/n7036mvhghdbwvzm7o3z1o", {
-        method: "post",
-        body: JSON.stringify({ name: firstName.value, email: email.value }),
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((res) => res.json())
-        .then((data) => {});
-    }
-  });
+  if (window.location.pathname === "/forms/new-patients") {
+    const emailCapture = createSingletonFunction(() => {
+      const abandoned = getLocalStorageValue("abandoned");
+      if (abandoned !== "true") {
+        console.log("Send AJAX");
+        setLocalStorageValue("abandoned", true);
+        fetch("https://api.form-data.com/f/n7036mvhghdbwvzm7o3z1o", {
+          method: "post",
+          body: JSON.stringify({ name: firstName.value, email: email.value }),
+          headers: { "Content-Type": "application/json" },
+        })
+          .then((res) => res.json())
+          .then((data) => {});
+      }
+    });
+  }
 
   Array.from(document.querySelectorAll(".change-slide")).forEach(function (
     changeSlideElement
@@ -358,7 +360,9 @@ window.addEventListener("load", function () {
     'input[type="radio"]'
   );
   const previousAddress = this.document.getElementById("previous-address");
-  const previousAddressInput = document.getElementById("previous-address-input");
+  const previousAddressInput = document.getElementById(
+    "previous-address-input"
+  );
   const hasPreviousAddressQuestion = document.getElementById(
     "has-previous-address"
   );
@@ -640,6 +644,14 @@ window.addEventListener("load", function () {
       }
     }
     resetHeight();
+  }
+
+  let applicantDivs = document.querySelectorAll(".replace-name");
+
+  if (applicantDivs.length > 0) {
+    applicantDivs.forEach((div) => {
+      div.textContent = getLocalStorageValue("firstName");
+    });
   }
 });
 
