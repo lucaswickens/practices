@@ -473,24 +473,7 @@ window.addEventListener("load", function () {
         'input[type="radio"]'
       );
 
-      if (hasMovedFromEU === "Yes") {
-        documentsSection.classList.remove("hidden");
-        documentsOptions.forEach((input) => {
-          input.required = true;
-        });
-      }
-      if (hasMovedFromEU === "No") {
-        documentsSection.classList.add("hidden");
-        documentsOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
-        });
-        ehicDetails.classList.add("hidden");
-        ehicDetailsInputs.forEach((input) => {
-          input.required = false;
-          input.value = "";
-        });
-      }
+      abroadLogic();
       resetHeight();
     });
   });
@@ -561,7 +544,6 @@ window.addEventListener("load", function () {
     });
 
   function abroadLogic() {
-
     if (countryBornInput) {
       if (recentlyMoved === "Yes") {
         enterUK.classList.remove("hidden");
@@ -576,6 +558,12 @@ window.addEventListener("load", function () {
         interpreterOptions.forEach((input) => {
           input.required = true;
         });
+        if (hasMovedFromEU === "Yes") {
+          documentsSection.classList.remove("hidden");
+          documentsOptions.forEach((input) => {
+            input.required = true;
+          });
+        }
       }
       if (recentlyMoved === "No") {
         enterUK.classList.add("hidden");
@@ -593,6 +581,16 @@ window.addEventListener("load", function () {
           input.required = false;
           input.checked = false;
         });
+        documentsSection.classList.add("hidden");
+        documentsOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+        ehicDetails.classList.add("hidden");
+        ehicDetailsInputs.forEach((input) => {
+          input.required = false;
+          input.value = "";
+        });
       }
       if (countryBornInput === "None of the above") {
         intCountryQuestion.classList.remove("hidden");
@@ -609,6 +607,12 @@ window.addEventListener("load", function () {
         interpreterOptions.forEach((input) => {
           input.required = true;
         });
+        if (hasMovedFromEU === "Yes") {
+          documentsSection.classList.remove("hidden");
+          documentsOptions.forEach((input) => {
+            input.required = true;
+          });
+        }
         hasPreviousAddress.classList.add("hidden");
         hasPreviousAddressOptions.forEach((input) => {
           input.required = false;
