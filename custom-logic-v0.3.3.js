@@ -357,14 +357,18 @@ window.addEventListener("load", function () {
   const interpreterOptions = interpreter.querySelectorAll(
     'input[type="radio"]'
   );
-  const hasPreviousAddress = document.getElementById("has-previous-address");
-  const hasPreviousAddressOptions = hasPreviousAddress.querySelectorAll(
+  const hasPreviousAddressQuestion = document.getElementById(
+    "has-previous-address"
+  );
+  const hasPreviousAddressOptions = hasPreviousAddressQuestion.querySelectorAll(
     'input[type="radio"]'
   );
   documentsSection = document.getElementById("documents");
   const documentsOptions = documentsSection.querySelectorAll(
     'input[type="radio"]'
   );
+  preferredLang = document.getElementById("preferred-lang");
+  preferredLangInput = document.getElementById("preferred-lang-input");
 
   // State
   let registeredBefore;
@@ -372,7 +376,9 @@ window.addEventListener("load", function () {
   let countryBornInput;
   let recentlyMoved;
   let hasMovedFromEU;
+  let hasPreviousAddress;
   let documents;
+  let needsInterpreter;
 
   // Registered with GP before
   document
@@ -444,12 +450,7 @@ window.addEventListener("load", function () {
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         recentlyMoved = this.value;
-        countryBorn.classList.remove("hidden");
-        countryBornOptions.forEach((input) => {
-          input.required = true;
-        });
         abroadLogic();
-        resetHeight();
       });
     });
 
@@ -459,12 +460,7 @@ window.addEventListener("load", function () {
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         countryBornInput = this.value;
-
-        document.getElementById("birth-details").classList.remove("hidden");
-        document.getElementById("birth-place-input").required = true;
-
         abroadLogic();
-        resetHeight();
       });
     });
 
@@ -473,7 +469,6 @@ window.addEventListener("load", function () {
     elem.addEventListener("change", function () {
       hasMovedFromEU = this.value;
       abroadLogic();
-      resetHeight();
     });
   });
 
@@ -482,7 +477,6 @@ window.addEventListener("load", function () {
     elem.addEventListener("change", function () {
       documents = this.value;
       abroadLogic();
-      resetHeight();
     });
   });
 
@@ -491,20 +485,8 @@ window.addEventListener("load", function () {
     .querySelectorAll('input[name="Interpreter-needed"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
-        let value = this.value;
-
-        preferredLang = document.getElementById("preferred-lang");
-        preferredLangInput = document.getElementById("preferred-lang-input");
-
-        if (value === "Yes") {
-          preferredLang.classList.remove("hidden");
-          preferredLangInput.required = true;
-        } else {
-          preferredLang.classList.add("hidden");
-          preferredLangInput.required = false;
-          preferredLangInput.value = "";
-        }
-        resetHeight();
+        needsInterpreter = this.value;
+        abroadLogic();
       });
     });
 
@@ -513,119 +495,64 @@ window.addEventListener("load", function () {
     .querySelectorAll('input[name="Has-previous-UK-address"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
-        let value = this.value;
-
-        const previousAddress = document.getElementById("previous-address");
-        const previousAddressInput = document.getElementById(
-          "previous-address-input"
-        );
-
-        if (value === "Yes") {
-          previousAddress.classList.remove("hidden");
-        } else {
-          previousAddress.classList.add("hidden");
-          previousAddressInput.value = "";
-        }
-        resetHeight();
+        hasPreviousAddress = this.value;
+        abroadLogic();
       });
     });
 
-  function movedFromEULogic() {
-    if (hasMovedFromEU === "Yes") {
-      documentsSection.classList.remove("hidden");
-      documentsOptions.forEach((input) => {
-        input.required = true;
-      });
-      if (documents === "European health insurance card (EHIC)") {
-        ehicDetails.classList.remove("hidden");
-        ehicDetailsInputs.forEach((input) => {
-          input.required = true;
-        });
-      } else {
-        ehicDetails.classList.add("hidden");
-        ehicDetailsInputs.forEach((input) => {
-          input.required = false;
-          input.value = "";
-        });
-      }
-    }
-    if (hasMovedFromEU === "No") {
-      documentsSection.classList.add("hidden");
-      documentsOptions.forEach((input) => {
-        input.required = false;
-        input.checked = false;
-      });
-      ehicDetails.classList.add("hidden");
-      ehicDetailsInputs.forEach((input) => {
-        input.required = false;
-        input.value = "";
-      });
-    }
-  }
-
   function abroadLogic() {
+    countryBorn.classList.remove("hidden");
+    countryBornOptions.forEach((input) => {
+      input.required = true;
+    });
+    // Country selected
     if (countryBornInput) {
-      if (countryBornInput === "None of the above") {
-        intCountryQuestion.classList.remove("hidden");
-        intCountryField.required = true;
+      // Show birth details section and require place
+      document.getElementById("birth-details").classList.remove("hidden");
+      document.getElementById("birth-place-input").required = true;
+      if (countryBornInput === "None of the above" || recentlyMoved === "Yes") {
+        // Show int country field if abroad
+        if (countryBornInput === "None of the above") {
+          intCountryQuestion.classList.remove("hidden");
+          intCountryField.required = true;
+        }
+        // Show enter UK date
         enterUK.classList.remove("hidden");
         enterUKOptions.forEach((input) => {
           input.required = true;
         });
+        // Show moved from EU question
         movedFromEU.classList.remove("hidden");
         movedFromEUOptions.forEach((input) => {
           input.required = true;
         });
+        // Show interpreter question
         interpreter.classList.remove("hidden");
         interpreterOptions.forEach((input) => {
           input.required = true;
         });
-        hasPreviousAddress.classList.add("hidden");
+        // Hide previous address question
+        hasPreviousAddressQuestion.classList.add("hidden");
         hasPreviousAddressOptions.forEach((input) => {
           input.required = false;
           input.checked = false;
         });
-      } else {
-        intCountryQuestion.classList.add("hidden");
-        intCountryField.required = false;
-        hasPreviousAddress.classList.remove("hidden");
-        hasPreviousAddressOptions.forEach((input) => {
-          input.required = true;
-        });
-        if (recentlyMoved === "Yes") {
-          enterUK.classList.remove("hidden");
-          enterUKOptions.forEach((input) => {
+        // Hide previous address lookup
+        previousAddress.classList.add("hidden");
+        previousAddressInput.value = "";
+        // If they have moved from EU, show documents question
+        if (hasMovedFromEU === "Yes") {
+          documentsSection.classList.remove("hidden");
+          documentsOptions.forEach((input) => {
             input.required = true;
           });
-          movedFromEU.classList.remove("hidden");
-          movedFromEUOptions.forEach((input) => {
-            input.required = true;
-          });
-          interpreter.classList.remove("hidden");
-          interpreterOptions.forEach((input) => {
-            input.required = true;
-          });
-          if (recentlyMoved === "No") {
-            enterUK.classList.add("hidden");
-            enterUKOptions.forEach((input) => {
-              input.required = false;
-              input.value = "";
+          // If they have EHIC, show the question, else hide it
+          if (documents === "European health insurance card (EHIC)") {
+            ehicDetails.classList.remove("hidden");
+            ehicDetailsInputs.forEach((input) => {
+              input.required = true;
             });
-            movedFromEU.classList.add("hidden");
-            movedFromEUOptions.forEach((input) => {
-              input.required = false;
-              input.checked = false;
-            });
-            interpreter.classList.add("hidden");
-            interpreterOptions.forEach((input) => {
-              input.required = false;
-              input.checked = false;
-            });
-            documentsSection.classList.add("hidden");
-            documentsOptions.forEach((input) => {
-              input.required = false;
-              input.checked = false;
-            });
+          } else {
             ehicDetails.classList.add("hidden");
             ehicDetailsInputs.forEach((input) => {
               input.required = false;
@@ -633,9 +560,84 @@ window.addEventListener("load", function () {
             });
           }
         }
+        // If they haven't moved from EU, hide documents and EHIC questions
+        if (hasMovedFromEU === "No") {
+          documentsSection.classList.add("hidden");
+          documentsOptions.forEach((input) => {
+            input.required = false;
+            input.checked = false;
+          });
+          ehicDetails.classList.add("hidden");
+          ehicDetailsInputs.forEach((input) => {
+            input.required = false;
+            input.value = "";
+          });
+        }
+        // If they need an interpreter, ask what language
+        if (needsInterpreter === "Yes") {
+          preferredLang.classList.remove("hidden");
+          preferredLangInput.required = true;
+        }
+        if (needsInterpreter === "No") {
+          preferredLang.classList.add("hidden");
+          preferredLangInput.required = false;
+          preferredLangInput.value = "";
+        }
+      } else {
+        // If in UK and not recently moved
+        // Hide int country field
+        intCountryQuestion.classList.add("hidden");
+        intCountryField.required = false;
+        // Hide enter UK date
+        enterUK.classList.add("hidden");
+        enterUKOptions.forEach((input) => {
+          input.required = false;
+          input.value = "";
+        });
+        // Hide moved from EU question
+        movedFromEU.classList.add("hidden");
+        movedFromEUOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+        // Hide interpreter question
+        interpreter.classList.add("hidden");
+        interpreterOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+        // Hide language question
+        preferredLang.classList.add("hidden");
+        preferredLangInput.required = false;
+        preferredLangInput.value = "";
+        // Hide documents question
+        documentsSection.classList.add("hidden");
+        documentsOptions.forEach((input) => {
+          input.required = false;
+          input.checked = false;
+        });
+        // Hide EHIC question
+        ehicDetails.classList.add("hidden");
+        ehicDetailsInputs.forEach((input) => {
+          input.required = false;
+          input.value = "";
+        });
+        // Show previous address question
+        hasPreviousAddressQuestion.classList.remove("hidden");
+        hasPreviousAddressOptions.forEach((input) => {
+          input.required = true;
+        });
+        // If they have a previous address, show lookup
+        if (hasPreviousAddress === "Yes") {
+          previousAddress.classList.remove("hidden");
+        }
+        if (hasPreviousAddress === "No") {
+          previousAddress.classList.add("hidden");
+          previousAddressInput.value = "";
+        }
       }
-      movedFromEULogic();
     }
+    resetHeight();
   }
 });
 
