@@ -294,7 +294,7 @@ window.addEventListener("load", function () {
   const addressChanged = document.getElementById("home-address-changed");
   const previousPostcode = document.getElementById("previous-postcode");
   const armedForces = document.getElementById("armed-forces");
-  const armedForcesOptions = armedForced.querySelectorAll(
+  const armedForcesOptions = armedForces.querySelectorAll(
     'input[type="radio"]'
   );
 
