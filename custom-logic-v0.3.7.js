@@ -159,7 +159,6 @@ window.addEventListener("load", function () {
         case "postal_code":
           document.getElementById("postcode").value = component.long_name;
           break;
-        // you can add more cases as needed
       }
     });
     if (
@@ -203,7 +202,9 @@ window.addEventListener("load", function () {
           document.getElementById("previous_postcode").value =
             component.long_name;
           break;
-        // you can add more cases as needed
+        case "administrative_area_level_1":
+          document.getElementById("previous_country").value = component.long_name;
+          break;
       }
     });
     if (
