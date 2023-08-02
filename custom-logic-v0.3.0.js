@@ -472,7 +472,6 @@ window.addEventListener("load", function () {
       const documentsOptions = documentsSection.querySelectorAll(
         'input[type="radio"]'
       );
-
       abroadLogic();
       resetHeight();
     });
@@ -545,53 +544,6 @@ window.addEventListener("load", function () {
 
   function abroadLogic() {
     if (countryBornInput) {
-      if (recentlyMoved === "Yes") {
-        enterUK.classList.remove("hidden");
-        enterUKOptions.forEach((input) => {
-          input.required = true;
-        });
-        movedFromEU.classList.remove("hidden");
-        movedFromEUOptions.forEach((input) => {
-          input.required = true;
-        });
-        interpreter.classList.remove("hidden");
-        interpreterOptions.forEach((input) => {
-          input.required = true;
-        });
-        if (hasMovedFromEU === "Yes") {
-          documentsSection.classList.remove("hidden");
-          documentsOptions.forEach((input) => {
-            input.required = true;
-          });
-        }
-      }
-      if (recentlyMoved === "No") {
-        enterUK.classList.add("hidden");
-        enterUKOptions.forEach((input) => {
-          input.required = false;
-          input.value = "";
-        });
-        movedFromEU.classList.add("hidden");
-        movedFromEUOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
-        });
-        interpreter.classList.add("hidden");
-        interpreterOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
-        });
-        documentsSection.classList.add("hidden");
-        documentsOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
-        });
-        ehicDetails.classList.add("hidden");
-        ehicDetailsInputs.forEach((input) => {
-          input.required = false;
-          input.value = "";
-        });
-      }
       if (countryBornInput === "None of the above") {
         intCountryQuestion.classList.remove("hidden");
         intCountryField.required = true;
@@ -625,8 +577,56 @@ window.addEventListener("load", function () {
         hasPreviousAddressOptions.forEach((input) => {
           input.required = true;
         });
+        if (recentlyMoved === "Yes") {
+          enterUK.classList.remove("hidden");
+          enterUKOptions.forEach((input) => {
+            input.required = true;
+          });
+          movedFromEU.classList.remove("hidden");
+          movedFromEUOptions.forEach((input) => {
+            input.required = true;
+          });
+          interpreter.classList.remove("hidden");
+          interpreterOptions.forEach((input) => {
+            input.required = true;
+          });
+          if (hasMovedFromEU === "Yes") {
+            documentsSection.classList.remove("hidden");
+            documentsOptions.forEach((input) => {
+              input.required = true;
+            });
+          }
+        }
+        if (recentlyMoved === "No") {
+          enterUK.classList.add("hidden");
+          enterUKOptions.forEach((input) => {
+            input.required = false;
+            input.value = "";
+          });
+          movedFromEU.classList.add("hidden");
+          movedFromEUOptions.forEach((input) => {
+            input.required = false;
+            input.checked = false;
+          });
+          interpreter.classList.add("hidden");
+          interpreterOptions.forEach((input) => {
+            input.required = false;
+            input.checked = false;
+          });
+          documentsSection.classList.add("hidden");
+          documentsOptions.forEach((input) => {
+            input.required = false;
+            input.checked = false;
+          });
+          ehicDetails.classList.add("hidden");
+          ehicDetailsInputs.forEach((input) => {
+            input.required = false;
+            input.value = "";
+          });
+        }
       }
     }
+    resetHeight();
   }
 });
 
