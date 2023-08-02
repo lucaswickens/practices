@@ -300,7 +300,7 @@ window.addEventListener("load", function () {
 
   // Registered with GP before
   document
-    .querySelectorAll('input[name="Registered with a GP before"]')
+    .querySelectorAll('input[name="Registered-with-a-GP-before"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         // Get the value of the selected option
@@ -324,7 +324,7 @@ window.addEventListener("load", function () {
 
   // Address has changed
   document
-    .querySelectorAll('input[name="Address has changed"]')
+    .querySelectorAll('input[name="Address-has-changed"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         const previousPostcodeInput = document.getElementById(
