@@ -347,13 +347,26 @@ window.addEventListener("load", function () {
   );
   const ehicDetails = document.getElementById("ehic-details");
   const ehicDetailsInputs = ehicDetails.querySelectorAll('input[type="text"]');
+  const enterUK = document.getElementById("enter-uk");
+  const movedFromEU = document.getElementById("moved-from-eu");
+  const enterUKOptions = enterUK.querySelectorAll('input[type="text"]');
+  const movedFromEUOptions = movedFromEU.querySelectorAll(
+    'input[type="radio"]'
+  );
+  const interpreter = document.getElementById("interpreter");
+  const interpreterOptions = interpreter.querySelectorAll(
+    'input[type="radio"]'
+  );
+  const hasPreviousAddress = document.getElementById("has-previous-address");
+  const hasPreviousAddressOptions = hasPreviousAddress.querySelectorAll(
+    'input[type="radio"]'
+  );
 
   // State
   let registeredBefore;
   let addressHasChanged;
   let countryBornInput;
   let recentlyMoved;
-  let movedFromEU;
 
   // Registered with GP before
   document
@@ -429,6 +442,37 @@ window.addEventListener("load", function () {
         countryBornOptions.forEach((input) => {
           input.required = true;
         });
+        if (recentlyMoved === "Yes") {
+          enterUK.classList.remove("hidden");
+          enterUKOptions.forEach((input) => {
+            input.required = true;
+          });
+          movedFromEU.classList.remove("hidden");
+          movedFromEUOptions.forEach((input) => {
+            input.required = true;
+          });
+          interpreter.classList.remove("hidden");
+          interpreterOptions.forEach((input) => {
+            input.required = true;
+          });
+        }
+        if (recentlyMoved === "No") {
+          enterUK.classList.add("hidden");
+          enterUKOptions.forEach((input) => {
+            input.required = false;
+            input.value = "";
+          });
+          movedFromEU.classList.add("hidden");
+          movedFromEUOptions.forEach((input) => {
+            input.required = false;
+            input.checked = false;
+          });
+          interpreter.classList.add("hidden");
+          interpreterOptions.forEach((input) => {
+            input.required = false;
+            input.checked = false;
+          });
+        }
         resetHeight();
       });
     });
@@ -439,23 +483,6 @@ window.addEventListener("load", function () {
     .forEach((elem) => {
       elem.addEventListener("change", function () {
         countryBornInput = this.value;
-
-        const enterUK = document.getElementById("enter-uk");
-        const movedFromEU = document.getElementById("moved-from-eu");
-        const enterUKOptions = enterUK.querySelectorAll('input[type="text"]');
-        const movedFromEUOptions = movedFromEU.querySelectorAll(
-          'input[type="radio"]'
-        );
-        const interpreter = document.getElementById("interpreter");
-        const interpreterOptions = interpreter.querySelectorAll(
-          'input[type="radio"]'
-        );
-        const hasPreviousAddress = document.getElementById(
-          "has-previous-address"
-        );
-        const hasPreviousAddressOptions = hasPreviousAddress.querySelectorAll(
-          'input[type="radio"]'
-        );
 
         document.getElementById("birth-details").classList.remove("hidden");
         document.getElementById("birth-place-input").required = true;
