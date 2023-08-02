@@ -417,7 +417,7 @@ window.addEventListener("load", function () {
         );
 
         document.getElementById("birth-details").classList.remove("hidden");
-        document.getElementById("birth-place").required = true;
+        document.getElementById("birth-place-input").required = true;
 
         if (countryBornInput === "None of the above") {
           intCountryQuestion.classList.remove("hidden");
@@ -440,7 +440,7 @@ window.addEventListener("load", function () {
             input.checked = false;
           });
         } else {
-          intCountryField.classList.add("hidden");
+          intCountryQuestion.classList.add("hidden");
           intCountryField.required = false;
           hasPreviousAddress.classList.remove("hidden");
           hasPreviousAddressOptions.forEach((input) => {
