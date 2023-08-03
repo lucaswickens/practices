@@ -172,6 +172,22 @@ window.addEventListener("load", function () {
     } else {
       document.getElementById("flat").focus();
     }
+    inICB = icb.some((str) => postcode.value.startsWith(str));
+    inCatchment = catchment.some((str) => postcode.value.startsWith(str));
+    if (inICB) {
+      eligible.innerHTML = "You are eligible to register";
+    } else {
+      eligible.innerHTML = "Please note";
+    }
+    if (inCatchment) {
+      outCatchmentMessage.style.display = "none";
+      consentBox.innerHTML =
+        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre.";
+    } else {
+      outCatchmentMessage.style.display = "block";
+      consentBox.innerHTML =
+        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre and I am not eligible for home visits.";
+    }
   });
 
   // Address lookup - previous address
@@ -203,7 +219,8 @@ window.addEventListener("load", function () {
             component.long_name;
           break;
         case "administrative_area_level_1":
-          document.getElementById("previous_country").value = component.long_name;
+          document.getElementById("previous_country").value =
+            component.long_name;
           break;
       }
     });
