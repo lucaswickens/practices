@@ -143,24 +143,31 @@ window.addEventListener("load", function () {
 
   autocomplete.addListener("place_changed", () => {
     const place = autocomplete.getPlace();
+    const streetNoField = document.getElementById("street_number");
+    const routeField = document.getElementById("route");
+    const cityField = document.getElementById("city");
+    const postcodeField = document.getElementById("postcode");
 
     place.address_components.forEach((component) => {
       const addressType = component.types[0];
       switch (addressType) {
         case "street_number":
-          document.getElementById("street_number").value = component.long_name;
+          streetNoField.value = component.long_name;
           break;
         case "route":
-          document.getElementById("route").value = component.long_name;
+          routeField.value = component.long_name;
           break;
         case "postal_town":
-          document.getElementById("city").value = component.long_name;
+          cityField.value = component.long_name;
           break;
         case "postal_code":
-          document.getElementById("postcode").value = component.long_name;
+          postcodeField.value = component.long_name;
           break;
       }
     });
+    routeField.required = true;
+    cityField.required = true;
+    postcodeField.required = true;
     if (
       document.getElementById("additionalFields").classList.contains("hidden")
     ) {
