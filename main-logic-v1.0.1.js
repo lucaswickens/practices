@@ -178,6 +178,7 @@ window.addEventListener("load", function () {
         document.getElementById("flat").focus();
       }, 401);
     } else {
+      resetHeight();
       document.getElementById("flat").focus();
     }
     inICB = icb.some((str) => postcode.value.startsWith(str));
