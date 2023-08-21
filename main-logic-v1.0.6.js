@@ -402,7 +402,6 @@ window.addEventListener("load", function () {
   const armedForcesRedirected = armedForces.querySelectorAll(
     '.w-radio-input'
   );
-  w-radio-input
   const ehicDetails = document.getElementById("ehic-details");
   const ehicDetailsInputs = ehicDetails.querySelectorAll('input[type="text"]');
   const enterUK = document.getElementById("enter-uk");
