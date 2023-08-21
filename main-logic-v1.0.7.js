@@ -385,6 +385,12 @@ window.addEventListener("load", function () {
 
   // Get elements
   const addressChanged = document.getElementById("address-changed");
+  const addressChangedOptions = addressChanged.querySelectorAll(
+    'input[type="radio"]'
+  );
+  const addressChangedRedirected = addressChanged.querySelectorAll(
+    '.w-radio-input'
+  );
   const previousPostcode = document.getElementById("previous-postcode");
   const armedForces = document.getElementById("armed-forces");
   const countryBorn = document.getElementById("country-born");
@@ -399,9 +405,7 @@ window.addEventListener("load", function () {
   const armedForcesOptions = armedForces.querySelectorAll(
     'input[type="radio"]'
   );
-  const armedForcesRedirected = armedForces.querySelectorAll(
-    '.w-radio-input'
-  );
+  const armedForcesRedirected = armedForces.querySelectorAll(".w-radio-input");
   const ehicDetails = document.getElementById("ehic-details");
   const ehicDetailsInputs = ehicDetails.querySelectorAll('input[type="text"]');
   const enterUK = document.getElementById("enter-uk");
@@ -424,6 +428,8 @@ window.addEventListener("load", function () {
   const hasPreviousAddressOptions = hasPreviousAddressQuestion.querySelectorAll(
     'input[type="radio"]'
   );
+  const hasPreviousAddressRedirected =
+    hasPreviousAddressQuestion.querySelectorAll(".w-radio-input");
   documentsSection = document.getElementById("documents");
   const documentsOptions = documentsSection.querySelectorAll(
     'input[type="radio"]'
@@ -466,10 +472,15 @@ window.addEventListener("load", function () {
   function regBeforeLogic() {
     if (registeredBefore === "Yes") {
       addressChanged.classList.remove("hidden");
-      armedForcesOptions.forEach((input) => {
+      addressChangedOptions.forEach((input) => {
         input.required = true;
       });
-      armedForces.classList.remove("hidden");
+      if (addressHasChanged === "Yes" || addressHasChanged === "No") {
+        armedForces.classList.remove("hidden");
+        armedForcesOptions.forEach((input) => {
+          input.required = true;
+        });
+      }
       if (addressHasChanged === "Yes") {
         previousPostcode.classList.remove("hidden");
         previousPostcodeInput.required = true;
@@ -488,6 +499,13 @@ window.addEventListener("load", function () {
         input.checked = false;
       });
       armedForcesRedirected.forEach((div) => {
+        div.classList.remove("w--redirected-checked");
+      });
+      addressChangedOptions.forEach((input) => {
+        input.required = false;
+        input.checked = false;
+      });
+      addressChangedRedirected.forEach((div) => {
         div.classList.remove("w--redirected-checked");
       });
       previousPostcode.classList.add("hidden");
