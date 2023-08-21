@@ -483,6 +483,8 @@ window.addEventListener("load", function () {
       armedForcesOptions.forEach((input) => {
         input.required = false;
         input.checked = false;
+        console.log("armed forces unchecked and unrequired");
+        console.log(input);
       });
       previousPostcode.classList.add("hidden");
       previousPostcodeInput.required = false;
