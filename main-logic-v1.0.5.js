@@ -399,6 +399,10 @@ window.addEventListener("load", function () {
   const armedForcesOptions = armedForces.querySelectorAll(
     'input[type="radio"]'
   );
+  const armedForcesRedirected = armedForces.querySelectorAll(
+    '.w-radio-input'
+  );
+  w-radio-input
   const ehicDetails = document.getElementById("ehic-details");
   const ehicDetailsInputs = ehicDetails.querySelectorAll('input[type="text"]');
   const enterUK = document.getElementById("enter-uk");
@@ -483,8 +487,9 @@ window.addEventListener("load", function () {
       armedForcesOptions.forEach((input) => {
         input.required = false;
         input.checked = false;
-        console.log("armed forces unchecked and unrequired");
-        console.log(input);
+      });
+      armedForcesRedirected.forEach((div) => {
+        div.classList.remove("w--redirected-checked");
       });
       previousPostcode.classList.add("hidden");
       previousPostcodeInput.required = false;
