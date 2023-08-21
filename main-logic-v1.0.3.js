@@ -466,14 +466,13 @@ window.addEventListener("load", function () {
       armedForcesOptions.forEach((input) => {
         input.required = true;
       });
+      armedForces.classList.remove("hidden");
       if (addressHasChanged === "Yes") {
         previousPostcode.classList.remove("hidden");
-        armedForces.classList.remove("hidden");
         previousPostcodeInput.required = true;
       }
       if (addressHasChanged === "No") {
         previousPostcode.classList.add("hidden");
-        armedForces.classList.remove("hidden");
         previousPostcodeInput.required = false;
         previousPostcodeInput.value = "";
       }
@@ -481,13 +480,13 @@ window.addEventListener("load", function () {
     if (registeredBefore === "No") {
       addressChanged.classList.add("hidden");
       armedForces.classList.add("hidden");
-      previousPostcode.classList.add("hidden");
-      previousPostcodeInput.required = false;
-      previousPostcodeInput.value = "";
       armedForcesOptions.forEach((input) => {
         input.required = false;
         input.checked = false;
       });
+      previousPostcode.classList.add("hidden");
+      previousPostcodeInput.required = false;
+      previousPostcodeInput.value = "";
     }
     resetHeight();
   }
