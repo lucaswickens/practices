@@ -616,6 +616,7 @@ window.addEventListener("load", function () {
         hasPreviousAddressRedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
         });
+        hasPreviousAddress = "";
         // Hide previous address lookup
         previousAddress.classList.add("hidden");
         previousAddressInput.value = "";
@@ -649,6 +650,7 @@ window.addEventListener("load", function () {
           documentsRedirected.forEach((div) => {
             div.classList.remove("w--redirected-checked");
           });
+          documents = "";
           ehicDetails.classList.add("hidden");
           ehicDetailsInputs.forEach((input) => {
             input.required = false;
@@ -688,6 +690,7 @@ window.addEventListener("load", function () {
         movedFromEURedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
         });
+        movedFromEU = "";
         // Hide interpreter question
         interpreter.classList.add("hidden");
         interpreterOptions.forEach((input) => {
@@ -697,6 +700,7 @@ window.addEventListener("load", function () {
         interpreterRedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
         });
+        needsInterpreter = "";
         // Hide language question
         preferredLang.classList.add("hidden");
         preferredLangInput.required = false;
@@ -710,6 +714,7 @@ window.addEventListener("load", function () {
         documentsRedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
         });
+        documents = "";
         // Hide EHIC question
         ehicDetails.classList.add("hidden");
         ehicDetailsInputs.forEach((input) => {
