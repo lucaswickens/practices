@@ -11,32 +11,20 @@ window.addEventListener("load", function () {
   const underSixteen = document.getElementById("underSixteen");
   const firstName = document.getElementById("first-name");
   const lastName = document.getElementById("last-name");
-  const email = document.getElementById("Email-address");
-  const dobDay = document.getElementById("dob-day");
-  const dobMonth = document.getElementById("dob-month");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
   const dobYear = document.getElementById("dob-year");
-
-  const applicantDivs = document.querySelectorAll(".replace-name");
 
   firstName.addEventListener("input", () => {
     localStorage.setItem("firstName", firstName.value);
-    if (applicantDivs.length > 0) {
-      applicantDivs.forEach((div) => {
-        div.textContent = getLocalStorageValue("firstName");
-      });
-    }
   });
   lastName.addEventListener("input", () => {
     localStorage.setItem("lastName", lastName.value);
   });
-  dobDay.addEventListener("input", () => {
-    localStorage.setItem("dobDay", dobDay.value);
-  });
-  dobMonth.addEventListener("input", () => {
-    localStorage.setItem("dobMonth", dobMonth.value);
+  phone.addEventListener("input", () => {
+    localStorage.setItem("phone", phone.value);
   });
   dobYear.addEventListener("input", () => {
-    localStorage.setItem("dobYear", dobYear.value);
     if (dobYear.value > 2006) {
       underSixteen.style.display = "flex";
       resetHeight();
@@ -355,6 +343,8 @@ window.addEventListener("load", function () {
       }
       if (slideNo === "3") {
         emailCapture();
+        phoneInputField.value = phoneInput.getNumber();
+        setLocalStorageValue("phone", phoneInputField.value);
       }
     });
   });
@@ -385,32 +375,41 @@ window.addEventListener("load", function () {
 
   // Get elements
   const addressChanged = document.getElementById("address-changed");
-  const previousPostcode = document.getElementById("previous-postcode");
-  const armedForces = document.getElementById("armed-forces");
-  const countryBorn = document.getElementById("country-born");
+  const addressChangedOptions = addressChanged.querySelectorAll(
+    'input[type="radio"]'
+  );
+  const addressChangedRedirected =
+    addressChanged.querySelectorAll(".w-radio-input");
   const intCountryQuestion = document.getElementById("int-country");
   const intCountryField = document.getElementById("int-country-field");
+  const countryBorn = document.getElementById("country-born");
   const countryBornOptions = countryBorn.querySelectorAll(
     'input[type="radio"]'
   );
+  const previousPostcode = document.getElementById("previous-postcode");
   const previousPostcodeInput = document.getElementById(
     "previous-postcode-input"
   );
+  const armedForces = document.getElementById("armed-forces");
   const armedForcesOptions = armedForces.querySelectorAll(
     'input[type="radio"]'
   );
+  const armedForcesRedirected = armedForces.querySelectorAll(".w-radio-input");
   const ehicDetails = document.getElementById("ehic-details");
   const ehicDetailsInputs = ehicDetails.querySelectorAll('input[type="text"]');
   const enterUK = document.getElementById("enter-uk");
-  const movedFromEU = document.getElementById("moved-from-eu");
   const enterUKOptions = enterUK.querySelectorAll('input[type="text"]');
+  const enterUKRedirected = enterUK.querySelectorAll(".w-radio-input");
+  const movedFromEU = document.getElementById("moved-from-eu");
   const movedFromEUOptions = movedFromEU.querySelectorAll(
     'input[type="radio"]'
   );
+  const movedFromEURedirected = movedFromEU.querySelectorAll(".w-radio-input");
   const interpreter = document.getElementById("interpreter");
   const interpreterOptions = interpreter.querySelectorAll(
     'input[type="radio"]'
   );
+  const interpreterRedirected = interpreter.querySelectorAll(".w-radio-input");
   const previousAddress = this.document.getElementById("previous-address");
   const previousAddressInput = document.getElementById(
     "previous-address-input"
@@ -421,10 +420,14 @@ window.addEventListener("load", function () {
   const hasPreviousAddressOptions = hasPreviousAddressQuestion.querySelectorAll(
     'input[type="radio"]'
   );
+  const hasPreviousAddressRedirected =
+    hasPreviousAddressQuestion.querySelectorAll(".w-radio-input");
   documentsSection = document.getElementById("documents");
   const documentsOptions = documentsSection.querySelectorAll(
     'input[type="radio"]'
   );
+  const documentsRedirected =
+    documentsSection.querySelectorAll(".w-radio-input");
   preferredLang = document.getElementById("preferred-lang");
   preferredLangInput = document.getElementById("preferred-lang-input");
 
@@ -445,37 +448,7 @@ window.addEventListener("load", function () {
       elem.addEventListener("change", function () {
         // Get the value of the selected option
         registeredBefore = this.value;
-
-        // Show the div with the matching data-ethnicity attribute
-        if (registeredBefore === "Yes") {
-          addressChanged.classList.remove("hidden");
-          armedForcesOptions.forEach((input) => {
-            input.required = true;
-          });
-          if (addressHasChanged === "Yes") {
-            previousPostcode.classList.remove("hidden");
-            armedForces.classList.remove("hidden");
-            previousPostcodeInput.required = true;
-          }
-          if (addressHasChanged === "No") {
-            previousPostcode.classList.add("hidden");
-            armedForces.classList.remove("hidden");
-            previousPostcodeInput.required = false;
-            previousPostcodeInput.value = "";
-          }
-        }
-        if (registeredBefore === "No") {
-          addressChanged.classList.add("hidden");
-          armedForces.classList.add("hidden");
-          previousPostcode.classList.add("hidden");
-          previousPostcodeInput.required = false;
-          previousPostcodeInput.value = "";
-          armedForcesOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
-          });
-        }
-        resetHeight();
+        regBeforeLogic();
       });
     });
 
@@ -484,23 +457,58 @@ window.addEventListener("load", function () {
     .querySelectorAll('input[name="Address-has-changed"]')
     .forEach((elem) => {
       elem.addEventListener("change", function () {
-        // Get the value of the selected option
         addressHasChanged = this.value;
-
-        // Show the div with the matching data-ethnicity attribute
-        if (addressHasChanged === "Yes") {
-          previousPostcode.classList.remove("hidden");
-          armedForces.classList.remove("hidden");
-          previousPostcodeInput.required = true;
-        }
-        if (addressHasChanged === "No") {
-          previousPostcode.classList.add("hidden");
-          armedForces.classList.remove("hidden");
-          previousPostcodeInput.required = false;
-        }
-        resetHeight();
+        regBeforeLogic();
       });
     });
+
+  // Registered before logic
+  function regBeforeLogic() {
+    if (registeredBefore === "Yes") {
+      addressChanged.classList.remove("hidden");
+      addressChangedOptions.forEach((input) => {
+        input.required = true;
+      });
+      if (addressHasChanged === "Yes" || addressHasChanged === "No") {
+        armedForces.classList.remove("hidden");
+        armedForcesOptions.forEach((input) => {
+          input.required = true;
+        });
+      }
+      if (addressHasChanged === "Yes") {
+        previousPostcode.classList.remove("hidden");
+        previousPostcodeInput.required = true;
+      }
+      if (addressHasChanged === "No") {
+        previousPostcode.classList.add("hidden");
+        previousPostcodeInput.required = false;
+        previousPostcodeInput.value = "";
+      }
+    }
+    if (registeredBefore === "No") {
+      addressChanged.classList.add("hidden");
+      addressChangedOptions.forEach((input) => {
+        input.required = false;
+        input.checked = false;
+      });
+      addressChangedRedirected.forEach((div) => {
+        div.classList.remove("w--redirected-checked");
+      });
+      addressHasChanged = "";
+      armedForces.classList.add("hidden");
+      armedForcesOptions.forEach((input) => {
+        input.required = false;
+        input.checked = false;
+      });
+      armedForcesRedirected.forEach((div) => {
+        div.classList.remove("w--redirected-checked");
+      });
+      previousPostcode.classList.add("hidden");
+      previousPostcodeInput.required = false;
+      previousPostcodeInput.value = "";
+    }
+    resetHeight();
+  }
 
   // Recently moved from abroad
   document
@@ -595,6 +603,10 @@ window.addEventListener("load", function () {
           input.required = false;
           input.checked = false;
         });
+        hasPreviousAddressRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
+        hasPreviousAddress = "";
         // Hide previous address lookup
         previousAddress.classList.add("hidden");
         previousAddressInput.value = "";
@@ -625,6 +637,10 @@ window.addEventListener("load", function () {
             input.required = false;
             input.checked = false;
           });
+          documentsRedirected.forEach((div) => {
+            div.classList.remove("w--redirected-checked");
+          });
+          documents = "";
           ehicDetails.classList.add("hidden");
           ehicDetailsInputs.forEach((input) => {
             input.required = false;
@@ -652,18 +668,29 @@ window.addEventListener("load", function () {
           input.required = false;
           input.value = "";
         });
+        enterUKRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
         // Hide moved from EU question
         movedFromEU.classList.add("hidden");
         movedFromEUOptions.forEach((input) => {
           input.required = false;
           input.checked = false;
         });
+        movedFromEURedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
+        hasMovedFromEU = "";
         // Hide interpreter question
         interpreter.classList.add("hidden");
         interpreterOptions.forEach((input) => {
           input.required = false;
           input.checked = false;
         });
+        interpreterRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
+        needsInterpreter = "";
         // Hide language question
         preferredLang.classList.add("hidden");
         preferredLangInput.required = false;
@@ -674,6 +701,10 @@ window.addEventListener("load", function () {
           input.required = false;
           input.checked = false;
         });
+        documentsRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
+        documents = "";
         // Hide EHIC question
         ehicDetails.classList.add("hidden");
         ehicDetailsInputs.forEach((input) => {
@@ -747,7 +778,6 @@ function scrollToTop() {
     top: 0,
     behavior: "smooth",
   });
-  phoneInputField.value = phoneInput.getNumber();
 }
 
 nextBtn.addEventListener("click", () => scrollToTop());
