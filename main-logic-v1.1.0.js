@@ -499,23 +499,18 @@ window.addEventListener("load", function () {
       addressChanged.classList.add("hidden");
       addressChangedOptions.forEach((input) => {
         input.required = false;
+        input.checked = false;
       });
       addressChangedRedirected.forEach((div) => {
         div.classList.remove("w--redirected-checked");
       });
+      addressHasChanged = "";
       armedForces.classList.add("hidden");
       armedForcesOptions.forEach((input) => {
         input.required = false;
         input.checked = false;
       });
       armedForcesRedirected.forEach((div) => {
-        div.classList.remove("w--redirected-checked");
-      });
-      addressChangedOptions.forEach((input) => {
-        input.required = false;
-        input.checked = false;
-      });
-      addressChangedRedirected.forEach((div) => {
         div.classList.remove("w--redirected-checked");
       });
       previousPostcode.classList.add("hidden");
