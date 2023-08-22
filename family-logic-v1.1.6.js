@@ -44,6 +44,7 @@ window.addEventListener("load", function () {
     registeredByPhoneInput.value = registeredByPhone;
   } else {
     registeredBySection.classList.remove("hidden");
+    resetHeight();
   }
 
   const postcode = document.getElementById("postcode");
