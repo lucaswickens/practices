@@ -396,7 +396,6 @@ window.addEventListener("load", function () {
   const countryBornOptions = countryBorn.querySelectorAll(
     'input[type="radio"]'
   );
-  const countryBornRedirected = countryBorn.querySelectorAll(".w-radio-input");
   const previousPostcode = document.getElementById("previous-postcode");
   const previousPostcodeInput = document.getElementById(
     "previous-postcode-input"
@@ -437,9 +436,8 @@ window.addEventListener("load", function () {
   const documentsOptions = documentsSection.querySelectorAll(
     'input[type="radio"]'
   );
-  const documentsRedirected = documentsSection.querySelectorAll(
-    ".w-radio-input"
-  );
+  const documentsRedirected =
+    documentsSection.querySelectorAll(".w-radio-input");
   preferredLang = document.getElementById("preferred-lang");
   preferredLangInput = document.getElementById("preferred-lang-input");
 
@@ -499,6 +497,12 @@ window.addEventListener("load", function () {
     }
     if (registeredBefore === "No") {
       addressChanged.classList.add("hidden");
+      addressChangedOptions.forEach((input) => {
+        input.required = false;
+      });
+      addressChangedRedirected.forEach((div) => {
+        div.classList.remove("w--redirected-checked");
+      });
       armedForces.classList.add("hidden");
       armedForcesOptions.forEach((input) => {
         input.required = false;
