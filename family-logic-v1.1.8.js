@@ -112,11 +112,11 @@ window.addEventListener("load", function () {
     if (inCatchment) {
       outCatchmentMessage.style.display = "none";
       consentBox.innerHTML =
-        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre.";
+        "I have permission to register on behalf of this person and understand that I am switching their NHS GP practice to Carrfield Medical Centre.";
     } else {
       outCatchmentMessage.style.display = "block";
       consentBox.innerHTML =
-        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre and I am not eligible for home visits.";
+        "I have permission to register on behalf of this person. I understand that I am switching their NHS GP practice to Carrfield Medical Centre and they are not eligible for home visits.";
     }
   });
 
