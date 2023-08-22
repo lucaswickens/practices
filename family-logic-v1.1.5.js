@@ -33,8 +33,8 @@ window.addEventListener("load", function () {
   });
 
   const registeredBySection = document.getElementById("registered-by");
-  const registeredByFirstName = getLocalStorageValue("first-name");
-  const registeredByLastName = getLocalStorageValue("last-name");
+  const registeredByFirstName = getLocalStorageValue("firstName");
+  const registeredByLastName = getLocalStorageValue("lastName");
   const registeredByPhone = getLocalStorageValue("phone");
   const registeredByNameInput = document.getElementById("Person-registering");
   const registeredByPhoneInput = document.getElementById("Person-registering-phone");
