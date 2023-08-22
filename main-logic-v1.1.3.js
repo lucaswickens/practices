@@ -11,32 +11,20 @@ window.addEventListener("load", function () {
   const underSixteen = document.getElementById("underSixteen");
   const firstName = document.getElementById("first-name");
   const lastName = document.getElementById("last-name");
-  const email = document.getElementById("Email-address");
-  const dobDay = document.getElementById("dob-day");
-  const dobMonth = document.getElementById("dob-month");
+  const email = document.getElementById("email");
+  const phone = document.getElementById("phone");
   const dobYear = document.getElementById("dob-year");
-
-  const applicantDivs = document.querySelectorAll(".replace-name");
 
   firstName.addEventListener("input", () => {
     localStorage.setItem("firstName", firstName.value);
-    if (applicantDivs.length > 0) {
-      applicantDivs.forEach((div) => {
-        div.textContent = getLocalStorageValue("firstName");
-      });
-    }
   });
   lastName.addEventListener("input", () => {
     localStorage.setItem("lastName", lastName.value);
   });
-  dobDay.addEventListener("input", () => {
-    localStorage.setItem("dobDay", dobDay.value);
-  });
-  dobMonth.addEventListener("input", () => {
-    localStorage.setItem("dobMonth", dobMonth.value);
+  phone.addEventListener("input", () => {
+    localStorage.setItem("phone", phone.value);
   });
   dobYear.addEventListener("input", () => {
-    localStorage.setItem("dobYear", dobYear.value);
     if (dobYear.value > 2006) {
       underSixteen.style.display = "flex";
       resetHeight();
