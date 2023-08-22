@@ -32,21 +32,6 @@ window.addEventListener("load", function () {
     }
   });
 
-  const registeredBySection = document.getElementById("registered-by");
-  const registeredByFirstName = getLocalStorageValue("firstName");
-  const registeredByLastName = getLocalStorageValue("lastName");
-  const registeredByPhone = getLocalStorageValue("phone");
-  const registeredByNameInput = document.getElementById("Person-registering");
-  const registeredByPhoneInput = document.getElementById("Person-registering-phone");
-
-  if (registeredByFirstName && registeredByLastName && registeredByPhone) {
-    registeredByNameInput.value = `${registeredByFirstName} ${registeredByLastName}`;
-    registeredByPhoneInput.value = registeredByPhone;
-  } else {
-    registeredBySection.classList.remove("hidden");
-    resetHeight();
-  }
-
   const postcode = document.getElementById("postcode");
   const outCatchmentMessage = document.getElementById("outCatchmentMessage");
   const eligible = document.getElementById("eligible");
@@ -708,6 +693,23 @@ window.addEventListener("load", function () {
         }
       }
     }
+    resetHeight();
+  }
+
+  const registeredBySection = document.getElementById("registered-by");
+  const registeredByFirstName = getLocalStorageValue("firstName");
+  const registeredByLastName = getLocalStorageValue("lastName");
+  const registeredByPhone = getLocalStorageValue("phone");
+  const registeredByNameInput = document.getElementById("Person-registering");
+  const registeredByPhoneInput = document.getElementById(
+    "Person-registering-phone"
+  );
+
+  if (registeredByFirstName && registeredByLastName && registeredByPhone) {
+    registeredByNameInput.value = `${registeredByFirstName} ${registeredByLastName}`;
+    registeredByPhoneInput.value = registeredByPhone;
+  } else {
+    registeredBySection.classList.remove("hidden");
     resetHeight();
   }
 });
