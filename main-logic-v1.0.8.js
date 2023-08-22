@@ -388,20 +388,20 @@ window.addEventListener("load", function () {
   const addressChangedOptions = addressChanged.querySelectorAll(
     'input[type="radio"]'
   );
-  const addressChangedRedirected = addressChanged.querySelectorAll(
-    '.w-radio-input'
-  );
-  const previousPostcode = document.getElementById("previous-postcode");
-  const armedForces = document.getElementById("armed-forces");
-  const countryBorn = document.getElementById("country-born");
+  const addressChangedRedirected =
+    addressChanged.querySelectorAll(".w-radio-input");
   const intCountryQuestion = document.getElementById("int-country");
   const intCountryField = document.getElementById("int-country-field");
+  const countryBorn = document.getElementById("country-born");
   const countryBornOptions = countryBorn.querySelectorAll(
     'input[type="radio"]'
   );
+  const countryBornRedirected = countryBorn.querySelectorAll(".w-radio-input");
+  const previousPostcode = document.getElementById("previous-postcode");
   const previousPostcodeInput = document.getElementById(
     "previous-postcode-input"
   );
+  const armedForces = document.getElementById("armed-forces");
   const armedForcesOptions = armedForces.querySelectorAll(
     'input[type="radio"]'
   );
@@ -409,15 +409,18 @@ window.addEventListener("load", function () {
   const ehicDetails = document.getElementById("ehic-details");
   const ehicDetailsInputs = ehicDetails.querySelectorAll('input[type="text"]');
   const enterUK = document.getElementById("enter-uk");
-  const movedFromEU = document.getElementById("moved-from-eu");
   const enterUKOptions = enterUK.querySelectorAll('input[type="text"]');
+  const enterUKRedirected = enterUK.querySelectorAll(".w-radio-input");
+  const movedFromEU = document.getElementById("moved-from-eu");
   const movedFromEUOptions = movedFromEU.querySelectorAll(
     'input[type="radio"]'
   );
+  const movedFromEURedirected = movedFromEU.querySelectorAll(".w-radio-input");
   const interpreter = document.getElementById("interpreter");
   const interpreterOptions = interpreter.querySelectorAll(
     'input[type="radio"]'
   );
+  const interpreterRedirected = interpreter.querySelectorAll(".w-radio-input");
   const previousAddress = this.document.getElementById("previous-address");
   const previousAddressInput = document.getElementById(
     "previous-address-input"
@@ -433,6 +436,9 @@ window.addEventListener("load", function () {
   documentsSection = document.getElementById("documents");
   const documentsOptions = documentsSection.querySelectorAll(
     'input[type="radio"]'
+  );
+  const documentsRedirected = documentsSection.querySelectorAll(
+    ".w-radio-input"
   );
   preferredLang = document.getElementById("preferred-lang");
   preferredLangInput = document.getElementById("preferred-lang-input");
@@ -608,6 +614,9 @@ window.addEventListener("load", function () {
           input.required = false;
           input.checked = false;
         });
+        hasPreviousAddressRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
         // Hide previous address lookup
         previousAddress.classList.add("hidden");
         previousAddressInput.value = "";
@@ -638,6 +647,9 @@ window.addEventListener("load", function () {
             input.required = false;
             input.checked = false;
           });
+          documentsRedirected.forEach((div) => {
+            div.classList.remove("w--redirected-checked");
+          });
           ehicDetails.classList.add("hidden");
           ehicDetailsInputs.forEach((input) => {
             input.required = false;
@@ -665,17 +677,26 @@ window.addEventListener("load", function () {
           input.required = false;
           input.value = "";
         });
+        enterUKRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
         // Hide moved from EU question
         movedFromEU.classList.add("hidden");
         movedFromEUOptions.forEach((input) => {
           input.required = false;
           input.checked = false;
         });
+        movedFromEURedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
+        });
         // Hide interpreter question
         interpreter.classList.add("hidden");
         interpreterOptions.forEach((input) => {
           input.required = false;
           input.checked = false;
+        });
+        interpreterRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
         });
         // Hide language question
         preferredLang.classList.add("hidden");
@@ -686,6 +707,9 @@ window.addEventListener("load", function () {
         documentsOptions.forEach((input) => {
           input.required = false;
           input.checked = false;
+        });
+        documentsRedirected.forEach((div) => {
+          div.classList.remove("w--redirected-checked");
         });
         // Hide EHIC question
         ehicDetails.classList.add("hidden");
