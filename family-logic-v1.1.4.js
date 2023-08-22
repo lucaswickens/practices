@@ -31,6 +31,21 @@ window.addEventListener("load", function () {
       resetHeight();
     }
   });
+
+  const registeredBySection = document.getElementById("registered-by");
+  const registeredByFirstName = getLocalStorageValue("first-name");
+  const registeredByLastName = getLocalStorageValue("last-name");
+  const registeredByPhone = getLocalStorageValue("phone");
+  const registeredByNameInput = document.getElementById("Person-registering");
+  const registeredByPhoneInput = document.getElementById("Person-registering-phone");
+
+  if (registeredByFirstName && registeredByLastName && registeredByPhone) {
+    registeredByNameInput.value = `${registeredByFirstName} ${registeredByLastName}`;
+    registeredByPhoneInput.value = registeredByPhone;
+  } else {
+    registeredBySection.classList.remove("hidden");
+  }
+
   const postcode = document.getElementById("postcode");
   const outCatchmentMessage = document.getElementById("outCatchmentMessage");
   const eligible = document.getElementById("eligible");
