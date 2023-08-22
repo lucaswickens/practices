@@ -690,7 +690,7 @@ window.addEventListener("load", function () {
         movedFromEURedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
         });
-        movedFromEU = "";
+        hasMovedFromEU = "";
         // Hide interpreter question
         interpreter.classList.add("hidden");
         interpreterOptions.forEach((input) => {
