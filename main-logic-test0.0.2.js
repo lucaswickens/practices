@@ -1,12 +1,6 @@
 window.addEventListener("load", function () {
-  document.getElementById("mask").classList.remove("cls");
 
-  window.addEventListener("keydown", function (event) {
-    if (event.keyCode == 13) {
-      document.getElementById("msf-next").click();
-      event.preventDefault();
-    }
-  });
+  const nextArrow = document.getElementById("nextButton");
 
   const underSixteen = document.getElementById("underSixteen");
   const firstName = document.getElementById("first-name");
@@ -27,10 +21,8 @@ window.addEventListener("load", function () {
   dobYear.addEventListener("input", () => {
     if (dobYear.value > 2006) {
       underSixteen.style.display = "flex";
-      resetHeight();
     } else {
       underSixteen.style.display = "none";
-      resetHeight();
     }
   });
   const postcode = document.getElementById("postcode");
@@ -121,184 +113,166 @@ window.addEventListener("load", function () {
     }
   });
 
-  // // Address lookup
-  // const options = {
-  //   componentRestrictions: { country: "uk" },
-  // };
+  // Address lookup
+  const options = {
+    componentRestrictions: { country: "uk" },
+  };
 
-  // const autocompleteInput = document.getElementById("autocomplete");
-  // const autocomplete = new google.maps.places.Autocomplete(
-  //   autocompleteInput,
-  //   options
-  // );
+  const autocompleteInput = document.getElementById("autocomplete");
+  const autocomplete = new google.maps.places.Autocomplete(
+    autocompleteInput,
+    options
+  );
 
-  // autocomplete.addListener("place_changed", () => {
-  //   const place = autocomplete.getPlace();
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
 
-  //   place.address_components.forEach((component) => {
-  //     const addressType = component.types[0];
-  //     switch (addressType) {
-  //       case "street_number":
-  //         streetNoField.value = component.long_name;
-  //         break;
-  //       case "route":
-  //         routeField.value = component.long_name;
-  //         break;
-  //       case "postal_town":
-  //         cityField.value = component.long_name;
-  //         break;
-  //       case "postal_code":
-  //         postcodeField.value = component.long_name;
-  //         break;
-  //     }
-  //   });
-  //   routeField.required = true;
-  //   cityField.required = true;
-  //   postcodeField.required = true;
-  //   hasAddressField.value = "Yes";
-  //   noAddressContainer.classList.add("hidden");
-  //   if (
-  //     document.getElementById("additionalFields").classList.contains("hidden")
-  //   ) {
-  //     document.getElementById("additionalFields").classList.remove("hidden");
-  //     resetHeight();
-  //     setTimeout(() => {
-  //       document.getElementById("flat").focus();
-  //     }, 401);
-  //   } else {
-  //     resetHeight();
-  //     document.getElementById("flat").focus();
-  //   }
-  //   inICB = icb.some((str) => postcode.value.startsWith(str));
-  //   inCatchment = catchment.some((str) => postcode.value.startsWith(str));
-  //   if (inICB) {
-  //     eligible.innerHTML = "You are eligible to register";
-  //   } else {
-  //     eligible.innerHTML = "Please note";
-  //   }
-  //   if (inCatchment) {
-  //     outCatchmentMessage.style.display = "none";
-  //     consentBox.innerHTML =
-  //       "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre.";
-  //   } else {
-  //     outCatchmentMessage.style.display = "block";
-  //     consentBox.innerHTML =
-  //       "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre and I am not eligible for home visits.";
-  //   }
-  // });
+    place.address_components.forEach((component) => {
+      const addressType = component.types[0];
+      switch (addressType) {
+        case "street_number":
+          streetNoField.value = component.long_name;
+          break;
+        case "route":
+          routeField.value = component.long_name;
+          break;
+        case "postal_town":
+          cityField.value = component.long_name;
+          break;
+        case "postal_code":
+          postcodeField.value = component.long_name;
+          break;
+      }
+    });
+    routeField.required = true;
+    cityField.required = true;
+    postcodeField.required = true;
+    hasAddressField.value = "Yes";
+    noAddressContainer.classList.add("hidden");
+    if (
+      document.getElementById("additionalFields").classList.contains("hidden")
+    ) {
+      document.getElementById("additionalFields").classList.remove("hidden");
+      setTimeout(() => {
+        document.getElementById("flat").focus();
+      }, 401);
+    } else {
+      document.getElementById("flat").focus();
+    }
+    inICB = icb.some((str) => postcode.value.startsWith(str));
+    inCatchment = catchment.some((str) => postcode.value.startsWith(str));
+    if (inICB) {
+      eligible.innerHTML = "You are eligible to register";
+    } else {
+      eligible.innerHTML = "Please note";
+    }
+    if (inCatchment) {
+      outCatchmentMessage.style.display = "none";
+      consentBox.innerHTML =
+        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre.";
+    } else {
+      outCatchmentMessage.style.display = "block";
+      consentBox.innerHTML =
+        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre and I am not eligible for home visits.";
+    }
+  });
 
-  // // Address lookup - previous address
-  // const previousAutocompleteInput = document.getElementById(
-  //   "previous-address-input"
-  // );
-  // const previousAutocomplete = new google.maps.places.Autocomplete(
-  //   previousAutocompleteInput,
-  //   options
-  // );
+  // Address lookup - previous address
+  const previousAutocompleteInput = document.getElementById(
+    "previous-address-input"
+  );
+  const previousAutocomplete = new google.maps.places.Autocomplete(
+    previousAutocompleteInput,
+    options
+  );
 
-  // previousAutocomplete.addListener("place_changed", () => {
-  //   const previousPlace = previousAutocomplete.getPlace();
-  //   console.log(previousPlace);
+  previousAutocomplete.addListener("place_changed", () => {
+    const previousPlace = previousAutocomplete.getPlace();
+    console.log(previousPlace);
 
-  //   previousPlace.address_components.forEach((component) => {
-  //     const addressType = component.types[0];
-  //     switch (addressType) {
-  //       case "street_number":
-  //         document.getElementById("previous_street_number").value =
-  //           component.long_name;
-  //         break;
-  //       case "route":
-  //         document.getElementById("previous_route").value = component.long_name;
-  //         break;
-  //       case "postal_town":
-  //         document.getElementById("previous_city").value = component.long_name;
-  //         break;
-  //       case "postal_code":
-  //         document.getElementById("previous_postcode").value =
-  //           component.long_name;
-  //         break;
-  //       case "administrative_area_level_1":
-  //         document.getElementById("previous_country").value =
-  //           component.long_name;
-  //         break;
-  //     }
-  //   });
-  //   if (
-  //     document
-  //       .getElementById("previousAdditionalFields")
-  //       .classList.contains("hidden")
-  //   ) {
-  //     document
-  //       .getElementById("previousAdditionalFields")
-  //       .classList.remove("hidden");
-  //     resetHeight();
-  //     setTimeout(() => {
-  //       document.getElementById("previous_additional").focus();
-  //     }, 401);
-  //   } else {
-  //     document.getElementById("previous_additional").focus();
-  //   }
-  // });
+    previousPlace.address_components.forEach((component) => {
+      const addressType = component.types[0];
+      switch (addressType) {
+        case "street_number":
+          document.getElementById("previous_street_number").value =
+            component.long_name;
+          break;
+        case "route":
+          document.getElementById("previous_route").value = component.long_name;
+          break;
+        case "postal_town":
+          document.getElementById("previous_city").value = component.long_name;
+          break;
+        case "postal_code":
+          document.getElementById("previous_postcode").value =
+            component.long_name;
+          break;
+        case "administrative_area_level_1":
+          document.getElementById("previous_country").value =
+            component.long_name;
+          break;
+      }
+    });
+    if (
+      document
+        .getElementById("previousAdditionalFields")
+        .classList.contains("hidden")
+    ) {
+      document
+        .getElementById("previousAdditionalFields")
+        .classList.remove("hidden");
+      setTimeout(() => {
+        document.getElementById("previous_additional").focus();
+      }, 401);
+    } else {
+      document.getElementById("previous_additional").focus();
+    }
+  });
 
-  // // No address link
-  // const noAddressLink = document.getElementById("no-address-link");
-  // const hasAddressField = document.getElementById("has-address");
-  // const noAddressContainer = document.getElementById("no-address-cont");
-  // const streetNoField = document.getElementById("street_number");
-  // const routeField = document.getElementById("route");
-  // const cityField = document.getElementById("city");
-  // const postcodeField = document.getElementById("postcode");
-  // noAddressLink.addEventListener("click", () => {
-  //   hasAddressField.value = "False";
-  //   autocompleteInput.required = false;
-  //   streetNoField.required = false;
-  //   routeField.required = false;
-  //   cityField.required = false;
-  //   postcodeField.required = false;
-  //   nextBtn.click();
-  // });
+  // No address link
+  const noAddressLink = document.getElementById("no-address-link");
+  const hasAddressField = document.getElementById("has-address");
+  const noAddressContainer = document.getElementById("no-address-cont");
+  const streetNoField = document.getElementById("street_number");
+  const routeField = document.getElementById("route");
+  const cityField = document.getElementById("city");
+  const postcodeField = document.getElementById("postcode");
+  noAddressLink.addEventListener("click", () => {
+    hasAddressField.value = "False";
+    autocompleteInput.required = false;
+    streetNoField.required = false;
+    routeField.required = false;
+    cityField.required = false;
+    postcodeField.required = false;
+    nextArrow.click();
+  });
 
-  const totalSlides = document.querySelectorAll(".w-slider-dot").length;
-  document
-    .getElementById("reset-height")
-    .addEventListener("click", resetHeight);
+  //const totalSlides = document.querySelectorAll(".w-slider-dot").length;
 
   const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
 
-  const sliderMask = document.querySelector("#mask");
+//   function animateHeight(element, to, duration, timingFunction) {
+//     const start = performance.now();
+//     const from = element.offsetHeight;
+//     const unit = "px";
 
-  function animateHeight(element, to, duration, timingFunction) {
-    const start = performance.now();
-    const from = element.offsetHeight;
-    const unit = "px";
+//     requestAnimationFrame(function step(timestamp) {
+//       const timeElapsed = timestamp - start;
+//       const progress = timeElapsed / duration;
 
-    requestAnimationFrame(function step(timestamp) {
-      const timeElapsed = timestamp - start;
-      const progress = timeElapsed / duration;
+//       if (timeElapsed < duration) {
+//         const timingProgress = timingFunction(progress);
+//         element.style.height = from + (to - from) * timingProgress + unit;
+//         requestAnimationFrame(step);
+//       } else {
+//         element.style.height = to + unit;
+//       }
+//     });
+//   }
 
-      if (timeElapsed < duration) {
-        const timingProgress = timingFunction(progress);
-        element.style.height = from + (to - from) * timingProgress + unit;
-        requestAnimationFrame(step);
-      } else {
-        element.style.height = to + unit;
-      }
-    });
-  }
-
-  function easeOut(t) {
-    return t * (2 - t);
-  }
-
-  function resetHeight() {
-    const slideNo = document.getElementById("currentStep").textContent;
-    const target = slideNo + " of " + totalSlides;
-    const slide = document.querySelector(
-      '[aria-label="' + target + '"] .slide'
-    );
-    const slideHeight = slide.offsetHeight;
-    animateHeight(sliderMask, slideHeight, 400, easeOut);
-  }
+//   function easeOut(t) {
+//     return t * (2 - t);
+//   }
 
   // Create function that can only be called once
   function createSingletonFunction(fn) {
@@ -327,27 +301,27 @@ window.addEventListener("load", function () {
     }
   });
 
-  Array.from(document.querySelectorAll(".change-slide")).forEach(function (
-    changeSlideElement
-  ) {
-    changeSlideElement.addEventListener("click", function () {
-      const slideNo = document.getElementById("currentStep").textContent;
-      const progressWidth = "-" + (100 - widths[slideNo - 1]) + "%";
-      document.getElementById("progress-indicator").style.transform =
-        "translateX(" + progressWidth + ")";
-      const input = document.querySelector('input[av-focus="' + slideNo + '"]');
-      if (input) {
-        setTimeout(() => {
-          input.focus();
-        }, 401);
-      }
-      if (slideNo === "3") {
-        emailCapture();
-        phoneInputField.value = phoneInput.getNumber();
-        setLocalStorageValue("phone", phoneInputField.value);
-      }
-    });
-  });
+//   Array.from(document.querySelectorAll(".change-slide")).forEach(function (
+//     changeSlideElement
+//   ) {
+//     changeSlideElement.addEventListener("click", function () {
+//       const slideNo = document.getElementById("currentStep").textContent;
+//       const progressWidth = "-" + (100 - widths[slideNo - 1]) + "%";
+//       document.getElementById("progress-indicator").style.transform =
+//         "translateX(" + progressWidth + ")";
+//       const input = document.querySelector('input[av-focus="' + slideNo + '"]');
+//       if (input) {
+//         setTimeout(() => {
+//           input.focus();
+//         }, 401);
+//       }
+//       if (slideNo === "3") {
+//         emailCapture();
+//         phoneInputField.value = phoneInput.getNumber();
+//         setLocalStorageValue("phone", phoneInputField.value);
+//       }
+//     });
+//   });
 
   // Ethnicity options
   document.querySelectorAll('input[name="Ethnicity"]').forEach((elem) => {
@@ -369,7 +343,6 @@ window.addEventListener("load", function () {
           selectedDiv.classList.remove("hidden");
         }
       }
-      resetHeight();
     });
   });
 
@@ -507,7 +480,6 @@ window.addEventListener("load", function () {
       previousPostcodeInput.required = false;
       previousPostcodeInput.value = "";
     }
-    resetHeight();
   }
 
   // Recently moved from abroad
@@ -726,7 +698,6 @@ window.addEventListener("load", function () {
         }
       }
     }
-    resetHeight();
   }
 });
 
@@ -770,15 +741,15 @@ const phoneInput = window.intlTelInput(phoneInputField, {
     "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
 });
 
-const nextArrow = document.getElementById("nextButton");
-const nextBtn = document.getElementById("msf-next");
+const nextBtnElements = document.querySelectorAll('[data-form="next-btn"]');
 
-function scrollToTop() {
+function scrollUp() {
   window.scrollTo({
     top: 0,
     behavior: "smooth",
   });
 }
 
-nextBtn.addEventListener("click", () => scrollToTop());
-nextArrow.addEventListener("click", () => nextBtn.click());
+nextBtnElements.forEach((btn) => {
+  btn.addEventListener("click", () => scrollUp());
+});
