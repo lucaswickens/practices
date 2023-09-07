@@ -312,7 +312,7 @@ window.addEventListener("load", function () {
         if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
           const currentStep = stepDiv.textContent;
           console.log(`Current step changed to: ${currentStep}`);
-          const progressWidth = "-" + (100 - widths[currentStep]) + "%";
+          const progressWidth = "-" + (100 - widths[currentStep - 1]) + "%";
           document.getElementById("progress-indicator").style.transform =
             "translateX(" + progressWidth + ")";
           const input = document.querySelector(
@@ -323,7 +323,7 @@ window.addEventListener("load", function () {
               input.focus();
             }, 401);
           }
-          if (currentStep === "4") {
+          if (currentStep === "3") {
             emailCapture();
             phoneInputField.value = phoneInput.getNumber();
             setLocalStorageValue("phone", phoneInputField.value);
