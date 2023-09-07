@@ -1,5 +1,4 @@
 window.addEventListener("load", function () {
-
   const nextArrow = document.getElementById("nextButton");
 
   const underSixteen = document.getElementById("underSixteen");
@@ -251,28 +250,28 @@ window.addEventListener("load", function () {
 
   const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
 
-//   function animateHeight(element, to, duration, timingFunction) {
-//     const start = performance.now();
-//     const from = element.offsetHeight;
-//     const unit = "px";
+  //   function animateHeight(element, to, duration, timingFunction) {
+  //     const start = performance.now();
+  //     const from = element.offsetHeight;
+  //     const unit = "px";
 
-//     requestAnimationFrame(function step(timestamp) {
-//       const timeElapsed = timestamp - start;
-//       const progress = timeElapsed / duration;
+  //     requestAnimationFrame(function step(timestamp) {
+  //       const timeElapsed = timestamp - start;
+  //       const progress = timeElapsed / duration;
 
-//       if (timeElapsed < duration) {
-//         const timingProgress = timingFunction(progress);
-//         element.style.height = from + (to - from) * timingProgress + unit;
-//         requestAnimationFrame(step);
-//       } else {
-//         element.style.height = to + unit;
-//       }
-//     });
-//   }
+  //       if (timeElapsed < duration) {
+  //         const timingProgress = timingFunction(progress);
+  //         element.style.height = from + (to - from) * timingProgress + unit;
+  //         requestAnimationFrame(step);
+  //       } else {
+  //         element.style.height = to + unit;
+  //       }
+  //     });
+  //   }
 
-//   function easeOut(t) {
-//     return t * (2 - t);
-//   }
+  //   function easeOut(t) {
+  //     return t * (2 - t);
+  //   }
 
   // Create function that can only be called once
   function createSingletonFunction(fn) {
@@ -301,27 +300,43 @@ window.addEventListener("load", function () {
     }
   });
 
-//   Array.from(document.querySelectorAll(".change-slide")).forEach(function (
-//     changeSlideElement
-//   ) {
-//     changeSlideElement.addEventListener("click", function () {
-//       const slideNo = document.getElementById("currentStep").textContent;
-//       const progressWidth = "-" + (100 - widths[slideNo - 1]) + "%";
-//       document.getElementById("progress-indicator").style.transform =
-//         "translateX(" + progressWidth + ")";
-//       const input = document.querySelector('input[av-focus="' + slideNo + '"]');
-//       if (input) {
-//         setTimeout(() => {
-//           input.focus();
-//         }, 401);
-//       }
-//       if (slideNo === "3") {
-//         emailCapture();
-//         phoneInputField.value = phoneInput.getNumber();
-//         setLocalStorageValue("phone", phoneInputField.value);
-//       }
-//     });
-//   });
+  // Select the div with the attribute data-text="current-step"
+  const stepDiv = document.querySelector('[data-text="current-step"]');
+
+  // Check if the div exists
+  if (stepDiv) {
+    // Create a MutationObserver instance
+    const observer = new MutationObserver((mutationsList) => {
+      for (let mutation of mutationsList) {
+        // If the addedNodes property has one or more nodes
+        if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+          const currentStep = stepDiv.textContent;
+          console.log(`Current step changed to: ${currentStep}`);
+          const progressWidth = "-" + (100 - widths[slideNo - 1]) + "%";
+          document.getElementById("progress-indicator").style.transform =
+            "translateX(" + progressWidth + ")";
+          const input = document.querySelector(
+            'input[av-focus="' + slideNo + '"]'
+          );
+          if (input) {
+            setTimeout(() => {
+              input.focus();
+            }, 401);
+          }
+          if (slideNo === "3") {
+            emailCapture();
+            phoneInputField.value = phoneInput.getNumber();
+            setLocalStorageValue("phone", phoneInputField.value);
+          }
+        }
+      }
+    });
+
+    // Start observing the div with the configured parameters
+    observer.observe(stepDiv, { childList: true, subtree: true });
+  } else {
+    console.error('Could not find the div with data-text="current-step"');
+  }
 
   // Ethnicity options
   document.querySelectorAll('input[name="Ethnicity"]').forEach((elem) => {
