@@ -254,28 +254,28 @@ window.addEventListener("load", function () {
 
   const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
 
-  function animateHeight(element, to, duration, timingFunction) {
-    const start = performance.now();
-    const from = element.offsetHeight;
-    const unit = "px";
+//   function animateHeight(element, to, duration, timingFunction) {
+//     const start = performance.now();
+//     const from = element.offsetHeight;
+//     const unit = "px";
 
-    requestAnimationFrame(function step(timestamp) {
-      const timeElapsed = timestamp - start;
-      const progress = timeElapsed / duration;
+//     requestAnimationFrame(function step(timestamp) {
+//       const timeElapsed = timestamp - start;
+//       const progress = timeElapsed / duration;
 
-      if (timeElapsed < duration) {
-        const timingProgress = timingFunction(progress);
-        element.style.height = from + (to - from) * timingProgress + unit;
-        requestAnimationFrame(step);
-      } else {
-        element.style.height = to + unit;
-      }
-    });
-  }
+//       if (timeElapsed < duration) {
+//         const timingProgress = timingFunction(progress);
+//         element.style.height = from + (to - from) * timingProgress + unit;
+//         requestAnimationFrame(step);
+//       } else {
+//         element.style.height = to + unit;
+//       }
+//     });
+//   }
 
-  function easeOut(t) {
-    return t * (2 - t);
-  }
+//   function easeOut(t) {
+//     return t * (2 - t);
+//   }
 
   // Define the animateHeight function as before
   function animateHeight(element) {
