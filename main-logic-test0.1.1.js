@@ -131,19 +131,19 @@ window.addEventListener("load", function () {
       switch (addressType) {
         case "street_number":
           streetNoField.value = component.long_name;
-          streetNoField.dispatchEvent(new Event("input", { bubbles: true }));
+          streetNoField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
         case "route":
           routeField.value = component.long_name;
-          routeField.dispatchEvent(new Event("input", { bubbles: true }));
+          routeField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
         case "postal_town":
           cityField.value = component.long_name;
-          cityField.dispatchEvent(new Event("input", { bubbles: true }));
+          cityField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
         case "postal_code":
           postcodeField.value = component.long_name;
-          postcodeField.dispatchEvent(new Event("input", { bubbles: true }));
+          postcodeField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
       }
     });
@@ -475,6 +475,7 @@ window.addEventListener("load", function () {
         previousPostcode.classList.add("hidden");
         previousPostcodeInput.required = false;
         previousPostcodeInput.value = "";
+        previousPostcodeInput.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
       }
     }
     if (registeredBefore === "No") {
@@ -482,6 +483,7 @@ window.addEventListener("load", function () {
       addressChangedOptions.forEach((input) => {
         input.required = false;
         input.checked = false;
+        input.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
       });
       addressChangedRedirected.forEach((div) => {
         div.classList.remove("w--redirected-checked");
@@ -491,6 +493,7 @@ window.addEventListener("load", function () {
       armedForcesOptions.forEach((input) => {
         input.required = false;
         input.checked = false;
+        input.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
       });
       armedForcesRedirected.forEach((div) => {
         div.classList.remove("w--redirected-checked");
@@ -498,6 +501,7 @@ window.addEventListener("load", function () {
       previousPostcode.classList.add("hidden");
       previousPostcodeInput.required = false;
       previousPostcodeInput.value = "";
+      previousPostcodeInput.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
     }
   }
 
