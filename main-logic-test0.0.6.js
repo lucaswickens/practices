@@ -131,15 +131,19 @@ window.addEventListener("load", function () {
       switch (addressType) {
         case "street_number":
           streetNoField.value = component.long_name;
+          streetNoField.dispatchEvent(new Event('input', { 'bubbles': true }));
           break;
         case "route":
           routeField.value = component.long_name;
+          routeField..dispatchEvent(new Event('input', { 'bubbles': true }));
           break;
         case "postal_town":
           cityField.value = component.long_name;
+          cityField..dispatchEvent(new Event('input', { 'bubbles': true }));
           break;
         case "postal_code":
           postcodeField.value = component.long_name;
+          postcodeField..dispatchEvent(new Event('input', { 'bubbles': true }));
           break;
       }
     });
