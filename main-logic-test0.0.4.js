@@ -312,18 +312,18 @@ window.addEventListener("load", function () {
         if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
           const currentStep = stepDiv.textContent;
           console.log(`Current step changed to: ${currentStep}`);
-          const progressWidth = "-" + (100 - widths[slideNo - 1]) + "%";
+          const progressWidth = "-" + (100 - widths[currentStep]) + "%";
           document.getElementById("progress-indicator").style.transform =
             "translateX(" + progressWidth + ")";
           const input = document.querySelector(
-            'input[av-focus="' + slideNo + '"]'
+            'input[av-focus="' + currentStep + '"]'
           );
           if (input) {
             setTimeout(() => {
               input.focus();
             }, 401);
           }
-          if (slideNo === "3") {
+          if (currentStep === "4") {
             emailCapture();
             phoneInputField.value = phoneInput.getNumber();
             setLocalStorageValue("phone", phoneInputField.value);
