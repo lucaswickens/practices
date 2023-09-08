@@ -171,8 +171,6 @@ window.addEventListener("load", function () {
 
   previousAutocomplete.addListener("place_changed", () => {
     const previousPlace = previousAutocomplete.getPlace();
-    console.log(previousPlace);
-
     previousPlace.address_components.forEach((component) => {
       const addressType = component.types[0];
       switch (addressType) {
@@ -294,7 +292,6 @@ window.addEventListener("load", function () {
         // If the addedNodes property has one or more nodes
         if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
           const currentStep = stepDiv.textContent;
-          console.log(`Current step changed to: ${currentStep}`);
           const progressWidth = "-" + (100 - widths[currentStep - 1]) + "%";
           document.getElementById("progress-indicator").style.transform =
             "translateX(" + progressWidth + ")";
@@ -304,7 +301,7 @@ window.addEventListener("load", function () {
           if (input) {
             setTimeout(() => {
               input.focus();
-            }, 401);
+            }, 50);
           }
           if (currentStep === "3") {
             emailCapture();
@@ -424,9 +421,7 @@ window.addEventListener("load", function () {
 
   function requireInput(input, required) {
     const type = getInputType(input);
-    console.log(`Type is ${type} for ${input.name}`);
     if (required === false) {
-      console.log(`Unrequiring input ${input.name} with type ${type}`);
       if (type === "text") {
         input.value = "";
       }
@@ -436,7 +431,6 @@ window.addEventListener("load", function () {
       input.required = false;
     }
     if (required === true) {
-      console.log(`Requiring input ${input.name} with type ${type}`);
       input.required = true;
     }
     validation();
