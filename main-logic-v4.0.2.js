@@ -247,15 +247,17 @@ window.addEventListener("load", function () {
 
   // Display a custom error message if there's a pattern mismatch
   function customValidCheck(input, errorDiv) {
-    input.addEventListener("blur", () => {
-      if (!inputField.validity.valid) {
-        if (inputField.validity.patternMismatch) {
-          errorDiv.classList.remove("hidden");
+    if (input && errorDiv) {
+      input.addEventListener("blur", () => {
+        if (!input.validity.valid) {
+          if (input.validity.patternMismatch) {
+            errorDiv.classList.remove("hidden");
+          }
+        } else {
+          errorDiv.classList.add("hidden");
         }
-      } else {
-        errorDiv.classList.add("hidden");
-      }
-    });
+      });
+    }
   }
   customValidCheck(firstName, firstNameError);
   customValidCheck(lastName, lastNameError);
