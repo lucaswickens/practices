@@ -439,9 +439,6 @@ window.addEventListener("load", function () {
     }
     if (required === true) {
       input.required = true;
-      input.dispatchEvent(
-        new Event("input", { bubbles: true, cancelable: true })
-      );
     }
   }
 
