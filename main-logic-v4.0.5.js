@@ -246,24 +246,17 @@ window.addEventListener("load", function () {
   });
 
   // Display a custom error message if there's a pattern mismatch
-  function customValidCheck(input, errorDiv) {
-    console.log("Adding event listener to input...");
+  function customValidCheck(input) {
     input.addEventListener("blur", () => {
-      console.log(`Blur event for ${input.name} - checking validity...`);
-      if (!input.validity.valid) {
-        console.log(`${input.name} is not valid, checking pattern...`);
-        if (input.validity.patternMismatch) {
-          console.log(`${input.name} has a pattern mismatch - display error`);
-          errorDiv.classList.remove("hidden");
-        }
-      } else {
-        errorDiv.classList.add("hidden");
+      if (!input.validity.valid && input.validity.patternMismatch) {
+        input.value = "";
+        validation();
       }
     });
   }
-  customValidCheck(firstName, firstNameError);
-  customValidCheck(lastName, lastNameError);
-  customValidCheck(previousLastName, previousLastNameError);
+  customValidCheck(firstName);
+  customValidCheck(lastName);
+  customValidCheck(previousLastName);
 
   const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
 
