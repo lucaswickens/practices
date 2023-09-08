@@ -13,6 +13,8 @@ window.addEventListener("load", function () {
   const email = document.getElementById("email");
   const phone = document.getElementById("phone");
   const dobYear = document.getElementById("dob-year");
+  console.log(window.location.pathname);
+  console.log(window.location.pathname === "/forms/new-patients");
   if (window.location.pathname === "/forms/new-patients") {
     firstName.addEventListener("input", () => {
       localStorage.setItem("firstName", firstName.value);
