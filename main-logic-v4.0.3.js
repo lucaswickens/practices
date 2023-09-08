@@ -248,9 +248,13 @@ window.addEventListener("load", function () {
   // Display a custom error message if there's a pattern mismatch
   function customValidCheck(input, errorDiv) {
     if (input && errorDiv) {
+      console.log("input and error div found");
       input.addEventListener("blur", () => {
+        console.log(`Blur event for ${input.name} - checking validity...`);
         if (!input.validity.valid) {
+          console.log(`${input.name} is not valid, checking pattern...`);
           if (input.validity.patternMismatch) {
+            console.log(`${input.name} has a pattern mismatch - display error`);
             errorDiv.classList.remove("hidden");
           }
         } else {
