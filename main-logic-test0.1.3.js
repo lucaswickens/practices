@@ -414,8 +414,16 @@ window.addEventListener("load", function () {
   let documents;
   let needsInterpreter;
 
+  function getInputType(inputElement) {
+    // Check if the provided element is an input
+    if (inputElement.tagName.toLowerCase() === "input") {
+      return inputElement.type;
+    }
+    return null;
+  }
+
   function requireInput(input, required) {
-    const type = input.tagName.toLowerCase();
+    const type = getInputType(input);
     console.log(`Type is ${type} for ${input}`);
     if (required === false) {
       if (type === "text") {
