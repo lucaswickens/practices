@@ -15,17 +15,17 @@ window.addEventListener("load", function () {
   const dobYear = document.getElementById("dob-year");
   console.log(window.location.pathname);
   console.log(window.location.pathname === "/forms/new-patients");
-//   if (window.location.pathname === "/forms/new-patients") {
-//     firstName.addEventListener("input", () => {
-//       localStorage.setItem("firstName", firstName.value);
-//     });
-//     lastName.addEventListener("input", () => {
-//       localStorage.setItem("lastName", lastName.value);
-//     });
-//     phone.addEventListener("input", () => {
-//       localStorage.setItem("phone", phone.value);
-//     });
-//   }
+  if (window.location.pathname === "/forms/new-patients") {
+    firstName.addEventListener("input", () => {
+      localStorage.setItem("firstName", firstName.value);
+    });
+    lastName.addEventListener("input", () => {
+      localStorage.setItem("lastName", lastName.value);
+    });
+    phone.addEventListener("input", () => {
+      localStorage.setItem("phone", phone.value);
+    });
+  }
   if (window.location.pathname === "/forms/register-someone") {
     const applicantDivs = document.querySelectorAll(".replace-name");
     firstName.addEventListener("input", () => {
