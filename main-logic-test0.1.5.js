@@ -426,6 +426,7 @@ window.addEventListener("load", function () {
     const type = getInputType(input);
     console.log(`Type is ${type} for ${input}`);
     if (required === false) {
+      console.log(`Unrequiring input ${input} with type ${type}`);
       if (type === "text") {
         input.value = "";
       }
@@ -438,7 +439,11 @@ window.addEventListener("load", function () {
       );
     }
     if (required === true) {
+      console.log(`Requiring input ${input} with type ${type}`);
       input.required = true;
+      input.dispatchEvent(
+        new Event("input", { bubbles: true, cancelable: true })
+      );
     }
   }
 
