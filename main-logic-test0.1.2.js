@@ -131,25 +131,21 @@ window.addEventListener("load", function () {
       switch (addressType) {
         case "street_number":
           streetNoField.value = component.long_name;
-          streetNoField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
         case "route":
           routeField.value = component.long_name;
-          routeField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
         case "postal_town":
           cityField.value = component.long_name;
-          cityField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
         case "postal_code":
           postcodeField.value = component.long_name;
-          postcodeField.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
           break;
       }
     });
-    routeField.required = true;
-    cityField.required = true;
-    postcodeField.required = true;
+    requireInput(routeField, true);
+    requireInput(cityField, true);
+    requireInput(postcodeField, true);
     hasAddressField.value = "Yes";
     noAddressContainer.classList.add("hidden");
     if (
@@ -161,22 +157,6 @@ window.addEventListener("load", function () {
       }, 401);
     } else {
       document.getElementById("flat").focus();
-    }
-    inICB = icb.some((str) => postcode.value.startsWith(str));
-    inCatchment = catchment.some((str) => postcode.value.startsWith(str));
-    if (inICB) {
-      eligible.innerHTML = "You are eligible to register";
-    } else {
-      eligible.innerHTML = "Please note";
-    }
-    if (inCatchment) {
-      outCatchmentMessage.style.display = "none";
-      consentBox.innerHTML =
-        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre.";
-    } else {
-      outCatchmentMessage.style.display = "block";
-      consentBox.innerHTML =
-        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre and I am not eligible for home visits.";
     }
   });
 
@@ -241,12 +221,11 @@ window.addEventListener("load", function () {
   const cityField = document.getElementById("city");
   const postcodeField = document.getElementById("postcode");
   noAddressLink.addEventListener("click", () => {
-    hasAddressField.value = "False";
-    autocompleteInput.required = false;
-    streetNoField.required = false;
-    routeField.required = false;
-    cityField.required = false;
-    postcodeField.required = false;
+    hasAddressField.value = "No";
+    requireInput(autocompleteInput, false);
+    requireInput(routeField, false);
+    requireInput(cityField, false);
+    requireInput(postcodeField, false);
     nextArrow.click();
   });
 
@@ -372,6 +351,8 @@ window.addEventListener("load", function () {
   );
   const addressChangedRedirected =
     addressChanged.querySelectorAll(".w-radio-input");
+  const birthDetails = document.getElementById("birth-details");
+  const birthPlaceInput = document.getElementById("birth-place-input");
   const intCountryQuestion = document.getElementById("int-country");
   const intCountryField = document.getElementById("int-country-field");
   const countryBorn = document.getElementById("country-born");
@@ -433,6 +414,29 @@ window.addEventListener("load", function () {
   let documents;
   let needsInterpreter;
 
+  function requireInput(input, required) {
+    const type = input.tagName.toLowerCase();
+    console.log(`Type is ${type} for ${input}`);
+    if (required === false) {
+      if (type === "text") {
+        input.value = "";
+      }
+      if (type === "radio") {
+        input.checked = false;
+      }
+      input.required = false;
+      input.dispatchEvent(
+        new Event("input", { bubbles: true, cancelable: true })
+      );
+    }
+    if (required === true) {
+      input.required = true;
+      input.dispatchEvent(
+        new Event("input", { bubbles: true, cancelable: true })
+      );
+    }
+  }
+
   // Registered with GP before
   document
     .querySelectorAll('input[name="Registered-with-a-GP-before"]')
@@ -459,31 +463,27 @@ window.addEventListener("load", function () {
     if (registeredBefore === "Yes") {
       addressChanged.classList.remove("hidden");
       addressChangedOptions.forEach((input) => {
-        input.required = true;
+        requireInput(input, true);
       });
       if (addressHasChanged === "Yes" || addressHasChanged === "No") {
         armedForces.classList.remove("hidden");
         armedForcesOptions.forEach((input) => {
-          input.required = true;
+          requireInput(input, true);
         });
       }
       if (addressHasChanged === "Yes") {
         previousPostcode.classList.remove("hidden");
-        previousPostcodeInput.required = true;
+        requireInput(previousPostcodeInput, true);
       }
       if (addressHasChanged === "No") {
         previousPostcode.classList.add("hidden");
-        previousPostcodeInput.required = false;
-        previousPostcodeInput.value = "";
-        previousPostcodeInput.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
+        requireInput(previousPostcodeInput, false);
       }
     }
     if (registeredBefore === "No") {
       addressChanged.classList.add("hidden");
       addressChangedOptions.forEach((input) => {
-        input.required = false;
-        input.checked = false;
-        input.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
+        requireInput(input, false);
       });
       addressChangedRedirected.forEach((div) => {
         div.classList.remove("w--redirected-checked");
@@ -491,17 +491,13 @@ window.addEventListener("load", function () {
       addressHasChanged = "";
       armedForces.classList.add("hidden");
       armedForcesOptions.forEach((input) => {
-        input.required = false;
-        input.checked = false;
-        input.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
+        requireInput(input, false);
       });
       armedForcesRedirected.forEach((div) => {
         div.classList.remove("w--redirected-checked");
       });
       previousPostcode.classList.add("hidden");
-      previousPostcodeInput.required = false;
-      previousPostcodeInput.value = "";
-      previousPostcodeInput.dispatchEvent(new Event("input", { bubbles: true, cancelable: true }));
+      requireInput(previousPostcodeInput, false);
     }
   }
 
@@ -564,39 +560,38 @@ window.addEventListener("load", function () {
   function abroadLogic() {
     countryBorn.classList.remove("hidden");
     countryBornOptions.forEach((input) => {
-      input.required = true;
+      requireInput(input, true);
     });
     // Country selected
     if (countryBornInput) {
       // Show birth details section and require place
-      document.getElementById("birth-details").classList.remove("hidden");
-      document.getElementById("birth-place-input").required = true;
+      birthDetails.classList.remove("hidden");
+      requireInput(birthPlaceInput, true);
       if (countryBornInput === "None of the above" || recentlyMoved === "Yes") {
         // Show int country field if abroad
         if (countryBornInput === "None of the above") {
           intCountryQuestion.classList.remove("hidden");
-          intCountryField.required = true;
+          requireInput(intCountryField, true);
         }
         // Show enter UK date
         enterUK.classList.remove("hidden");
         enterUKOptions.forEach((input) => {
-          input.required = true;
+          requireInput(input, true);
         });
         // Show moved from EU question
         movedFromEU.classList.remove("hidden");
         movedFromEUOptions.forEach((input) => {
-          input.required = true;
+          requireInput(input, true);
         });
         // Show interpreter question
         interpreter.classList.remove("hidden");
         interpreterOptions.forEach((input) => {
-          input.required = true;
+          requireInput(input, true);
         });
         // Hide previous address question
         hasPreviousAddressQuestion.classList.add("hidden");
         hasPreviousAddressOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
+          requireInput(input, false);
         });
         hasPreviousAddressRedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
@@ -609,19 +604,18 @@ window.addEventListener("load", function () {
         if (hasMovedFromEU === "Yes") {
           documentsSection.classList.remove("hidden");
           documentsOptions.forEach((input) => {
-            input.required = true;
+            requireInput(input, true);
           });
           // If they have EHIC, show the question, else hide it
           if (documents === "European health insurance card (EHIC)") {
             ehicDetails.classList.remove("hidden");
             ehicDetailsInputs.forEach((input) => {
-              input.required = true;
+              requireInput(input, true);
             });
           } else {
             ehicDetails.classList.add("hidden");
             ehicDetailsInputs.forEach((input) => {
-              input.required = false;
-              input.value = "";
+              requireInput(input, false);
             });
           }
         }
@@ -629,8 +623,7 @@ window.addEventListener("load", function () {
         if (hasMovedFromEU === "No") {
           documentsSection.classList.add("hidden");
           documentsOptions.forEach((input) => {
-            input.required = false;
-            input.checked = false;
+            requireInput(input, false);
           });
           documentsRedirected.forEach((div) => {
             div.classList.remove("w--redirected-checked");
@@ -638,30 +631,27 @@ window.addEventListener("load", function () {
           documents = "";
           ehicDetails.classList.add("hidden");
           ehicDetailsInputs.forEach((input) => {
-            input.required = false;
-            input.value = "";
+            requireInput(input, false);
           });
         }
         // If they need an interpreter, ask what language
         if (needsInterpreter === "Yes") {
           preferredLang.classList.remove("hidden");
-          preferredLangInput.required = true;
+          requireInput(preferredLangInput, true);
         }
         if (needsInterpreter === "No") {
           preferredLang.classList.add("hidden");
-          preferredLangInput.required = false;
-          preferredLangInput.value = "";
+          requireInput(preferredLangInput, false);
         }
       } else {
         // If in UK and not recently moved
         // Hide int country field
         intCountryQuestion.classList.add("hidden");
-        intCountryField.required = false;
+        requireInput(intCountryField, false);
         // Hide enter UK date
         enterUK.classList.add("hidden");
         enterUKOptions.forEach((input) => {
-          input.required = false;
-          input.value = "";
+          requireInput(input, false);
         });
         enterUKRedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
@@ -669,8 +659,7 @@ window.addEventListener("load", function () {
         // Hide moved from EU question
         movedFromEU.classList.add("hidden");
         movedFromEUOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
+          requireInput(input, false);
         });
         movedFromEURedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
@@ -679,8 +668,7 @@ window.addEventListener("load", function () {
         // Hide interpreter question
         interpreter.classList.add("hidden");
         interpreterOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
+          requireInput(input, false);
         });
         interpreterRedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
@@ -688,13 +676,11 @@ window.addEventListener("load", function () {
         needsInterpreter = "";
         // Hide language question
         preferredLang.classList.add("hidden");
-        preferredLangInput.required = false;
-        preferredLangInput.value = "";
+        requireInput(preferredLangInput, false);
         // Hide documents question
         documentsSection.classList.add("hidden");
         documentsOptions.forEach((input) => {
-          input.required = false;
-          input.checked = false;
+          requireInput(input, false);
         });
         documentsRedirected.forEach((div) => {
           div.classList.remove("w--redirected-checked");
@@ -703,13 +689,12 @@ window.addEventListener("load", function () {
         // Hide EHIC question
         ehicDetails.classList.add("hidden");
         ehicDetailsInputs.forEach((input) => {
-          input.required = false;
-          input.value = "";
+          requireInput(input, false);
         });
         // Show previous address question
         hasPreviousAddressQuestion.classList.remove("hidden");
         hasPreviousAddressOptions.forEach((input) => {
-          input.required = true;
+          requireInput(input, true);
         });
         // If they have a previous address, show lookup
         if (hasPreviousAddress === "Yes") {
