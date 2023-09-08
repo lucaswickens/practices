@@ -442,7 +442,7 @@ window.addEventListener("load", function () {
       console.log(`Requiring input ${input.name} with type ${type}`);
       input.required = true;
       input.dispatchEvent(
-        new Event("input", { bubbles: true, cancelable: true })
+        new Event("change", { bubbles: true, cancelable: true })
       );
     }
   }
