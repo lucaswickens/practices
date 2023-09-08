@@ -779,15 +779,13 @@ const setLocalStorageValue = (key, value) => {
     console.error("Error setting localStorage value");
   }
 };
-if (window.location.pathname === "/forms/new-patients") {
-  // When the page loads, read localStorage value and update hidden form input
-  const value = getLocalStorageValue("campaignId");
-  const hiddenInput = document.getElementById("campaignId");
+// When the page loads, read localStorage value and update hidden form input
+const value = getLocalStorageValue("campaignId");
+const hiddenInput = document.getElementById("campaignId");
 
-  // Update the hidden input's value
-  if (hiddenInput && value) {
-    hiddenInput.value = value;
-  }
+// Update the hidden input's value
+if (hiddenInput && value) {
+  hiddenInput.value = value;
 }
 
 const phoneInputField = document.querySelector("#phone");
