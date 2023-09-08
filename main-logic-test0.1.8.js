@@ -442,9 +442,10 @@ window.addEventListener("load", function () {
       console.log(`Requiring input ${input.name} with type ${type}`);
       input.required = true;
       input.dispatchEvent(
-        new Event("change", { bubbles: true, cancelable: true })
+        new Event("input", { bubbles: true, cancelable: true })
       );
     }
+    updateStep();
   }
 
   // Registered with GP before
