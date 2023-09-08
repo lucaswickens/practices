@@ -246,17 +246,20 @@ window.addEventListener("load", function () {
   });
 
   // Display a custom error message if there's a pattern mismatch
-  function customValidCheck(input) {
+  function customValidCheck(input, errorDiv) {
     input.addEventListener("blur", () => {
       if (!input.validity.valid && input.validity.patternMismatch) {
         input.value = "";
+        errorDiv.classList.remove("hidden");
         validation();
+      } else {
+        errorDiv.classList.add("hidden");
       }
     });
   }
-  customValidCheck(firstName);
-  customValidCheck(lastName);
-  customValidCheck(previousLastName);
+  customValidCheck(firstName, firstNameError);
+  customValidCheck(lastName, lastNameError);
+  customValidCheck(previousLastName, previousLastNameError);
 
   const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100];
 
