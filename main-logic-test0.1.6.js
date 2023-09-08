@@ -424,9 +424,9 @@ window.addEventListener("load", function () {
 
   function requireInput(input, required) {
     const type = getInputType(input);
-    console.log(`Type is ${type} for ${input}`);
+    console.log(`Type is ${type} for ${input.name}`);
     if (required === false) {
-      console.log(`Unrequiring input ${input} with type ${type}`);
+      console.log(`Unrequiring input ${input.name} with type ${type}`);
       if (type === "text") {
         input.value = "";
       }
@@ -439,7 +439,7 @@ window.addEventListener("load", function () {
       );
     }
     if (required === true) {
-      console.log(`Requiring input ${input} with type ${type}`);
+      console.log(`Requiring input ${input.name} with type ${type}`);
       input.required = true;
       input.dispatchEvent(
         new Event("input", { bubbles: true, cancelable: true })
