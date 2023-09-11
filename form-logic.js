@@ -109,6 +109,7 @@ window.addEventListener("load", function () {
         underSixteen.style.display = "none";
       }
     }
+    console.log(`${type} - length: ${dayInput.value.length}`);
 
     if (type === "day" && dayInput.value.length === 2) {
       monthInput.focus();
