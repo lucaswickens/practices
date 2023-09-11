@@ -68,8 +68,10 @@ window.addEventListener("load", function () {
 
   dobYear.addEventListener("input", () => {
     if (dobYear.value > 2006) {
-      parentNameInput.value = registeredByFullName;
-      parentPhoneInput.value = registeredByPhone;
+      if (registeredByFullName !== "" && registeredByPhone !== "") {
+        parentNameInput.value = registeredByFullName;
+        parentPhoneInput.value = registeredByPhone;
+      }
       underSixteen.style.display = "block";
     } else {
       parentNameInput.value = "";
