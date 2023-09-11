@@ -824,6 +824,8 @@ window.addEventListener("load", function () {
       }
     }
   }
+  regBeforeLogic();
+  abroadLogic();
 });
 
 // Function to get a localStorage value
