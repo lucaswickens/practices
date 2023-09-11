@@ -1,7 +1,8 @@
 window.addEventListener("load", function () {
   const nextArrow = document.getElementById("nextButton");
-
   const underSixteen = document.getElementById("underSixteen");
+  const parentNameInput = document.getElementById("parent-name");
+  const parentPhoneInput = document.getElementById("parent-phone");
   const firstName = document.getElementById("first-name");
   const lastName = document.getElementById("last-name");
   const previousLastName = document.getElementById("previous-last-name");
@@ -26,7 +27,11 @@ window.addEventListener("load", function () {
       localStorage.setItem("phone", phone.value);
     });
   }
+
+  let registeredByFullName = "";
+  let registeredByPhone = "";
   if (window.location.pathname === "/forms/register-someone") {
+    // Replace name
     const applicantDivs = document.querySelectorAll(".replace-name");
     firstName.addEventListener("input", () => {
       let applicantName = firstName.value;
@@ -36,12 +41,39 @@ window.addEventListener("load", function () {
         });
       }
     });
+
+    // Log name
+    const registeredBySection = document.getElementById("registered-by");
+    const registeredByFirstNameLocal = getLocalStorageValue("firstName");
+    const registeredByLastNameLocal = getLocalStorageValue("lastName");
+    const registeredByPhoneLocal = getLocalStorageValue("phone");
+    const registeredByNameInput = document.getElementById("Person-registering");
+    const registeredByPhoneInput = document.getElementById(
+      "Person-registering-phone"
+    );
+
+    if (
+      registeredByFirstNameLocal &&
+      registeredByLastNameLocal &&
+      registeredByPhoneLocal
+    ) {
+      registeredByFullName = `${registeredByFirstNameLocal} ${registeredByLastNameLocal}`;
+      registeredByPhone = registeredByPhoneLocal;
+      registeredByNameInput.value = registeredByFullName;
+      registeredByPhoneInput.value = registeredByPhone;
+    } else {
+      registeredBySection.classList.remove("hidden");
+    }
   }
 
   dobYear.addEventListener("input", () => {
     if (dobYear.value > 2006) {
-      underSixteen.style.display = "flex";
+      parentNameInput.value = registeredByFullName;
+      parentPhoneInput.value = registeredByPhone;
+      underSixteen.style.display = "block";
     } else {
+      parentNameInput.value = "";
+      parentPhoneInput.value = "";
       underSixteen.style.display = "none";
     }
   });
@@ -733,25 +765,6 @@ window.addEventListener("load", function () {
           previousAddressInput.value = "";
         }
       }
-    }
-  }
-
-  if (window.location.pathname === "/forms/register-someone") {
-    const registeredBySection = document.getElementById("registered-by");
-    const registeredByFirstName = getLocalStorageValue("firstName");
-    const registeredByLastName = getLocalStorageValue("lastName");
-    const registeredByPhone = getLocalStorageValue("phone");
-    const registeredByNameInput = document.getElementById("Person-registering");
-    const registeredByPhoneInput = document.getElementById(
-      "Person-registering-phone"
-    );
-
-    if (registeredByFirstName && registeredByLastName && registeredByPhone) {
-      registeredByNameInput.value = `${registeredByFirstName} ${registeredByLastName}`;
-      registeredByPhoneInput.value = registeredByPhone;
-    } else {
-      registeredBySection.classList.remove("hidden");
-      resetHeight();
     }
   }
 });
