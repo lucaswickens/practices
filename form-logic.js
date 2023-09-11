@@ -13,7 +13,6 @@ window.addEventListener("load", function () {
   );
   const email = document.getElementById("email");
   const phone = document.getElementById("phone");
-  const dobYear = document.getElementById("dob-year");
   console.log(window.location.pathname);
   console.log(window.location.pathname === "/forms/new-patients");
   if (window.location.pathname === "/forms/new-patients") {
@@ -66,19 +65,55 @@ window.addEventListener("load", function () {
     }
   }
 
-  dobYear.addEventListener("input", () => {
-    if (dobYear.value > 2006) {
-      if (registeredByFullName !== "" && registeredByPhone !== "") {
-        parentNameInput.value = registeredByFullName;
-        parentPhoneInput.value = registeredByPhone;
-      }
-      underSixteen.style.display = "block";
-    } else {
-      parentNameInput.value = "";
-      parentPhoneInput.value = "";
-      underSixteen.style.display = "none";
+  // Date of birth
+  const dayInput = document.getElementById("dob-day");
+  const monthInput = document.getElementById("dob-month");
+  const yearInput = document.getElementById("dob-year");
+
+  function calculateAge(dob) {
+    const today = new Date();
+    const birthDate = new Date(dob);
+
+    let age = today.getFullYear() - birthDate.getFullYear();
+
+    // If today's month is before the birth month or it's the same month but today's day is before the birth day
+    if (
+      today.getMonth() < birthDate.getMonth() ||
+      (today.getMonth() === birthDate.getMonth() &&
+        today.getDate() < birthDate.getDate())
+    ) {
+      age--;
     }
-  });
+
+    return age;
+  }
+
+  function checkAge() {
+    const day = dayInput.value.padStart(2, "0");
+    const month = monthInput.value.padStart(2, "0");
+    const year = yearInput.value;
+
+    if (day && month && year.length === 4) {
+      const dob = `${year}-${month}-${day}`;
+      const age = calculateAge(dob);
+
+      if (age < 16) {
+        if (registeredByFullName !== "" && registeredByPhone !== "") {
+          parentNameInput.value = registeredByFullName;
+          parentPhoneInput.value = registeredByPhone;
+        }
+        underSixteen.style.display = "block";
+      } else {
+        parentNameInput.value = "";
+        parentPhoneInput.value = "";
+        underSixteen.style.display = "none";
+      }
+    }
+  }
+  dayInput.addEventListener("input", checkAge);
+  monthInput.addEventListener("input", checkAge);
+  yearInput.addEventListener("input", checkAge);
+
   const postcode = document.getElementById("postcode");
   const outCatchmentMessage = document.getElementById("outCatchmentMessage");
   const eligible = document.getElementById("eligible");
