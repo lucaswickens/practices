@@ -111,14 +111,24 @@ window.addEventListener("load", function () {
     }
   }
   dayInput.addEventListener("input", () => {
-    if (dayInput.value.length === 2) {
+    const dayValue = dayInput.value;
+    if (
+      (dayValue.length === 1 &&
+        ["4", "5", "6", "7", "8", "9"].includes(dayValue)) ||
+      dayValue.length === 2
+    ) {
       monthInput.focus();
     }
     checkAge();
   });
   monthInput.addEventListener("input", () => {
-    if (monthInput.value.length === 2) {
-      monthInput.focus();
+    const monthValue = monthInput.value;
+    if (
+      (monthValue.length === 1 &&
+        ["2", "3", "4", "5", "6", "7", "8", "9"].includes(monthValue)) ||
+      monthValue.length === 2
+    ) {
+      yearInput.focus();
     }
     checkAge();
   });
