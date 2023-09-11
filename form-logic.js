@@ -88,7 +88,7 @@ window.addEventListener("load", function () {
     return age;
   }
 
-  function checkAge() {
+  function checkAge(type) {
     const day = dayInput.value.padStart(2, "0");
     const month = monthInput.value.padStart(2, "0");
     const year = yearInput.value;
