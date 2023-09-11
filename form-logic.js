@@ -110,10 +110,10 @@ window.addEventListener("load", function () {
       }
     }
 
-    if (type === "day" && dayInput.length === 2) {
+    if (type === "day" && dayInput.value.length === 2) {
       monthInput.focus();
     }
-    if (type === "month" && monthInput.length === 2) {
+    if (type === "month" && monthInput.value.length === 2) {
       yearInput.focus();
     }
   }
