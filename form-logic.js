@@ -88,19 +88,10 @@ window.addEventListener("load", function () {
     return age;
   }
 
-  function checkAge(dobType) {
+  function checkAge() {
     const day = dayInput.value.padStart(2, "0");
     const month = monthInput.value.padStart(2, "0");
     const year = yearInput.value;
-
-    console.log(`${dobType} - length: ${dayInput.value.length}`);
-
-    if (dobType === "day" && dayInput.value.length === 2) {
-      monthInput.focus();
-    }
-    if (dobType === "month" && monthInput.value.length === 2) {
-      yearInput.focus();
-    }
 
     if (day && month && year.length === 4) {
       const dob = `${year}-${month}-${day}`;
@@ -119,8 +110,18 @@ window.addEventListener("load", function () {
       }
     }
   }
-  dayInput.addEventListener("input", checkAge("day"));
-  monthInput.addEventListener("input", checkAge("month"));
+  dayInput.addEventListener("input", () => {
+    if (dayInput.value.length === 2) {
+      monthInput.focus();
+    }
+    checkAge();
+  });
+  monthInput.addEventListener("input", () => {
+    if (monthInput.value.length === 2) {
+      monthInput.focus();
+    }
+    checkAge();
+  });
   yearInput.addEventListener("input", checkAge);
 
   const postcode = document.getElementById("postcode");
