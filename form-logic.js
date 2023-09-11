@@ -88,10 +88,19 @@ window.addEventListener("load", function () {
     return age;
   }
 
-  function checkAge(type) {
+  function checkAge(dobType) {
     const day = dayInput.value.padStart(2, "0");
     const month = monthInput.value.padStart(2, "0");
     const year = yearInput.value;
+
+    console.log(`${dobType} - length: ${dayInput.value.length}`);
+
+    if (dobType === "day" && dayInput.value.length === 2) {
+      monthInput.focus();
+    }
+    if (dobType === "month" && monthInput.value.length === 2) {
+      yearInput.focus();
+    }
 
     if (day && month && year.length === 4) {
       const dob = `${year}-${month}-${day}`;
@@ -108,14 +117,6 @@ window.addEventListener("load", function () {
         parentPhoneInput.value = "";
         underSixteen.style.display = "none";
       }
-    }
-    console.log(`${type} - length: ${dayInput.value.length}`);
-
-    if (type === "day" && dayInput.value.length === 2) {
-      monthInput.focus();
-    }
-    if (type === "month" && monthInput.value.length === 2) {
-      yearInput.focus();
     }
   }
   dayInput.addEventListener("input", checkAge("day"));
