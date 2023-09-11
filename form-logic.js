@@ -109,9 +109,16 @@ window.addEventListener("load", function () {
         underSixteen.style.display = "none";
       }
     }
+
+    if (type === "day" && dayInput.length === 2) {
+      monthInput.focus();
+    }
+    if (type === "month" && monthInput.length === 2) {
+      yearInput.focus();
+    }
   }
-  dayInput.addEventListener("input", checkAge);
-  monthInput.addEventListener("input", checkAge);
+  dayInput.addEventListener("input", checkAge("day"));
+  monthInput.addEventListener("input", checkAge("month"));
   yearInput.addEventListener("input", checkAge);
 
   const postcode = document.getElementById("postcode");
