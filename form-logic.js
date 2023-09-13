@@ -534,6 +534,7 @@ window.addEventListener("load", function () {
 
   // Ethnicity options
   document.querySelectorAll('input[name="Ethnicity"]').forEach((elem) => {
+    console.log(`Setting ${this.value} as currentEthnicity`);
     currentEthnicity = this.value;
     elem.addEventListener("change", function () {
       currentEthnicity = this.value;
@@ -542,6 +543,7 @@ window.addEventListener("load", function () {
   });
 
   function ethnicityLogic() {
+    console.log(currentEthnicity);
     // Hide all content divs
     document
     .querySelectorAll(".sub-options")
@@ -549,7 +551,8 @@ window.addEventListener("load", function () {
 
     // Show the div with the matching data-ethnicity attribute
     if (currentEthnicity) {
-      let selectedDiv = document.querySelector(
+      console.log(`Has current ethnicity of ${currentEthnicity}`);
+      const selectedDiv = document.querySelector(
         `div[data-ethnicity='${currentEthnicity}']`
       );
       if (selectedDiv) {
