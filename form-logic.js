@@ -534,7 +534,7 @@ window.addEventListener("load", function () {
 
   // Ethnicity options
   document.querySelectorAll('input[name="Ethnicity"]').forEach((elem) => {
-    console.log(`Setting ${this.value} as currentEthnicity`);
+    console.log(this);
     currentEthnicity = this.value;
     elem.addEventListener("change", function () {
       currentEthnicity = this.value;
