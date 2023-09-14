@@ -534,8 +534,7 @@ window.addEventListener("load", function () {
 
   // Ethnicity options
   document.querySelectorAll('input[name="Ethnicity"]').forEach((elem) => {
-    console.log(this);
-    currentEthnicity = this.value;
+    currentEthnicity = elem.value;
     elem.addEventListener("change", function () {
       currentEthnicity = this.value;
       ethnicityLogic();
@@ -566,7 +565,7 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Registered-with-a-GP-before"]')
     .forEach((elem) => {
-      registeredBefore = this.value;
+      registeredBefore = elem.value;
       elem.addEventListener("change", function () {
         registeredBefore = this.value;
         regBeforeLogic();
@@ -577,7 +576,7 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Address-has-changed"]')
     .forEach((elem) => {
-      addressHasChanged = this.value;
+      addressHasChanged = elem.value;
       elem.addEventListener("change", function () {
         addressHasChanged = this.value;
         regBeforeLogic();
@@ -631,7 +630,7 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Recently-moved-from-abroad"]')
     .forEach((elem) => {
-      recentlyMoved = this.value;
+      recentlyMoved = elem.value;
       elem.addEventListener("change", function () {
         recentlyMoved = this.value;
         abroadLogic();
@@ -642,7 +641,7 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Country-of-birth"]')
     .forEach((elem) => {
-      countryBornInput = this.value;
+      countryBornInput = elem.value;
       elem.addEventListener("change", function () {
         countryBornInput = this.value;
         abroadLogic();
@@ -651,7 +650,7 @@ window.addEventListener("load", function () {
 
   // Moved from EU
   document.querySelectorAll('input[name="Moved-from-EU"]').forEach((elem) => {
-    hasMovedFromEU = this.value;
+    hasMovedFromEU = elem.value;
     elem.addEventListener("change", function () {
       hasMovedFromEU = this.value;
       abroadLogic();
@@ -660,7 +659,7 @@ window.addEventListener("load", function () {
 
   // Documents
   document.querySelectorAll('input[name="Documents"]').forEach((elem) => {
-    documents = this.value;
+    documents = elem.value;
     elem.addEventListener("change", function () {
       documents = this.value;
       abroadLogic();
@@ -671,7 +670,7 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Interpreter-needed"]')
     .forEach((elem) => {
-      needsInterpreter = this.value;
+      needsInterpreter = elem.value;
       elem.addEventListener("change", function () {
         needsInterpreter = this.value;
         abroadLogic();
@@ -682,7 +681,7 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Has-previous-UK-address"]')
     .forEach((elem) => {
-      hasPreviousAddress = this.value;
+      hasPreviousAddress = elem.value;
       elem.addEventListener("change", function () {
         hasPreviousAddress = this.value;
         abroadLogic();
