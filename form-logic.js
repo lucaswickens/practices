@@ -534,7 +534,9 @@ window.addEventListener("load", function () {
 
   // Ethnicity options
   document.querySelectorAll('input[name="Ethnicity"]').forEach((elem) => {
-    currentEthnicity = elem.value;
+    if (elem.checked) {
+      currentEthnicity = elem.value;
+    }
     elem.addEventListener("change", function () {
       currentEthnicity = this.value;
       ethnicityLogic();
@@ -545,8 +547,8 @@ window.addEventListener("load", function () {
     console.log(currentEthnicity);
     // Hide all content divs
     document
-    .querySelectorAll(".sub-options")
-    .forEach((div) => div.classList.add("hidden"));
+      .querySelectorAll(".sub-options")
+      .forEach((div) => div.classList.add("hidden"));
 
     // Show the div with the matching data-ethnicity attribute
     if (currentEthnicity) {
@@ -559,13 +561,14 @@ window.addEventListener("load", function () {
       }
     }
   }
-  ethnicityLogic();
 
   // Registered with GP before
   document
     .querySelectorAll('input[name="Registered-with-a-GP-before"]')
     .forEach((elem) => {
-      registeredBefore = elem.value;
+      if (elem.checked) {
+        registeredBefore = elem.value;
+      }
       elem.addEventListener("change", function () {
         registeredBefore = this.value;
         regBeforeLogic();
@@ -576,7 +579,9 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Address-has-changed"]')
     .forEach((elem) => {
-      addressHasChanged = elem.value;
+      if (elem.checked) {
+        addressHasChanged = elem.value;
+      }
       elem.addEventListener("change", function () {
         addressHasChanged = this.value;
         regBeforeLogic();
@@ -630,7 +635,9 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Recently-moved-from-abroad"]')
     .forEach((elem) => {
-      recentlyMoved = elem.value;
+      if (elem.checked) {
+        recentlyMoved = elem.value;
+      }
       elem.addEventListener("change", function () {
         recentlyMoved = this.value;
         abroadLogic();
@@ -641,7 +648,9 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Country-of-birth"]')
     .forEach((elem) => {
-      countryBornInput = elem.value;
+      if (elem.checked) {
+        countryBornInput = elem.value;
+      }
       elem.addEventListener("change", function () {
         countryBornInput = this.value;
         abroadLogic();
@@ -650,7 +659,9 @@ window.addEventListener("load", function () {
 
   // Moved from EU
   document.querySelectorAll('input[name="Moved-from-EU"]').forEach((elem) => {
-    hasMovedFromEU = elem.value;
+    if (elem.checked) {
+      hasMovedFromEU = elem.value;
+    }
     elem.addEventListener("change", function () {
       hasMovedFromEU = this.value;
       abroadLogic();
@@ -659,7 +670,9 @@ window.addEventListener("load", function () {
 
   // Documents
   document.querySelectorAll('input[name="Documents"]').forEach((elem) => {
-    documents = elem.value;
+    if (elem.checked) {
+      documents = elem.value;
+    }
     elem.addEventListener("change", function () {
       documents = this.value;
       abroadLogic();
@@ -670,7 +683,9 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Interpreter-needed"]')
     .forEach((elem) => {
-      needsInterpreter = elem.value;
+      if (elem.checked) {
+        needsInterpreter = elem.value;
+      }
       elem.addEventListener("change", function () {
         needsInterpreter = this.value;
         abroadLogic();
@@ -681,7 +696,9 @@ window.addEventListener("load", function () {
   document
     .querySelectorAll('input[name="Has-previous-UK-address"]')
     .forEach((elem) => {
-      hasPreviousAddress = elem.value;
+      if (elem.checked) {
+        hasPreviousAddress = elem.value;
+      }
       elem.addEventListener("change", function () {
         hasPreviousAddress = this.value;
         abroadLogic();
@@ -838,6 +855,7 @@ window.addEventListener("load", function () {
       }
     }
   }
+  ethnicityLogic();
   regBeforeLogic();
   abroadLogic();
 });
