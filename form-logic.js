@@ -13,8 +13,6 @@ window.addEventListener("load", function () {
   );
   const email = document.getElementById("email");
   const phone = document.getElementById("phone");
-  console.log(window.location.pathname);
-  console.log(window.location.pathname === "/forms/new-patients");
   if (window.location.pathname === "/forms/new-patients") {
     firstName.addEventListener("input", () => {
       localStorage.setItem("firstName", firstName.value);
@@ -544,15 +542,13 @@ window.addEventListener("load", function () {
   });
 
   function ethnicityLogic() {
-    console.log(currentEthnicity);
-    // Hide all content divs
+    // Hide all divs
     document
       .querySelectorAll(".sub-options")
       .forEach((div) => div.classList.add("hidden"));
 
     // Show the div with the matching data-ethnicity attribute
     if (currentEthnicity) {
-      console.log(`Has current ethnicity of ${currentEthnicity}`);
       const selectedDiv = document.querySelector(
         `div[data-ethnicity='${currentEthnicity}']`
       );
@@ -865,7 +861,7 @@ const getLocalStorageValue = (key) => {
   try {
     const value = localStorage.getItem(key);
     console.log(
-      `Successfully retrieved value "${value}" for key "${key}" from localStorage.`
+      `Retrieved value "${value}" for key "${key}" from localStorage.`
     );
     return value;
   } catch (error) {
