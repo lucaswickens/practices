@@ -390,7 +390,7 @@ window.addEventListener("load", function () {
       setLocalStorageValue("abandoned", true);
       fetch("https://api.form-data.com/f/n7036mvhghdbwvzm7o3z1o", {
         method: "post",
-        body: JSON.stringify({ name: firstName.value, email: email.value }),
+        body: JSON.stringify({ name: firstName.value, email: email.value, startTimeInput: startTime.value }),
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => res.json())
