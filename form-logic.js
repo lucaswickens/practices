@@ -5,12 +5,12 @@ window.addEventListener("load", function () {
   const parentPhoneInput = document.getElementById("parent-phone");
   const firstName = document.getElementById("first-name");
   const lastName = document.getElementById("last-name");
-  const previousLastName = document.getElementById("previous-last-name");
-  const firstNameError = document.getElementById("first-name-error");
-  const lastNameError = document.getElementById("last-name-error");
-  const previousLastNameError = document.getElementById(
-    "previous-last-name-error"
-  );
+  // const previousLastName = document.getElementById("previous-last-name");
+  // const firstNameError = document.getElementById("first-name-error");
+  // const lastNameError = document.getElementById("last-name-error");
+  // const previousLastNameError = document.getElementById(
+  //   "previous-last-name-error"
+  // );
   const email = document.getElementById("email");
   const phone = document.getElementById("phone");
   if (window.location.pathname === "/forms/new-patients") {
@@ -23,6 +23,12 @@ window.addEventListener("load", function () {
     phone.addEventListener("input", () => {
       localStorage.setItem("phone", phone.value);
     });
+  }
+
+  const startTimeInput = document.getElementById("startTime");
+  const currentTime = new Date().toISOString();
+  if (startTimeInput) {
+    startTimeInput.value = currentTime;
   }
 
   let registeredByFullName = "";
