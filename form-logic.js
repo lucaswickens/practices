@@ -21,6 +21,11 @@ window.addEventListener("load", function () {
     })
   }
 
+  // Require selecting a title
+  document
+    .querySelector("#category option:first-child")
+    .setAttribute("disabled", "disabled")
+
   const startTimeInput = document.getElementById("startTime")
   const currentTime = new Date().toISOString()
   if (startTimeInput) {
