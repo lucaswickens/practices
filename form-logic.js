@@ -378,7 +378,9 @@ window.addEventListener("load", function () {
     }
   })
 
-  const widths = [27.03, 47.3, 62.51, 73.91, 82.46, 88.88, 93.69, 97.29, 100]
+  const widths = [
+    30.87, 52.48, 67.61, 78.2, 85.61, 90.8, 94.43, 96.97, 98.75, 100,
+  ]
 
   // Create function that can only be called once
   function createSingletonFunction(fn) {
