@@ -23,7 +23,7 @@ window.addEventListener("load", function () {
 
   // Require selecting a title
   document
-    .querySelector("#category option:first-child")
+    .querySelector("#title option:first-child")
     .setAttribute("disabled", "disabled")
 
   const startTimeInput = document.getElementById("startTime")
