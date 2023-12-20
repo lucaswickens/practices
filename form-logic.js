@@ -9,6 +9,7 @@ window.addEventListener("load", function () {
   const previousLastName = document.getElementById("previous-last-name")
   const email = document.getElementById("email")
   const phone = document.getElementById("phone")
+  const practiceId = document.getElementById("practiceId")
   if (window.location.pathname === "/forms/new-patients") {
     firstName.addEventListener("input", () => {
       localStorage.setItem("firstName", firstName.value)
