@@ -444,7 +444,7 @@ window.addEventListener("load", function () {
           email: email.value,
           phone: phone.value,
           startTime: startTime.value,
-          campaignId: campaignId.value,
+          campaignId: campaignId ? campaignId.value : "",
         }),
         headers: { "Content-Type": "application/json" },
       })
