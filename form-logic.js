@@ -3,6 +3,7 @@ window.addEventListener("load", function () {
   const underSixteen = document.getElementById("underSixteen")
   const parentNameInput = document.getElementById("parent-name")
   const parentPhoneInput = document.getElementById("parent-phone")
+  const title = document.getElementById("title")
   const firstName = document.getElementById("first-name")
   const middleName = document.getElementById("middle-name")
   const lastName = document.getElementById("last-name")
@@ -437,6 +438,7 @@ window.addEventListener("load", function () {
         method: "post",
         body: JSON.stringify({
           practice: practiceId.value,
+          firstName: title.value,
           firstName: firstName.value,
           middleName: middleName.value,
           lastName: lastName.value,
