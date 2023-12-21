@@ -384,6 +384,38 @@ window.addEventListener("load", function () {
     30.87, 52.48, 67.61, 78.2, 85.61, 90.8, 94.43, 96.97, 98.75, 100,
   ]
 
+  // Function to get a localStorage value
+  const getLocalStorageValue = (key) => {
+    try {
+      const value = localStorage.getItem(key)
+      console.log(
+        `Retrieved value "${value}" for key "${key}" from localStorage.`,
+      )
+      return value
+    } catch (error) {
+      console.error(
+        `Error retrieving value for key "${key}" from localStorage: ${error}`,
+      )
+    }
+  }
+
+  // Function to set a localStorage value
+  const setLocalStorageValue = (key, value) => {
+    try {
+      localStorage.setItem(key, value)
+    } catch (error) {
+      console.error("Error setting localStorage value")
+    }
+  }
+  // When the page loads, read localStorage value and update hidden form input
+  const campaignId = getLocalStorageValue("campaignId")
+  const campaignIdInput = document.getElementById("campaignId")
+
+  // Update the hidden input's value
+  if (campaignIdInput && campaignId) {
+    campaignIdInput.value = value
+  }
+
   // Create function that can only be called once
   function createSingletonFunction(fn) {
     let called = false
@@ -412,6 +444,7 @@ window.addEventListener("load", function () {
           email: email.value,
           phone: phone.value,
           startTime: startTime.value,
+          campaignId: campaignId.value,
         }),
         headers: { "Content-Type": "application/json" },
       })
@@ -873,38 +906,6 @@ window.addEventListener("load", function () {
   regBeforeLogic()
   abroadLogic()
 })
-
-// Function to get a localStorage value
-const getLocalStorageValue = (key) => {
-  try {
-    const value = localStorage.getItem(key)
-    console.log(
-      `Retrieved value "${value}" for key "${key}" from localStorage.`,
-    )
-    return value
-  } catch (error) {
-    console.error(
-      `Error retrieving value for key "${key}" from localStorage: ${error}`,
-    )
-  }
-}
-
-// Function to set a localStorage value
-const setLocalStorageValue = (key, value) => {
-  try {
-    localStorage.setItem(key, value)
-  } catch (error) {
-    console.error("Error setting localStorage value")
-  }
-}
-// When the page loads, read localStorage value and update hidden form input
-const value = getLocalStorageValue("campaignId")
-const hiddenInput = document.getElementById("campaignId")
-
-// Update the hidden input's value
-if (hiddenInput && value) {
-  hiddenInput.value = value
-}
 
 const phoneInputField = document.querySelector("#phone")
 const phoneInput = window.intlTelInput(phoneInputField, {
