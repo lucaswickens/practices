@@ -364,6 +364,7 @@ window.addEventListener("load", function () {
   )
   previousLastNameLink.addEventListener("click", () => {
     previousLastNameSection.classList.remove("hidden")
+    previousLastName.focus()
   })
 
   // Show enhanced summary care record
