@@ -438,7 +438,7 @@ window.addEventListener("load", function () {
         method: "post",
         body: JSON.stringify({
           practice: practiceId.value,
-          firstName: title.value,
+          title: title.value,
           firstName: firstName.value,
           middleName: middleName.value,
           lastName: lastName.value,
