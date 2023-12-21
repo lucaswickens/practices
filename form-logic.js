@@ -443,8 +443,8 @@ window.addEventListener("load", function () {
           previousLastName: previousLastName.value,
           email: email.value,
           phone: phone.value,
-          startTime: startTime.value,
-          campaignId: campaignId ? campaignId.value : "",
+          startTime: currentTime,
+          campaignId: campaignId,
         }),
         headers: { "Content-Type": "application/json" },
       })
