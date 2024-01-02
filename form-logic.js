@@ -1,4 +1,28 @@
 window.addEventListener("load", function () {
+  // Function to get a localStorage value
+  const getLocalStorageValue = (key) => {
+    try {
+      const value = localStorage.getItem(key)
+      console.log(
+        `Retrieved value "${value}" for key "${key}" from localStorage.`,
+      )
+      return value
+    } catch (error) {
+      console.error(
+        `Error retrieving value for key "${key}" from localStorage: ${error}`,
+      )
+    }
+  }
+
+  // Function to set a localStorage value
+  const setLocalStorageValue = (key, value) => {
+    try {
+      localStorage.setItem(key, value)
+    } catch (error) {
+      console.error("Error setting localStorage value")
+    }
+  }
+
   const nextArrow = document.getElementById("nextButton")
   const underSixteen = document.getElementById("underSixteen")
   const parentNameInput = document.getElementById("parent-name")
@@ -385,29 +409,6 @@ window.addEventListener("load", function () {
     30.87, 52.48, 67.61, 78.2, 85.61, 90.8, 94.43, 96.97, 98.75, 100,
   ]
 
-  // Function to get a localStorage value
-  const getLocalStorageValue = (key) => {
-    try {
-      const value = localStorage.getItem(key)
-      console.log(
-        `Retrieved value "${value}" for key "${key}" from localStorage.`,
-      )
-      return value
-    } catch (error) {
-      console.error(
-        `Error retrieving value for key "${key}" from localStorage: ${error}`,
-      )
-    }
-  }
-
-  // Function to set a localStorage value
-  const setLocalStorageValue = (key, value) => {
-    try {
-      localStorage.setItem(key, value)
-    } catch (error) {
-      console.error("Error setting localStorage value")
-    }
-  }
   // When the page loads, read localStorage value and update hidden form input
   const campaignId = getLocalStorageValue("campaignId")
   const campaignIdInput = document.getElementById("campaignId")
