@@ -547,11 +547,15 @@ window.addEventListener("load", function () {
     documentsSection.querySelectorAll(".w-radio-input")
   preferredLang = document.getElementById("preferred-lang")
   preferredLangInput = document.getElementById("preferred-lang-input")
+  const emergencyContact = document.getElementById("emergency-contact")
+  const emergencyContactOptions = emergencyContact.querySelectorAll(
+    'input[type="radio"]',
+  )
   const emergencyDetails = document.getElementById("emergency-details")
   const emergencyRequiredFields =
     emergencyDetails.querySelectorAll('input[type="text"]')
   const repeatMedication = document.getElementById("repeat-medication")
-  const repeatMedicationOptions = addressChanged.querySelectorAll(
+  const repeatMedicationOptions = repeatMedication.querySelectorAll(
     'input[type="radio"]',
   )
 
@@ -620,6 +624,13 @@ window.addEventListener("load", function () {
     }
   }
 
+  // Repeat medication options
+  emergencyContactOptions.forEach((input) => {
+    input.addEventListener("change", function () {
+      emergencyRepeatLogic()
+    })
+  })
+
   // Emergency contact options
   document
     .querySelectorAll('input[name="Emergency-contact"]')
@@ -629,28 +640,24 @@ window.addEventListener("load", function () {
       }
       elem.addEventListener("change", function () {
         hasEmergencyContact = this.value
-        emergencyContactLogic()
+        emergencyRepeatLogic()
       })
     })
 
-  function emergencyContactLogic() {
+  function emergencyRepeatLogic() {
+    emergencyContact.classList.remove("hidden")
+    emergencyContactOptions.forEach((input) => {
+      requireInput(input, true)
+    })
     if (hasEmergencyContact === "Yes") {
       emergencyDetails.classList.remove("hidden")
       emergencyRequiredFields.forEach((input) => {
-        requireInput(input, true)
-      })
-      repeatMedication.classList.remove("hidden")
-      repeatMedicationOptions.forEach((input) => {
         requireInput(input, true)
       })
     }
     if (hasEmergencyContact === "No") {
       emergencyDetails.classList.add("hidden")
       emergencyRequiredFields.forEach((input) => {
-        requireInput(input, false)
-      })
-      repeatMedication.classList.add("hidden")
-      repeatMedicationOptions.forEach((input) => {
         requireInput(input, false)
       })
     }
