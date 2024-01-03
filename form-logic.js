@@ -633,7 +633,7 @@ window.addEventListener("load", function () {
       })
     })
 
-  function emergencyDetailsLogic() {
+  function emergencyContactLogic() {
     if (hasEmergencyContact === "Yes") {
       emergencyDetails.classList.remove("hidden")
       emergencyRequiredFields.forEach((input) => {
