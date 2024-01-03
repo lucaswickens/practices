@@ -625,7 +625,7 @@ window.addEventListener("load", function () {
   }
 
   // Repeat medication options
-  emergencyContactOptions.forEach((input) => {
+  repeatMedicationOptions.forEach((input) => {
     input.addEventListener("change", function () {
       emergencyRepeatLogic()
     })
