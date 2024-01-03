@@ -547,6 +547,13 @@ window.addEventListener("load", function () {
     documentsSection.querySelectorAll(".w-radio-input")
   preferredLang = document.getElementById("preferred-lang")
   preferredLangInput = document.getElementById("preferred-lang-input")
+  const emergencyDetails = document.getElementById("emergency-details")
+  const emergencyRequiredFields =
+    emergencyDetails.querySelectorAll('input[type="text"]')
+  const repeatMedication = document.getElementById("repeat-medication")
+  const repeatMedicationOptions = addressChanged.querySelectorAll(
+    'input[type="radio"]',
+  )
 
   // State
   let registeredBefore
@@ -558,6 +565,7 @@ window.addEventListener("load", function () {
   let documents
   let needsInterpreter
   let currentEthnicity
+  let hasEmergencyContact
 
   function getInputType(inputElement) {
     // Check if the provided element is an input
@@ -609,6 +617,42 @@ window.addEventListener("load", function () {
       if (selectedDiv) {
         selectedDiv.classList.remove("hidden")
       }
+    }
+  }
+
+  // Emergency contact options
+  document
+    .querySelectorAll('input[name="Emergency-contact"]')
+    .forEach((elem) => {
+      if (elem.checked) {
+        hasEmergencyContact = elem.value
+      }
+      elem.addEventListener("change", function () {
+        hasEmergencyContact = this.value
+        emergencyContactLogic()
+      })
+    })
+
+  function emergencyDetailsLogic() {
+    if (hasEmergencyContact === "Yes") {
+      emergencyDetails.classList.remove("hidden")
+      emergencyRequiredFields.forEach((input) => {
+        requireInput(input, true)
+      })
+      repeatMedication.classList.remove("hidden")
+      repeatMedicationOptions.forEach((input) => {
+        requireInput(input, true)
+      })
+    }
+    if (hasEmergencyContact === "No") {
+      emergencyDetails.classList.add("hidden")
+      emergencyRequiredFields.forEach((input) => {
+        requireInput(input, false)
+      })
+      repeatMedication.classList.add("hidden")
+      repeatMedicationOptions.forEach((input) => {
+        requireInput(input, false)
+      })
     }
   }
 
