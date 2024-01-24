@@ -311,8 +311,7 @@ window.addEventListener("load", function () {
       show_all_for_postcode: false,
       show_all_for_postcode_text: "Show all...",
       highlight_suggestion: true,
-      highlight_suggestion_start_tag:
-        "<b class='b-search'>" /* highlighted suggestion text start tag */,
+      highlight_suggestion_start_tag: "<b class='b-search'>",
       highlight_suggestion_end_tag:
         "</b>" /* highlighted suggestion text end tag */,
       list_width: undefined /* if true, set the list width */,
@@ -321,7 +320,7 @@ window.addEventListener("load", function () {
       suggestion_template:
         undefined /* the suggestion template (see Autocomplete API)*/,
       bind_output_fields: true /* if true, bind the output_fields to the address*/,
-      input_focus_on_select: true /* if true, sets the focus to the textbox after selecting an address*/,
+      input_focus_on_select: false /* if true, sets the focus to the textbox after selecting an address*/,
       debug: false /* if true, logs behavior */,
       enable_get: true /* if true, retreives address on select */,
       location: {
