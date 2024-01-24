@@ -263,7 +263,12 @@ window.addEventListener("load", function () {
   const routeField = document.getElementById("route")
   const cityField = document.getElementById("city")
   const postcodeField = document.getElementById("postcode")
+  const previousFlatField = document.getElementById("previous_flat")
+  const previousRouteField = document.getElementById("previous_route")
+  const previousCityField = document.getElementById("previous_city")
+  const previousPostcodeField = document.getElementById("previous_postcode")
   const addressDetails = document.getElementById("address-details")
+  const previousAddressDetails = document.getElementById("address-details")
   noAddressLink.addEventListener("click", () => {
     hasAddressField.value = "No"
     requireInput(autocompleteInput, false)
@@ -298,7 +303,7 @@ window.addEventListener("load", function () {
         thoroughfare: "route",
         postcode: "postcode",
       },
-      id_prefix: "getAddress-autocomplete",
+      id_prefix: "primary-autocomplete",
       delay: 150,
       minimum_characters: 2,
       clear_list_on_select: true,
@@ -324,7 +329,7 @@ window.addEventListener("load", function () {
   const additionalFields = document.getElementById("additionalFields")
 
   document.addEventListener(
-    "getaddress-autocomplete-address-selected",
+    "primary-autocomplete-address-selected",
     function (e) {
       // Require inputs
       requireInput(routeField, true)
@@ -361,7 +366,7 @@ window.addEventListener("load", function () {
         thoroughfare: "previous_route",
         postcode: "previous_postcode",
       },
-      id_prefix: "getAddress-autocomplete",
+      id_prefix: "previous-autocomplete",
       delay: 150,
       minimum_characters: 2,
       clear_list_on_select: true,
@@ -384,51 +389,35 @@ window.addEventListener("load", function () {
     },
   )
 
-  // const previousAutocomplete = new google.maps.places.Autocomplete(
-  //   previousAutocompleteInput,
-  //   options,
-  // )
-
-  // previousAutocomplete.addListener("place_changed", () => {
-  //   const previousPlace = previousAutocomplete.getPlace()
-  //   previousPlace.address_components.forEach((component) => {
-  //     const addressType = component.types[0]
-  //     switch (addressType) {
-  //       case "street_number":
-  //         document.getElementById("previous_street_number").value =
-  //           component.long_name
-  //         break
-  //       case "route":
-  //         document.getElementById("previous_route").value = component.long_name
-  //         break
-  //       case "postal_town":
-  //         document.getElementById("previous_city").value = component.long_name
-  //         break
-  //       case "postal_code":
-  //         document.getElementById("previous_postcode").value =
-  //           component.long_name
-  //         break
-  //       case "administrative_area_level_1":
-  //         document.getElementById("previous_country").value =
-  //           component.long_name
-  //         break
-  //     }
-  //   })
-  //   if (
-  //     document
-  //       .getElementById("previousAdditionalFields")
-  //       .classList.contains("hidden")
-  //   ) {
-  //     document
-  //       .getElementById("previousAdditionalFields")
-  //       .classList.remove("hidden")
-  //     setTimeout(() => {
-  //       document.getElementById("previous_additional").focus()
-  //     }, 401)
-  //   } else {
-  //     document.getElementById("previous_additional").focus()
-  //   }
-  // })
+  document.addEventListener(
+    "previous-autocomplete-address-selected",
+    function (e) {
+      // Require inputs
+      requireInput(previousRouteField, true)
+      requireInput(previousCityField, true)
+      requireInput(previousPostcodeField, true)
+      // Has address
+      hasAddressField.value = "Yes"
+      noAddressContainer.classList.add("hidden")
+      // Focus on flat field
+      if (
+        document
+          .getElementById("previousAadditionalFields")
+          .classList.contains("hidden")
+      ) {
+        document
+          .getElementById("previousAdditionalFields")
+          .classList.remove("hidden")
+        setTimeout(() => {
+          previousFlatField.focus()
+        }, 301)
+      } else {
+        previousFlatField.focus()
+      }
+      // Record address details
+      previousAddressDetails.value = JSON.stringify(e.address)
+    },
+  )
 
   // Previous last name link
   const previousLastNameSection = document.getElementById(
