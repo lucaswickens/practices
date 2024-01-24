@@ -369,7 +369,8 @@ window.addEventListener("load", function () {
   document.addEventListener(
     "getaddress-autocomplete-address-selected",
     function (e) {
-      if (e.detail.id_prefix === "primary-autocomplete") {
+      console.log(e)
+      if (e.id_prefix === "primary-autocomplete") {
         // Require inputs
         requireInput(routeField, true)
         requireInput(cityField, true)
@@ -393,7 +394,7 @@ window.addEventListener("load", function () {
         // Record address details
         addressDetails.value = JSON.stringify(e.address)
       }
-      if (e.detail.id_prefix === "previous-autocomplete") {
+      if (e.id_prefix === "previous-autocomplete") {
         // Require inputs
         requireInput(previousRouteField, true)
         requireInput(previousCityField, true)
