@@ -254,114 +254,177 @@ window.addEventListener("load", function () {
   })
 
   // Address lookup
-  const options = {
-    componentRestrictions: { country: "uk" },
-  }
-
-  const autocompleteInput = document.getElementById("autocomplete")
-  const autocomplete = new google.maps.places.Autocomplete(
-    autocompleteInput,
-    options,
+  getAddress.autocomplete(
+    "autocomplete",
+    "6EZnzd4wQUmpxswGBNy6qQ41568",
+    /*options*/ {
+      output_fields: {
+        latitude: "latitude" /* The id of the element bound to 'latitude' */,
+        longitude: "longitude" /* The id of the element bound to 'longitude' */,
+        town_or_city:
+          "town_or_city" /* The id of the element bound to 'town_or_city' */,
+        building_number:
+          "street_number" /* The id of the element bound to 'building_number' */,
+        building_name:
+          "flat" /* The id of the element bound to 'building_name' */,
+        thoroughfare:
+          "route" /* The id of the element bound to 'thoroughfare' */,
+        district: "city" /* The id of the element bound to 'district' */,
+        postcode: "postcode" /* The id of the element bound to 'postcode' */,
+      },
+      id_prefix:
+        "getAddress-autocomplete" /* The id of the textbox and list container */,
+      delay: 150 /* millisecond delay between keypress and API call */,
+      minimum_characters: 2 /* minimum characters to initiate an API call */,
+      clear_list_on_select: true /* if true, clears list on suggestion selected */,
+      select_on_focus: true /* if true, highlights textbox characters on focus*/,
+      show_all_for_postcode: false /* if true, shows all addresses for postcode*/,
+      show_all_for_postcode_text: "Show all..." /* show all suggestion text*/,
+      input_class_names: [] /* textbox class names */,
+      input_show_class_names: [] /* textbox class names on show */,
+      list_class_names: [] /* list class names */,
+      container_class_names: [] /* container class names */,
+      suggestion_class_names: [] /* suggestion class names */,
+      highlight_suggestion: true /* if true, highlights matched suggestion text */,
+      highlight_suggestion_start_tag:
+        "<b class='b-search'>" /* highlighted suggestion text start tag */,
+      highlight_suggestion_end_tag:
+        "</b>" /* highlighted suggestion text end tag */,
+      list_width: undefined /* if true, set the list width */,
+      suggestion_count: 6 /* number of retreived suggestions (max 20) */,
+      auto_calc_list_height: true /* if true, calculates the list's height */,
+      suggestion_template:
+        undefined /* the suggestion template (see Autocomplete API)*/,
+      bind_output_fields: true /* if true, bind the output_fields to the address*/,
+      input_focus_on_select: true /* if true, sets the focus to the textbox after selecting an address*/,
+      debug: false /* if true, logs behavior */,
+      enable_get: true /* if true, retreives address on select */,
+      location: {
+        latitude: 53.35861761761171,
+        longitude: -1.46506152508536,
+      },
+    },
   )
 
-  autocomplete.addListener("place_changed", () => {
-    const place = autocomplete.getPlace()
-    requireInput(routeField, true)
-    requireInput(cityField, true)
-    requireInput(postcodeField, true)
+  const additionalFields = document.getElementById("additionalFields")
 
-    place.address_components.forEach((component) => {
-      const addressType = component.types[0]
-      switch (addressType) {
-        case "street_number":
-          streetNoField.value = component.long_name
-          streetNoField.dispatchEvent(
-            new Event("input", { bubbles: true, cancelable: true }),
-          )
-          break
-        case "route":
-          routeField.value = component.long_name
-          routeField.dispatchEvent(
-            new Event("input", { bubbles: true, cancelable: true }),
-          )
-          break
-        case "postal_town":
-          cityField.value = component.long_name
-          cityField.dispatchEvent(
-            new Event("input", { bubbles: true, cancelable: true }),
-          )
-          break
-        case "postal_code":
-          postcodeField.value = component.long_name
-          postcodeField.dispatchEvent(
-            new Event("input", { bubbles: true, cancelable: true }),
-          )
-          break
-      }
-    })
-    hasAddressField.value = "Yes"
-    noAddressContainer.classList.add("hidden")
-    if (
-      document.getElementById("additionalFields").classList.contains("hidden")
-    ) {
-      document.getElementById("additionalFields").classList.remove("hidden")
-      setTimeout(() => {
-        document.getElementById("flat").focus()
-      }, 401)
-    } else {
-      document.getElementById("flat").focus()
-    }
-  })
-
-  // Address lookup - previous address
-  const previousAutocompleteInput = document.getElementById(
-    "previous-address-input",
-  )
-  const previousAutocomplete = new google.maps.places.Autocomplete(
-    previousAutocompleteInput,
-    options,
+  document.addEventListener(
+    "getaddress-autocomplete-address-selected",
+    function (e) {
+      console.log(e.address)
+      console.log(e.latitude + " " + e.longitude)
+      additionalFields.classList.remove("hidden")
+    },
   )
 
-  previousAutocomplete.addListener("place_changed", () => {
-    const previousPlace = previousAutocomplete.getPlace()
-    previousPlace.address_components.forEach((component) => {
-      const addressType = component.types[0]
-      switch (addressType) {
-        case "street_number":
-          document.getElementById("previous_street_number").value =
-            component.long_name
-          break
-        case "route":
-          document.getElementById("previous_route").value = component.long_name
-          break
-        case "postal_town":
-          document.getElementById("previous_city").value = component.long_name
-          break
-        case "postal_code":
-          document.getElementById("previous_postcode").value =
-            component.long_name
-          break
-        case "administrative_area_level_1":
-          document.getElementById("previous_country").value =
-            component.long_name
-          break
-      }
-    })
-    if (
-      document
-        .getElementById("previousAdditionalFields")
-        .classList.contains("hidden")
-    ) {
-      document
-        .getElementById("previousAdditionalFields")
-        .classList.remove("hidden")
-      setTimeout(() => {
-        document.getElementById("previous_additional").focus()
-      }, 401)
-    } else {
-      document.getElementById("previous_additional").focus()
-    }
-  })
+  // const options = {
+  //   componentRestrictions: { country: "uk" },
+  // }
+
+  // const autocompleteInput = document.getElementById("autocomplete")
+  // const autocomplete = new google.maps.places.Autocomplete(
+  //   autocompleteInput,
+  //   options,
+  // )
+
+  // autocomplete.addListener("place_changed", () => {
+  //   const place = autocomplete.getPlace()
+  //   requireInput(routeField, true)
+  //   requireInput(cityField, true)
+  //   requireInput(postcodeField, true)
+
+  //   place.address_components.forEach((component) => {
+  //     const addressType = component.types[0]
+  //     switch (addressType) {
+  //       case "street_number":
+  //         streetNoField.value = component.long_name
+  //         streetNoField.dispatchEvent(
+  //           new Event("input", { bubbles: true, cancelable: true }),
+  //         )
+  //         break
+  //       case "route":
+  //         routeField.value = component.long_name
+  //         routeField.dispatchEvent(
+  //           new Event("input", { bubbles: true, cancelable: true }),
+  //         )
+  //         break
+  //       case "postal_town":
+  //         cityField.value = component.long_name
+  //         cityField.dispatchEvent(
+  //           new Event("input", { bubbles: true, cancelable: true }),
+  //         )
+  //         break
+  //       case "postal_code":
+  //         postcodeField.value = component.long_name
+  //         postcodeField.dispatchEvent(
+  //           new Event("input", { bubbles: true, cancelable: true }),
+  //         )
+  //         break
+  //     }
+  //   })
+  //   hasAddressField.value = "Yes"
+  //   noAddressContainer.classList.add("hidden")
+  //   if (
+  //     document.getElementById("additionalFields").classList.contains("hidden")
+  //   ) {
+  //     document.getElementById("additionalFields").classList.remove("hidden")
+  //     setTimeout(() => {
+  //       document.getElementById("flat").focus()
+  //     }, 401)
+  //   } else {
+  //     document.getElementById("flat").focus()
+  //   }
+  // })
+
+  // // Address lookup - previous address
+  // const previousAutocompleteInput = document.getElementById(
+  //   "previous-address-input",
+  // )
+  // const previousAutocomplete = new google.maps.places.Autocomplete(
+  //   previousAutocompleteInput,
+  //   options,
+  // )
+
+  // previousAutocomplete.addListener("place_changed", () => {
+  //   const previousPlace = previousAutocomplete.getPlace()
+  //   previousPlace.address_components.forEach((component) => {
+  //     const addressType = component.types[0]
+  //     switch (addressType) {
+  //       case "street_number":
+  //         document.getElementById("previous_street_number").value =
+  //           component.long_name
+  //         break
+  //       case "route":
+  //         document.getElementById("previous_route").value = component.long_name
+  //         break
+  //       case "postal_town":
+  //         document.getElementById("previous_city").value = component.long_name
+  //         break
+  //       case "postal_code":
+  //         document.getElementById("previous_postcode").value =
+  //           component.long_name
+  //         break
+  //       case "administrative_area_level_1":
+  //         document.getElementById("previous_country").value =
+  //           component.long_name
+  //         break
+  //     }
+  //   })
+  //   if (
+  //     document
+  //       .getElementById("previousAdditionalFields")
+  //       .classList.contains("hidden")
+  //   ) {
+  //     document
+  //       .getElementById("previousAdditionalFields")
+  //       .classList.remove("hidden")
+  //     setTimeout(() => {
+  //       document.getElementById("previous_additional").focus()
+  //     }, 401)
+  //   } else {
+  //     document.getElementById("previous_additional").focus()
+  //   }
+  // })
 
   // No address link
   const noAddressLink = document.getElementById("no-address-link")
