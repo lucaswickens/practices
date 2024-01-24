@@ -255,6 +255,9 @@ window.addEventListener("load", function () {
 
   // No address link
   const autocompleteInput = document.getElementById("autocomplete")
+  const previousAutocompleteInput = document.getElementById(
+    "previous-address-input",
+  )
   const noAddressLink = document.getElementById("no-address-link")
   const manualLink = document.getElementById("manual-link")
   const hasAddressField = document.getElementById("has-address")
@@ -370,7 +373,7 @@ window.addEventListener("load", function () {
     "getaddress-autocomplete-address-selected",
     function (e) {
       console.log(e)
-      if (e.id_prefix === "primary-autocomplete") {
+      if (e.target === autocompleteInput) {
         // Require inputs
         requireInput(routeField, true)
         requireInput(cityField, true)
@@ -394,7 +397,7 @@ window.addEventListener("load", function () {
         // Record address details
         addressDetails.value = JSON.stringify(e.address)
       }
-      if (e.id_prefix === "previous-autocomplete") {
+      if (e.target === previousAutocompleteInput) {
         // Require inputs
         requireInput(previousRouteField, true)
         requireInput(previousCityField, true)
