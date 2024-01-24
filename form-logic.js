@@ -253,6 +253,42 @@ window.addEventListener("load", function () {
     }
   })
 
+  // No address link
+  const noAddressLink = document.getElementById("no-address-link")
+  const manualLink = document.getElementById("manual-link")
+  const hasAddressField = document.getElementById("has-address")
+  const noAddressContainer = document.getElementById("no-address-cont")
+  const routeField = document.getElementById("route")
+  const cityField = document.getElementById("city")
+  const postcodeField = document.getElementById("postcode")
+  noAddressLink.addEventListener("click", () => {
+    hasAddressField.value = "No"
+    requireInput(autocompleteInput, false)
+    requireInput(routeField, false)
+    requireInput(cityField, false)
+    requireInput(postcodeField, false)
+    nextArrow.click()
+  })
+  manualLink.addEventListener("click", () => {
+    hasAddressField.value = "Yes"
+    requireInput(autocompleteInput, false)
+    requireInput(routeField, true)
+    requireInput(cityField, true)
+    requireInput(postcodeField, true)
+    noAddressContainer.classList.add("hidden")
+    additionalFields.classList.remove("hidden")
+    if (
+      document.getElementById("additionalFields").classList.contains("hidden")
+    ) {
+      document.getElementById("additionalFields").classList.remove("hidden")
+      setTimeout(() => {
+        document.getElementById("flat").focus()
+      }, 301)
+    } else {
+      document.getElementById("flat").focus()
+    }
+  })
+
   // Address lookup
   getAddress.autocomplete(
     "autocomplete",
@@ -327,13 +363,12 @@ window.addEventListener("load", function () {
         document.getElementById("additionalFields").classList.remove("hidden")
         setTimeout(() => {
           document.getElementById("flat").focus()
-        }, 401)
+        }, 301)
       } else {
         document.getElementById("flat").focus()
       }
       // Log address and latlong
       console.log(e.address)
-      console.log(e.latitude + " " + e.longitude)
     },
   )
 
@@ -445,23 +480,6 @@ window.addEventListener("load", function () {
   //     document.getElementById("previous_additional").focus()
   //   }
   // })
-
-  // No address link
-  const noAddressLink = document.getElementById("no-address-link")
-  const hasAddressField = document.getElementById("has-address")
-  const noAddressContainer = document.getElementById("no-address-cont")
-  const streetNoField = document.getElementById("street_number")
-  const routeField = document.getElementById("route")
-  const cityField = document.getElementById("city")
-  const postcodeField = document.getElementById("postcode")
-  noAddressLink.addEventListener("click", () => {
-    hasAddressField.value = "No"
-    requireInput(autocompleteInput, false)
-    requireInput(routeField, false)
-    requireInput(cityField, false)
-    requireInput(postcodeField, false)
-    nextArrow.click()
-  })
 
   // Previous last name link
   const previousLastNameSection = document.getElementById(
