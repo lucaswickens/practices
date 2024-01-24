@@ -311,9 +311,29 @@ window.addEventListener("load", function () {
   document.addEventListener(
     "getaddress-autocomplete-address-selected",
     function (e) {
+      // Require inputs
+      requireInput(routeField, true)
+      requireInput(cityField, true)
+      requireInput(postcodeField, true)
+      // Has address
+      hasAddressField.value = "Yes"
+      noAddressContainer.classList.add("hidden")
+      // Show fields
+      additionalFields.classList.remove("hidden")
+      // Focus on flat field
+      if (
+        document.getElementById("additionalFields").classList.contains("hidden")
+      ) {
+        document.getElementById("additionalFields").classList.remove("hidden")
+        setTimeout(() => {
+          document.getElementById("flat").focus()
+        }, 401)
+      } else {
+        document.getElementById("flat").focus()
+      }
+      // Log address and latlong
       console.log(e.address)
       console.log(e.latitude + " " + e.longitude)
-      additionalFields.classList.remove("hidden")
     },
   )
 
