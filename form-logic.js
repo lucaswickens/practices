@@ -263,6 +263,7 @@ window.addEventListener("load", function () {
   const routeField = document.getElementById("route")
   const cityField = document.getElementById("city")
   const postcodeField = document.getElementById("postcode")
+  const addressDetails = document.getElementById("address-details")
   noAddressLink.addEventListener("click", () => {
     hasAddressField.value = "No"
     requireInput(autocompleteInput, false)
@@ -281,7 +282,6 @@ window.addEventListener("load", function () {
     additionalFields.classList.remove("hidden")
     document.getElementById("additionalFields").classList.remove("hidden")
     setTimeout(() => {
-      console.log("focusing flat field - manual")
       flatField.focus()
     }, 301)
   })
@@ -337,17 +337,15 @@ window.addEventListener("load", function () {
       if (
         document.getElementById("additionalFields").classList.contains("hidden")
       ) {
-        console.log("contains hidden - searched")
         document.getElementById("additionalFields").classList.remove("hidden")
         setTimeout(() => {
           flatField.focus()
         }, 301)
       } else {
-        console.log("doesn't contain hidden - searched")
         flatField.focus()
       }
-      // Log address and latlong
-      console.log(e.address)
+      // Record address details
+      addressDetails.value = JSON.stringify(e.address)
     },
   )
 
@@ -478,14 +476,14 @@ window.addEventListener("load", function () {
         called = true
         return fn(...args)
       } else {
-        console.log("Function already ran")
+        console.log("Already ran")
       }
     }
   }
   const emailCapture = createSingletonFunction(() => {
     const abandoned = getLocalStorageValue("abandoned")
     if (abandoned !== "true") {
-      console.log("Send AJAX")
+      console.log("Reminder set")
       setLocalStorageValue("abandoned", true)
       fetch("https://api.form-data.com/f/n7036mvhghdbwvzm7o3z1o", {
         method: "post",
