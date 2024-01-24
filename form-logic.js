@@ -326,34 +326,6 @@ window.addEventListener("load", function () {
     },
   )
 
-  const additionalFields = document.getElementById("additionalFields")
-
-  document.addEventListener(
-    "primary-autocomplete-address-selected",
-    function (e) {
-      // Require inputs
-      requireInput(routeField, true)
-      requireInput(cityField, true)
-      requireInput(postcodeField, true)
-      // Has address
-      hasAddressField.value = "Yes"
-      noAddressContainer.classList.add("hidden")
-      // Focus on flat field
-      if (
-        document.getElementById("additionalFields").classList.contains("hidden")
-      ) {
-        document.getElementById("additionalFields").classList.remove("hidden")
-        setTimeout(() => {
-          flatField.focus()
-        }, 301)
-      } else {
-        flatField.focus()
-      }
-      // Record address details
-      addressDetails.value = JSON.stringify(e.address)
-    },
-  )
-
   // // Address lookup - previous address
   getAddress.autocomplete(
     "previous-address-input",
@@ -389,33 +361,55 @@ window.addEventListener("load", function () {
     },
   )
 
+  const additionalFields = document.getElementById("additionalFields")
+  const previousAdditionalFields = document.getElementById(
+    "previousAdditionalFields",
+  )
+
   document.addEventListener(
-    "previous-autocomplete-address-selected",
+    "getaddress-autocomplete-address-selected",
     function (e) {
-      // Require inputs
-      requireInput(previousRouteField, true)
-      requireInput(previousCityField, true)
-      requireInput(previousPostcodeField, true)
-      // Has address
-      hasAddressField.value = "Yes"
-      noAddressContainer.classList.add("hidden")
-      // Focus on flat field
-      if (
-        document
-          .getElementById("previousAadditionalFields")
-          .classList.contains("hidden")
-      ) {
-        document
-          .getElementById("previousAdditionalFields")
-          .classList.remove("hidden")
-        setTimeout(() => {
-          previousFlatField.focus()
-        }, 301)
-      } else {
-        previousFlatField.focus()
+      if (e.detail.id_prefix === "primary-autocomplete") {
+        // Require inputs
+        requireInput(routeField, true)
+        requireInput(cityField, true)
+        requireInput(postcodeField, true)
+        // Has address
+        hasAddressField.value = "Yes"
+        noAddressContainer.classList.add("hidden")
+        // Focus on flat field
+        if (
+          document
+            .getElementById("additionalFields")
+            .classList.contains("hidden")
+        ) {
+          document.getElementById("additionalFields").classList.remove("hidden")
+          setTimeout(() => {
+            flatField.focus()
+          }, 301)
+        } else {
+          flatField.focus()
+        }
+        // Record address details
+        addressDetails.value = JSON.stringify(e.address)
       }
-      // Record address details
-      previousAddressDetails.value = JSON.stringify(e.address)
+      if (e.detail.id_prefix === "previous-autocomplete") {
+        // Require inputs
+        requireInput(previousRouteField, true)
+        requireInput(previousCityField, true)
+        requireInput(previousPostcodeField, true)
+        // Focus on flat field
+        if (previousAdditionalFields.classList.contains("hidden")) {
+          previousAdditionalFields.classList.remove("hidden")
+          setTimeout(() => {
+            previousFlatField.focus()
+          }, 301)
+        } else {
+          previousFlatField.focus()
+        }
+        // Record address details
+        previousAddressDetails.value = JSON.stringify(e.address)
+      }
     },
   )
 
