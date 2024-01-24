@@ -254,6 +254,7 @@ window.addEventListener("load", function () {
   })
 
   // No address link
+  const autocompleteInput = document.getElementById("autocomplete")
   const noAddressLink = document.getElementById("no-address-link")
   const manualLink = document.getElementById("manual-link")
   const hasAddressField = document.getElementById("has-address")
@@ -295,33 +296,21 @@ window.addEventListener("load", function () {
     "6EZnzd4wQUmpxswGBNy6qQ41568",
     /*options*/ {
       output_fields: {
-        latitude: "latitude" /* The id of the element bound to 'latitude' */,
-        longitude: "longitude" /* The id of the element bound to 'longitude' */,
-        town_or_city:
-          "town_or_city" /* The id of the element bound to 'town_or_city' */,
-        building_number:
-          "street_number" /* The id of the element bound to 'building_number' */,
-        building_name:
-          "flat" /* The id of the element bound to 'building_name' */,
-        thoroughfare:
-          "route" /* The id of the element bound to 'thoroughfare' */,
-        district: "city" /* The id of the element bound to 'district' */,
-        postcode: "postcode" /* The id of the element bound to 'postcode' */,
+        town_or_city: "town_or_city",
+        building_number: "street_number",
+        building_name: "flat",
+        thoroughfare: "route",
+        district: "city",
+        postcode: "postcode",
       },
-      id_prefix:
-        "getAddress-autocomplete" /* The id of the textbox and list container */,
-      delay: 150 /* millisecond delay between keypress and API call */,
-      minimum_characters: 2 /* minimum characters to initiate an API call */,
-      clear_list_on_select: true /* if true, clears list on suggestion selected */,
-      select_on_focus: true /* if true, highlights textbox characters on focus*/,
-      show_all_for_postcode: false /* if true, shows all addresses for postcode*/,
-      show_all_for_postcode_text: "Show all..." /* show all suggestion text*/,
-      input_class_names: [] /* textbox class names */,
-      input_show_class_names: [] /* textbox class names on show */,
-      list_class_names: [] /* list class names */,
-      container_class_names: [] /* container class names */,
-      suggestion_class_names: [] /* suggestion class names */,
-      highlight_suggestion: true /* if true, highlights matched suggestion text */,
+      id_prefix: "getAddress-autocomplete",
+      delay: 150,
+      minimum_characters: 2,
+      clear_list_on_select: true,
+      select_on_focus: true,
+      show_all_for_postcode: false,
+      show_all_for_postcode_text: "Show all...",
+      highlight_suggestion: true,
       highlight_suggestion_start_tag:
         "<b class='b-search'>" /* highlighted suggestion text start tag */,
       highlight_suggestion_end_tag:
