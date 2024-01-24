@@ -415,7 +415,7 @@ window.addEventListener("load", function () {
 
   // Update the hidden input's value
   if (campaignIdInput && campaignId) {
-    campaignIdInput.value = value
+    campaignIdInput.value = campaignId
   }
 
   // Create function that can only be called once
