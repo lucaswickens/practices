@@ -373,7 +373,7 @@ window.addEventListener("load", function () {
     "getaddress-autocomplete-address-selected",
     function (e) {
       console.log(e)
-      if (e.target === autocompleteInput) {
+      if (e.target.id === "autocomplete") {
         // Require inputs
         requireInput(routeField, true)
         requireInput(cityField, true)
@@ -397,7 +397,7 @@ window.addEventListener("load", function () {
         // Record address details
         addressDetails.value = JSON.stringify(e.address)
       }
-      if (e.target === previousAutocompleteInput) {
+      if (e.target.id === "previous-address-input") {
         // Require inputs
         requireInput(previousRouteField, true)
         requireInput(previousCityField, true)
