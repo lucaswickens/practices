@@ -262,12 +262,14 @@ window.addEventListener("load", function () {
   const manualLink = document.getElementById("manual-link")
   const hasAddressField = document.getElementById("has-address")
   const noAddressContainer = document.getElementById("no-address-cont")
-  const flatField = document.getElementById("flat")
-  const routeField = document.getElementById("route")
+  const line1 = document.getElementById("line1")
+  const line2 = document.getElementById("line2")
+  const line3 = document.getElementById("line3")
   const cityField = document.getElementById("city")
   const postcodeField = document.getElementById("postcode")
-  const previousFlatField = document.getElementById("previous_flat")
-  const previousRouteField = document.getElementById("previous_route")
+  const previousLine1 = document.getElementById("previous_line1")
+  const previousLine2 = document.getElementById("previous_line2")
+  const previousLine3 = document.getElementById("previous_line3")
   const previousCityField = document.getElementById("previous_city")
   const previousPostcodeField = document.getElementById("previous_postcode")
   const addressDetails = document.getElementById("address-details")
@@ -300,10 +302,10 @@ window.addEventListener("load", function () {
     "dtoken_hEDzcyiWMr0Iz904v8jhdb3CERN_rSQ_ewgyeS7Qg3aBE9-H03iXlI1eyhADhPZyOAqSnmU_97Sao_y5bn7B_l7EeTdvrWa2QSa6sHcJgyJ4DMFHLwLToxgGFxFO_SgqbiPV9qNhokBkfiKEQ5jk6pjVIl_h2JxVE5SlecdUAzEcY0B2Qv7WmlltKpU1yiUKhUIeusAuFedgxXHhRMVSCw",
     {
       output_fields: {
+        line_1: "line1",
+        line_2: "line2",
+        line_3: "line3",
         town_or_city: "city",
-        building_number: "street_number",
-        building_name: "flat",
-        thoroughfare: "route",
         postcode: "postcode",
       },
       id_prefix: "primary-autocomplete",
@@ -335,10 +337,10 @@ window.addEventListener("load", function () {
     "dtoken_hEDzcyiWMr0Iz904v8jhdb3CERN_rSQ_ewgyeS7Qg3aBE9-H03iXlI1eyhADhPZyOAqSnmU_97Sao_y5bn7B_l7EeTdvrWa2QSa6sHcJgyJ4DMFHLwLToxgGFxFO_SgqbiPV9qNhokBkfiKEQ5jk6pjVIl_h2JxVE5SlecdUAzEcY0B2Qv7WmlltKpU1yiUKhUIeusAuFedgxXHhRMVSCw",
     {
       output_fields: {
+        line_1: "previous_line1",
+        line_2: "previous_line2",
+        line_3: "previous_line3",
         town_or_city: "previous_city",
-        building_number: "previous_street_number",
-        building_name: "previous_flat",
-        thoroughfare: "previous_route",
         postcode: "previous_postcode",
       },
       id_prefix: "previous-autocomplete",
@@ -375,13 +377,13 @@ window.addEventListener("load", function () {
       console.log(e)
       if (e.target.id === "autocomplete") {
         // Require inputs
-        requireInput(routeField, true)
+        requireInput(line1, true)
         requireInput(cityField, true)
         requireInput(postcodeField, true)
         // Has address
         hasAddressField.value = "Yes"
         noAddressContainer.classList.add("hidden")
-        // Focus on flat field
+        // Focus on line 1
         if (
           document
             .getElementById("additionalFields")
@@ -389,27 +391,27 @@ window.addEventListener("load", function () {
         ) {
           document.getElementById("additionalFields").classList.remove("hidden")
           setTimeout(() => {
-            flatField.focus()
+            line1.focus()
           }, 301)
         } else {
-          flatField.focus()
+          line1.focus()
         }
         // Record address details
         addressDetails.value = JSON.stringify(e.address)
       }
       if (e.target.id === "previous-address-input") {
         // Require inputs
-        requireInput(previousRouteField, true)
+        requireInput(line1, true)
         requireInput(previousCityField, true)
         requireInput(previousPostcodeField, true)
-        // Focus on flat field
+        // Focus on line 1
         if (previousAdditionalFields.classList.contains("hidden")) {
           previousAdditionalFields.classList.remove("hidden")
           setTimeout(() => {
-            previousFlatField.focus()
+            previousLine1.focus()
           }, 301)
         } else {
-          previousFlatField.focus()
+          previousLine1.focus()
         }
         // Record address details
         previousAddressDetails.value = JSON.stringify(e.address)
