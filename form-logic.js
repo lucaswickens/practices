@@ -167,89 +167,27 @@ window.addEventListener("load", function () {
 
   const postcode = document.getElementById("postcode")
   const outCatchmentMessage = document.getElementById("outCatchmentMessage")
-  const eligible = document.getElementById("eligible")
+  const eligibleInICB = document.getElementById("eligibleInICB")
+  const eligibleOutICB = document.getElementById("eligibleOutICB")
   const consentBox = document.getElementById("consentBox")
-  const catchment = ["S2", "S8"]
-  const icb = [
-    "S1",
-    "S2",
-    "S3",
-    "S4",
-    "S5",
-    "S6",
-    "S7",
-    "S8",
-    "S9",
-    "S10",
-    "S11",
-    "S12",
-    "S13",
-    "S14",
-    "S17",
-    "S18",
-    "S19",
-    "S20",
-    "S21",
-    "S25",
-    "S26",
-    "S30",
-    "S31",
-    "S33",
-    "S35",
-    "S36",
-    "S43",
-    "S60",
-    "S61",
-    "S62",
-    "S63",
-    "S65",
-    "S66",
-    "S70",
-    "S71",
-    "S72",
-    "S73",
-    "S74",
-    "S75",
-    "S80",
-    "S81",
-    "S94",
-    "S95",
-    "S96",
-    "S97",
-    "S98",
-    "S99",
-    "DN1",
-    "DN2",
-    "DN3",
-    "DN4",
-    "DN5",
-    "DN6",
-    "DN7",
-    "DN8",
-    "DN9",
-    "DN10",
-    "DN11",
-    "DN12",
-    "DN55",
-  ]
   let inICB
   let inCatchment
   postcode.addEventListener("input", () => {
     inICB = icb.some((str) => postcode.value.startsWith(str))
     inCatchment = catchment.some((str) => postcode.value.startsWith(str))
     if (inICB) {
-      eligible.innerHTML = "You are eligible to register"
+      eligibleInICB.classList.add = "grid"
+      eligibleOutICB.classList.add = "hidden"
     } else {
-      eligible.innerHTML = "Please note"
+      eligibleInICB.classList.add = "hidden"
+      eligibleOutICB.classList.add = "grid"
     }
     if (inCatchment) {
       outCatchmentMessage.style.display = "none"
-      consentBox.innerHTML =
-        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre."
+      consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName}.`
     } else {
       outCatchmentMessage.style.display = "block"
-      consentBox.innerHTML =
-        "I understand that by registering, I am switching my NHS GP practice to Carrfield Medical Centre and I am not eligible for home visits."
+      consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName} and I am not eligible for home visits.`
     }
   })
 
@@ -293,74 +231,60 @@ window.addEventListener("load", function () {
   })
 
   // Address lookup
-  getAddress.autocomplete(
-    "autocomplete",
-    "dtoken_hEDzcyiWMr0Iz904v8jhdb3CERN_rSQ_ewgyeS7Qg3aBE9-H03iXlI1eyhADhPZyOAqSnmU_97Sao_y5bn7B_l7EeTdvrWa2QSa6sHcJgyJ4DMFHLwLToxgGFxFO_SgqbiPV9qNhokBkfiKEQ5jk6pjVIl_h2JxVE5SlecdUAzEcY0B2Qv7WmlltKpU1yiUKhUIeusAuFedgxXHhRMVSCw",
-    {
-      output_fields: {
-        line_1: "line1",
-        line_2: "line2",
-        line_3: "line3",
-        town_or_city: "city",
-        postcode: "postcode",
-      },
-      id_prefix: "primary-autocomplete",
-      delay: 150,
-      minimum_characters: 2,
-      clear_list_on_select: true,
-      select_on_focus: true,
-      show_all_for_postcode: false,
-      show_all_for_postcode_text: "Show all...",
-      highlight_suggestion: true,
-      highlight_suggestion_start_tag: "<b class='b-search'>",
-      highlight_suggestion_end_tag: "</b>",
-      suggestion_count: 7,
-      auto_calc_list_height: true,
-      bind_output_fields: true,
-      input_focus_on_select: false,
-      debug: false,
-      enable_get: true,
-      location: {
-        latitude: 53.35861761761171,
-        longitude: -1.46506152508536,
-      },
+  getAddress.autocomplete("autocomplete", domainToken, {
+    output_fields: {
+      line_1: "line1",
+      line_2: "line2",
+      line_3: "line3",
+      town_or_city: "city",
+      postcode: "postcode",
     },
-  )
+    id_prefix: "primary-autocomplete",
+    delay: 150,
+    minimum_characters: 2,
+    clear_list_on_select: true,
+    select_on_focus: true,
+    show_all_for_postcode: false,
+    show_all_for_postcode_text: "Show all...",
+    highlight_suggestion: true,
+    highlight_suggestion_start_tag: "<b class='b-search'>",
+    highlight_suggestion_end_tag: "</b>",
+    suggestion_count: 7,
+    auto_calc_list_height: true,
+    bind_output_fields: true,
+    input_focus_on_select: false,
+    debug: false,
+    enable_get: true,
+    location: practiceCoordinates,
+  })
 
   // // Address lookup - previous address
-  getAddress.autocomplete(
-    "previous-address-input",
-    "dtoken_hEDzcyiWMr0Iz904v8jhdb3CERN_rSQ_ewgyeS7Qg3aBE9-H03iXlI1eyhADhPZyOAqSnmU_97Sao_y5bn7B_l7EeTdvrWa2QSa6sHcJgyJ4DMFHLwLToxgGFxFO_SgqbiPV9qNhokBkfiKEQ5jk6pjVIl_h2JxVE5SlecdUAzEcY0B2Qv7WmlltKpU1yiUKhUIeusAuFedgxXHhRMVSCw",
-    {
-      output_fields: {
-        line_1: "previous_line1",
-        line_2: "previous_line2",
-        line_3: "previous_line3",
-        town_or_city: "previous_city",
-        postcode: "previous_postcode",
-      },
-      id_prefix: "previous-autocomplete",
-      delay: 150,
-      minimum_characters: 2,
-      clear_list_on_select: true,
-      select_on_focus: true,
-      show_all_for_postcode: false,
-      show_all_for_postcode_text: "Show all...",
-      highlight_suggestion: true,
-      highlight_suggestion_start_tag: "<b class='b-search'>",
-      highlight_suggestion_end_tag: "</b>",
-      suggestion_count: 7,
-      auto_calc_list_height: true,
-      bind_output_fields: true,
-      input_focus_on_select: false,
-      debug: false,
-      enable_get: true,
-      location: {
-        latitude: 53.35861761761171,
-        longitude: -1.46506152508536,
-      },
+  getAddress.autocomplete("previous-address-input", domainToken, {
+    output_fields: {
+      line_1: "previous_line1",
+      line_2: "previous_line2",
+      line_3: "previous_line3",
+      town_or_city: "previous_city",
+      postcode: "previous_postcode",
     },
-  )
+    id_prefix: "previous-autocomplete",
+    delay: 150,
+    minimum_characters: 2,
+    clear_list_on_select: true,
+    select_on_focus: true,
+    show_all_for_postcode: false,
+    show_all_for_postcode_text: "Show all...",
+    highlight_suggestion: true,
+    highlight_suggestion_start_tag: "<b class='b-search'>",
+    highlight_suggestion_end_tag: "</b>",
+    suggestion_count: 7,
+    auto_calc_list_height: true,
+    bind_output_fields: true,
+    input_focus_on_select: false,
+    debug: false,
+    enable_get: true,
+    location: practiceCoordinates,
+  })
 
   const additionalFields = document.getElementById("additionalFields")
   const previousAdditionalFields = document.getElementById(
