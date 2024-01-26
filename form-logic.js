@@ -166,28 +166,31 @@ window.addEventListener("load", function () {
   yearInput.addEventListener("input", checkAge)
 
   const postcode = document.getElementById("postcode")
-  const outCatchmentMessage = document.getElementById("outCatchmentMessage")
   const eligibleInICB = document.getElementById("eligibleInICB")
   const eligibleOutICB = document.getElementById("eligibleOutICB")
+  const eligibleInCatchment = document.getElementById("eligibleInCatchment")
   const consentBox = document.getElementById("consentBox")
   let inICB
   let inCatchment
   postcode.addEventListener("input", () => {
     inICB = icb.some((str) => postcode.value.startsWith(str))
     inCatchment = catchment.some((str) => postcode.value.startsWith(str))
+    console.log(inICB, inCatchment)
     if (inICB) {
       eligibleInICB.classList.add = "grid"
       eligibleOutICB.classList.add = "hidden"
+      if (inCatchment) {
+        consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName}.`
+        eligibleInCatchment.classList.add = "block"
+        eligibleInICB.classList.add = "hidden"
+      } else {
+        consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName} and I am not eligible for home visits.`
+        eligibleInCatchment.classList.add = "hidden"
+      }
     } else {
       eligibleInICB.classList.add = "hidden"
       eligibleOutICB.classList.add = "grid"
-    }
-    if (inCatchment) {
-      outCatchmentMessage.style.display = "none"
-      consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName}.`
-    } else {
-      outCatchmentMessage.style.display = "block"
-      consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName} and I am not eligible for home visits.`
+      eligibleInCatchment.classList.add = "hidden"
     }
   })
 
