@@ -234,7 +234,7 @@ window.addEventListener("load", function () {
   })
 
   // Address lookup
-  getAddress.autocomplete("autocomplete", domainToken, {
+  getAddress.autocomplete("autocomplete", "-fSB7HDYWk6hSeldIjqO7g41568", {
     output_fields: {
       line_1: "line1",
       line_2: "line2",
@@ -262,32 +262,36 @@ window.addEventListener("load", function () {
   })
 
   // // Address lookup - previous address
-  getAddress.autocomplete("previous-address-input", domainToken, {
-    output_fields: {
-      line_1: "previous_line1",
-      line_2: "previous_line2",
-      line_3: "previous_line3",
-      town_or_city: "previous_city",
-      postcode: "previous_postcode",
+  getAddress.autocomplete(
+    "previous-address-input",
+    "-fSB7HDYWk6hSeldIjqO7g41568",
+    {
+      output_fields: {
+        line_1: "previous_line1",
+        line_2: "previous_line2",
+        line_3: "previous_line3",
+        town_or_city: "previous_city",
+        postcode: "previous_postcode",
+      },
+      id_prefix: "previous-autocomplete",
+      delay: 150,
+      minimum_characters: 2,
+      clear_list_on_select: true,
+      select_on_focus: true,
+      show_all_for_postcode: false,
+      show_all_for_postcode_text: "Show all...",
+      highlight_suggestion: true,
+      highlight_suggestion_start_tag: "<b class='b-search'>",
+      highlight_suggestion_end_tag: "</b>",
+      suggestion_count: 7,
+      auto_calc_list_height: true,
+      bind_output_fields: true,
+      input_focus_on_select: false,
+      debug: false,
+      enable_get: true,
+      location: practiceCoordinates,
     },
-    id_prefix: "previous-autocomplete",
-    delay: 150,
-    minimum_characters: 2,
-    clear_list_on_select: true,
-    select_on_focus: true,
-    show_all_for_postcode: false,
-    show_all_for_postcode_text: "Show all...",
-    highlight_suggestion: true,
-    highlight_suggestion_start_tag: "<b class='b-search'>",
-    highlight_suggestion_end_tag: "</b>",
-    suggestion_count: 7,
-    auto_calc_list_height: true,
-    bind_output_fields: true,
-    input_focus_on_select: false,
-    debug: false,
-    enable_get: true,
-    location: practiceCoordinates,
-  })
+  )
 
   const additionalFields = document.getElementById("additionalFields")
   const previousAdditionalFields = document.getElementById(
