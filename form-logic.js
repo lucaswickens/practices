@@ -177,17 +177,21 @@ window.addEventListener("load", function () {
     inCatchment = catchment.some((str) => postcode.value.startsWith(str))
     console.log(inICB, inCatchment)
     if (inICB) {
+      console.log("in icb")
       eligibleOutICB.classList.add = "hidden"
       if (inCatchment) {
+        console.log("in icb, in catchment")
         consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName}.`
         eligibleInCatchment.classList.remove = "hidden"
         eligibleInICB.classList.add = "hidden"
       } else {
+        console.log("in icb, out catchment")
         consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName} and I am not eligible for home visits.`
         eligibleInCatchment.classList.add = "hidden"
         eligibleInICB.classList.remove = "hidden"
       }
     } else {
+      console.log("out icb, out catchment")
       eligibleOutICB.classList.remove = "hidden"
       eligibleInICB.classList.add = "hidden"
       eligibleInCatchment.classList.add = "hidden"
