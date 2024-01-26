@@ -204,9 +204,13 @@ window.addEventListener("load", function () {
   const hasAddressField = document.getElementById("has-address")
   const noAddressContainer = document.getElementById("no-address-cont")
   const line1 = document.getElementById("line1")
+  const line2 = document.getElementById("line2")
+  const line3 = document.getElementById("line3")
   const cityField = document.getElementById("city")
   const postcodeField = document.getElementById("postcode")
   const previousLine1 = document.getElementById("previous_line1")
+  const previousLine2 = document.getElementById("previous_line2")
+  const previousLine3 = document.getElementById("previous_line3")
   const previousCityField = document.getElementById("previous_city")
   const previousPostcodeField = document.getElementById("previous_postcode")
   const addressDetails = document.getElementById("address-details")
@@ -325,6 +329,22 @@ window.addEventListener("load", function () {
         }
         // Record address details
         addressDetails.value = JSON.stringify(e.address)
+        // Dispatch events
+        line1.dispatchEvent(
+          new Event("input", { bubbles: true, cancelable: true }),
+        )
+        line2.dispatchEvent(
+          new Event("input", { bubbles: true, cancelable: true }),
+        )
+        line3.dispatchEvent(
+          new Event("input", { bubbles: true, cancelable: true }),
+        )
+        cityField.dispatchEvent(
+          new Event("input", { bubbles: true, cancelable: true }),
+        )
+        postcodeField.dispatchEvent(
+          new Event("input", { bubbles: true, cancelable: true }),
+        )
       }
       if (e.target.id === "previous-address-input") {
         // Require inputs
