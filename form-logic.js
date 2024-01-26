@@ -175,26 +175,21 @@ window.addEventListener("load", function () {
   postcode.addEventListener("input", () => {
     inICB = icb.some((str) => postcode.value.startsWith(str))
     inCatchment = catchment.some((str) => postcode.value.startsWith(str))
-    console.log(inICB, inCatchment)
     if (inICB) {
-      console.log("in icb")
-      eligibleOutICB.classList.add = "hidden"
+      eligibleOutICB.classList.add("hidden")
       if (inCatchment) {
-        console.log("in icb, in catchment")
         consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName}.`
-        eligibleInCatchment.classList.remove = "hidden"
-        eligibleInICB.classList.add = "hidden"
+        eligibleInCatchment.classList.remove("hidden")
+        eligibleInICB.classList.add("hidden")
       } else {
-        console.log("in icb, out catchment")
         consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName} and I am not eligible for home visits.`
-        eligibleInCatchment.classList.add = "hidden"
-        eligibleInICB.classList.remove = "hidden"
+        eligibleInCatchment.classList.add("hidden")
+        eligibleInICB.classList.remove("hidden")
       }
     } else {
-      console.log("out icb, out catchment")
-      eligibleOutICB.classList.remove = "hidden"
-      eligibleInICB.classList.add = "hidden"
-      eligibleInCatchment.classList.add = "hidden"
+      eligibleOutICB.classList.remove("hidden")
+      eligibleInICB.classList.add("hidden")
+      eligibleInCatchment.classList.add("hidden")
     }
   })
 
@@ -309,7 +304,7 @@ window.addEventListener("load", function () {
   document.addEventListener(
     "getaddress-autocomplete-address-selected",
     function (e) {
-      console.log(e)
+      //console.log(e)
       if (e.target.id === "autocomplete") {
         // Require inputs
         requireInput(line1, true)
