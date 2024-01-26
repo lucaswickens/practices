@@ -208,8 +208,6 @@ window.addEventListener("load", function () {
   const cityField = document.getElementById("city")
   const postcodeField = document.getElementById("postcode")
   const previousLine1 = document.getElementById("previous_line1")
-  const previousLine2 = document.getElementById("previous_line2")
-  const previousLine3 = document.getElementById("previous_line3")
   const previousCityField = document.getElementById("previous_city")
   const previousPostcodeField = document.getElementById("previous_postcode")
   const addressDetails = document.getElementById("address-details")
@@ -217,7 +215,7 @@ window.addEventListener("load", function () {
   noAddressLink.addEventListener("click", () => {
     hasAddressField.value = "No"
     requireInput(autocompleteInput, false)
-    requireInput(routeField, false)
+    requireInput(line1, false)
     requireInput(cityField, false)
     requireInput(postcodeField, false)
     nextArrow.click()
@@ -225,7 +223,7 @@ window.addEventListener("load", function () {
   manualLink.addEventListener("click", () => {
     hasAddressField.value = "Yes"
     requireInput(autocompleteInput, false)
-    requireInput(routeField, true)
+    requireInput(line1, true)
     requireInput(cityField, true)
     requireInput(postcodeField, true)
     noAddressContainer.classList.add("hidden")
