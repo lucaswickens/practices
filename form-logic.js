@@ -851,6 +851,19 @@ window.addEventListener("load", function () {
       // Show birth details section and require place
       birthDetails.classList.remove("hidden")
       requireInput(birthPlaceInput, true)
+      // Show previous address question
+      hasPreviousAddressQuestion.classList.remove("hidden")
+      hasPreviousAddressOptions.forEach((input) => {
+        requireInput(input, true)
+      })
+      // If they have a previous address, show lookup
+      if (hasPreviousAddress === "Yes") {
+        previousAddress.classList.remove("hidden")
+      }
+      if (hasPreviousAddress === "No") {
+        previousAddress.classList.add("hidden")
+        previousAddressInput.value = ""
+      }
       if (countryBornInput === "None of the above" || recentlyMoved === "Yes") {
         // Show int country field if abroad
         if (countryBornInput === "None of the above") {
@@ -872,18 +885,6 @@ window.addEventListener("load", function () {
         interpreterOptions.forEach((input) => {
           requireInput(input, true)
         })
-        // Hide previous address question
-        hasPreviousAddressQuestion.classList.add("hidden")
-        hasPreviousAddressOptions.forEach((input) => {
-          requireInput(input, false)
-        })
-        hasPreviousAddressRedirected.forEach((div) => {
-          div.classList.remove("w--redirected-checked")
-        })
-        hasPreviousAddress = ""
-        // Hide previous address lookup
-        previousAddress.classList.add("hidden")
-        previousAddressInput.value = ""
         // If they have moved from EU, show documents question
         if (hasMovedFromEU === "Yes") {
           documentsSection.classList.remove("hidden")
@@ -975,19 +976,6 @@ window.addEventListener("load", function () {
         ehicDetailsInputs.forEach((input) => {
           requireInput(input, false)
         })
-        // Show previous address question
-        hasPreviousAddressQuestion.classList.remove("hidden")
-        hasPreviousAddressOptions.forEach((input) => {
-          requireInput(input, true)
-        })
-        // If they have a previous address, show lookup
-        if (hasPreviousAddress === "Yes") {
-          previousAddress.classList.remove("hidden")
-        }
-        if (hasPreviousAddress === "No") {
-          previousAddress.classList.add("hidden")
-          previousAddressInput.value = ""
-        }
       }
     }
   }
