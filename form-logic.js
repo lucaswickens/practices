@@ -193,6 +193,21 @@ window.addEventListener("load", function () {
     }
   })
 
+  // Manual address
+  function manualAddress() {
+    hasAddressField.value = "Yes"
+    requireInput(autocompleteInput, false)
+    requireInput(line1, true)
+    requireInput(cityField, true)
+    requireInput(postcodeField, true)
+    noAddressContainer.classList.add("hidden")
+    additionalFields.classList.remove("hidden")
+    document.getElementById("additionalFields").classList.remove("hidden")
+    setTimeout(() => {
+      line1.focus()
+    }, 301)
+  }
+
   // No address link
   const autocompleteInput = document.getElementById("autocomplete")
   const previousAutocompleteInput = document.getElementById(
@@ -221,17 +236,7 @@ window.addEventListener("load", function () {
     nextArrow.click()
   })
   manualLink.addEventListener("click", () => {
-    hasAddressField.value = "Yes"
-    requireInput(autocompleteInput, false)
-    requireInput(line1, true)
-    requireInput(cityField, true)
-    requireInput(postcodeField, true)
-    noAddressContainer.classList.add("hidden")
-    additionalFields.classList.remove("hidden")
-    document.getElementById("additionalFields").classList.remove("hidden")
-    setTimeout(() => {
-      flatField.focus()
-    }, 301)
+    manualAddress()
   })
 
   // Address lookup
@@ -298,12 +303,15 @@ window.addEventListener("load", function () {
   const previousAdditionalFields = document.getElementById(
     "previousAdditionalFields",
   )
+  let addressSelected = false
 
   document.addEventListener(
     "getaddress-autocomplete-address-selected",
     function (e) {
       //console.log(e)
       if (e.target.id === "autocomplete") {
+        // Set address selected
+        addressSelected = true
         // Require inputs
         requireInput(line1, true)
         requireInput(cityField, true)
@@ -461,6 +469,7 @@ window.addEventListener("load", function () {
               input.focus()
             }, 50)
           }
+          // Step 3 (contact)
           if (currentStep === "3") {
             phoneInputField.value = phoneInput.getNumber()
             if (window.location.pathname === "/forms/new-patients") {
@@ -471,6 +480,14 @@ window.addEventListener("load", function () {
               phoneInputField.value = phoneInput.getNumber()
             }
           }
+          // Step 4 (address)
+          if (currentStep === "4") {
+            if (!addressSelected) {
+              nextArrow.addEventListener("click", overrideNext, true)
+            } else {
+              nextArrow.removeEventListener("click", overrideNext, true)
+            }
+          }
         }
       }
     })
@@ -479,6 +496,12 @@ window.addEventListener("load", function () {
     stepObserver.observe(stepDiv, { childList: true, subtree: true })
   } else {
     console.error('Could not find the div with data-text="current-step"')
+  }
+
+  // Override step 4 next button
+  function overrideNext(event) {
+    event.stopPropagation()
+    manualAddress()
   }
 
   // Get elements
