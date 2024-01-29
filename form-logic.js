@@ -195,6 +195,7 @@ window.addEventListener("load", function () {
 
   // Manual address
   function manualAddress() {
+    addressSelected = true
     hasAddressField.value = "Yes"
     requireInput(autocompleteInput, false)
     requireInput(line1, true)
@@ -310,12 +311,12 @@ window.addEventListener("load", function () {
     function (e) {
       //console.log(e)
       if (e.target.id === "autocomplete") {
-        // Set address selected
-        addressSelected = true
         // Require inputs
         requireInput(line1, true)
         requireInput(cityField, true)
         requireInput(postcodeField, true)
+        // Set address selected
+        addressSelected = true
         // Has address
         hasAddressField.value = "Yes"
         noAddressContainer.classList.add("hidden")
@@ -480,14 +481,6 @@ window.addEventListener("load", function () {
               phoneInputField.value = phoneInput.getNumber()
             }
           }
-          // Step 4 (address)
-          if (currentStep === "4") {
-            if (!addressSelected) {
-              nextArrow.addEventListener("click", overrideNext, true)
-            } else {
-              nextArrow.removeEventListener("click", overrideNext, true)
-            }
-          }
         }
       }
     })
@@ -498,11 +491,15 @@ window.addEventListener("load", function () {
     console.error('Could not find the div with data-text="current-step"')
   }
 
-  // Override step 4 next button
-  function overrideNext(event) {
-    event.stopPropagation()
-    manualAddress()
-  }
+  // Handle next button for address
+  const addressNext = document.getElementById("addressNext")
+  addressNext.addEventListener("click", () => {
+    if (!addressSelected) {
+      manualAddress()
+    } else {
+      nextStep()
+    }
+  })
 
   // Get elements
   const addressChanged = document.getElementById("address-changed")
