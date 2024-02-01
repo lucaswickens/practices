@@ -191,6 +191,7 @@ window.addEventListener("load", function () {
         eligibleInICB.classList.remove("hidden")
       }
     } else {
+      consentBox.innerHTML = `I understand that by registering, I am switching my NHS GP practice to ${practiceName} and I am not eligible for home visits.`
       eligibleOutICB.classList.remove("hidden")
       eligibleInICB.classList.add("hidden")
       eligibleInCatchment.classList.add("hidden")
