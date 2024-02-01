@@ -170,11 +170,15 @@ window.addEventListener("load", function () {
   const eligibleOutICB = document.getElementById("eligibleOutICB")
   const eligibleInCatchment = document.getElementById("eligibleInCatchment")
   const consentBox = document.getElementById("consentBox")
+  const icbField = document.getElementById("icbField")
+  const catchmentField = document.getElementById("catchmentField")
   let inICB
   let inCatchment
   postcode.addEventListener("input", () => {
     inICB = icb.some((str) => postcode.value.startsWith(str))
     inCatchment = catchment.some((str) => postcode.value.startsWith(str))
+    icbField.value = inICB
+    catchmentField.value = inCatchment
     if (inICB) {
       eligibleOutICB.classList.add("hidden")
       if (inCatchment) {
