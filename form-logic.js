@@ -41,11 +41,9 @@ window.addEventListener("load", function () {
       if (res.ok) {
         console.log("Form submitted successfully")
         if (window.location.pathname === "/forms/new-patients") {
-          window.location.replace(`${window.location.origin}/thanks/register`)
+          window.location.replace("/thanks/register")
         } else {
-          window.location.replace(
-            `${window.location.origin}/thanks/register-additional`,
-          )
+          window.location.replace("/thanks/register-additional")
         }
       } else {
         console.error(
