@@ -23,6 +23,34 @@ window.addEventListener("load", function () {
     }
   }
 
+  const form = document.getElementById("regv3")
+  form.addEventListener("submit", async (event) => {
+    if (form.checkValidity()) {
+      event.preventDefault()
+      const url = form.action
+      const formData = new FormData(form)
+      const data = Object.fromEntries(formData.entries())
+      // Run any form validation code here
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+      if (res.ok) {
+        console.log("Form submitted successfully")
+        window.location.replace(`${window.location.origin}/blog`)
+      } else {
+        console.error(
+          "There was an error submitting the form. Server returned " +
+            res.status,
+        )
+      }
+      // const body = await res.json()
+    }
+  })
+
   const nextArrow = document.getElementById("nextButton")
   const underSixteen = document.getElementById("underSixteen")
   const parentNameInput = document.getElementById("parent-name")
