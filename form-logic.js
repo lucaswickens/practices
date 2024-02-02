@@ -40,7 +40,13 @@ window.addEventListener("load", function () {
       })
       if (res.ok) {
         console.log("Form submitted successfully")
-        window.location.replace(`${window.location.origin}/blog`)
+        if (window.location.pathname === "/forms/new-patients") {
+          window.location.replace(`${window.location.origin}/thanks/register`)
+        } else {
+          window.location.replace(
+            `${window.location.origin}/thanks/register-additional`,
+          )
+        }
       } else {
         console.error(
           "There was an error submitting the form. Server returned " +
