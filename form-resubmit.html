@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Resubmit Form</title>
+  </head>
+  <body>
+    <h1>Resubmit Form</h1>
+    <form id="resubmitForm">
+      <label for="jsonData">JSON Data:</label><br />
+      <textarea id="jsonData" name="jsonData" rows="20" cols="50"></textarea
+      ><br />
+      <input type="submit" value="Resubmit" />
+    </form>
+
+    <script>
+      document
+        .getElementById("resubmitForm")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault()
+          const jsonData = document.getElementById("jsonData").value
+          try {
+            const data = JSON.parse(jsonData)
+            const url = "https://api.form-data.com/f/831mjdnvludp3ek70518n"
+            const res = await fetch(url, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+
+            if (res.ok) {
+              console.log("Form resubmitted successfully")
+              alert("Form resubmitted successfully")
+            } else {
+              console.error("There was an error resubmitting the form.")
+              alert("Error resubmitting form: " + res.statusText)
+            }
+          } catch (error) {
+            console.error("Failed to parse JSON or send request", error)
+            alert("Failed to parse JSON or send request: " + error.message)
+          }
+        })
+    </script>
+  </body>
+</html>
