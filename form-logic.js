@@ -1008,3 +1008,11 @@ function scrollUp() {
 nextBtnElements.forEach((btn) => {
   btn.addEventListener("click", () => scrollUp())
 })
+
+// Show/hide language hint
+document.addEventListener("click", function () {
+  const langHintElement = document.getElementById("langHint")
+  if (langHintElement) {
+    langHintElement.classList.add("hide")
+  }
+})
